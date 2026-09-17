@@ -15,11 +15,11 @@ export default function SpiritLayout({ children, showBack = true, showHome = tru
   const isHome = location.pathname === "/";
 
   return (
-    <div className="min-h-screen flex flex-col" dir="rtl" lang="he">
+    <div className="min-h-screen flex flex-col bg-background" dir="rtl" lang="he">
       {!hideNav && (
-        <header className="sticky top-0 z-30 backdrop-blur-md bg-background/70 border-b border-border/40">
-          <div className="max-w-2xl mx-auto px-5 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-2">
+        <header className="sticky top-0 z-30 glass border-b border-black/5">
+          <div className="max-w-2xl mx-auto px-5 h-12 flex items-center justify-between">
+            <div className="flex items-center gap-1">
               {showBack && !isHome && (
                 <button
                   onClick={() => navigate(-1)}
@@ -39,8 +39,8 @@ export default function SpiritLayout({ children, showBack = true, showHome = tru
                 </Link>
               )}
             </div>
-            <Link to="/" className="font-display text-lg tracking-wide text-foreground/80 hover:text-foreground transition-colors">
-              עדשת הרוח
+            <Link to="/" className="font-display text-base font-semibold tracking-app text-foreground">
+              {site.title}
             </Link>
             <Link
               to="/safety"
@@ -58,9 +58,9 @@ export default function SpiritLayout({ children, showBack = true, showHome = tru
         <div className="max-w-2xl w-full mx-auto px-5 py-8 flex-1 flex flex-col">{children}</div>
       </main>
 
-      <footer className="border-t border-border/40 bg-background/50">
+      <footer className="border-t border-black/5 bg-background">
         <div className="max-w-2xl mx-auto px-5 py-8 text-center space-y-1.5">
-          <p className="font-display text-sm text-foreground/80">{site.footerCredit}</p>
+          <p className="font-display text-sm font-medium text-foreground/80">{site.footerCredit}</p>
           <p className="text-xs text-muted-foreground">{site.footerModel}</p>
           <p className="text-xs text-muted-foreground/70 pt-2">{site.copyright}</p>
         </div>
