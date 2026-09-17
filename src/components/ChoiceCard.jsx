@@ -1,25 +1,42 @@
 import React from "react";
+import { ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+// שורת בחירה בסגנון Apple: לבנה, פינות רכות, hairline, ללא רעש.
 export default function ChoiceCard({ label, sub, subtle = false, onClick, icon }) {
   return (
     <button
       onClick={onClick}
       className={cn(
-        "group w-full text-right rounded-3xl border px-6 py-6 transition-all duration-500 rise-in",
-        "hover:border-gold/40 hover:bg-card hover:shadow-[0_8px_40px_-12px_rgba(201,178,126,0.25)]",
+        "group w-full text-right rounded-2xl px-6 py-5 reveal",
+        "transition-all duration-500 ease-apple active:scale-[0.985]",
         subtle
-          ? "border-border/50 bg-secondary/30 text-muted-foreground"
-          : "border-border bg-card/60 text-foreground"
+          ? "bg-transparent hairline-t text-muted-foreground hover:text-foreground rounded-none px-1"
+          : "bg-card elev-card hover:elev-card-hover hover:-translate-y-0.5 text-foreground"
       )}
     >
       <div className="flex items-center justify-between gap-4">
-        <span className={cn("font-body text-lg leading-snug", subtle ? "font-normal" : "font-medium")}>
+        <span
+          className={cn(
+            "text-[1.125rem] leading-snug tracking-tight",
+            subtle ? "font-normal" : "font-medium"
+          )}
+        >
           {label}
         </span>
-        {icon && <span className="text-gold/70 group-hover:text-gold transition-colors">{icon}</span>}
+        {icon ? (
+          <span className="text-primary">{icon}</span>
+        ) : (
+          !subtle && (
+            <ArrowLeft className="w-4 h-4 shrink-0 text-muted-foreground/50 transition-all duration-500 ease-apple group-hover:-translate-x-1 group-hover:text-primary" />
+          )
+        )}
       </div>
-      {sub && <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">{sub}</p>}
+      {sub && (
+        <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-muted-foreground">
+          {sub}
+        </p>
+      )}
     </button>
   );
 }

@@ -13,19 +13,25 @@ export default function Guided() {
   };
 
   return (
-    <SpiritLayout>
-      <div className="flex-1 flex flex-col justify-center">
-        <h1 className="font-display text-3xl text-center text-foreground leading-snug mb-10 rise-in">
+    <SpiritLayout bleed>
+      <div className="max-w-[720px] w-full mx-auto px-5 sm:px-6 pt-14 pb-24 sm:pt-20">
+        <p className="eyebrow text-primary reveal">שאלה אחת</p>
+        <h1
+          className="mt-3 display-xl text-[2.25rem] sm:text-[3.25rem] text-foreground reveal"
+          style={{ animationDelay: "0.06s" }}
+        >
           {guidedQuestion}
         </h1>
-        <div className="space-y-3">
+
+        <div className="mt-12 space-y-3">
           {guidedChoices.map((c, i) => (
-            <div key={c.id} style={{ animationDelay: `${0.08 * i}s` }}>
+            <div key={c.id} style={{ animationDelay: `${0.06 * i}s` }}>
               <ChoiceCard label={c.label} onClick={() => choose(c)} />
             </div>
           ))}
         </div>
-        <p className="mt-8 text-center text-sm text-muted-foreground/70">
+
+        <p className="mt-10 text-[0.9375rem] leading-relaxed text-muted-foreground/80">
           אין תשובה נכונה או שגויה. כל בחירה מובילה למקום אחר.
         </p>
       </div>

@@ -30,31 +30,49 @@ export default function GuidedPause() {
   };
 
   return (
-    <SpiritLayout>
-      <div className="flex-1 flex flex-col justify-center text-center">
-        <div className="mb-12">
-          <BreathOrb size={170} />
-        </div>
-        <h1 className="font-display text-2xl text-foreground leading-relaxed mb-8 rise-in">
-          {pauseBeforeTool.title}
-        </h1>
-        <div className="space-y-4 max-w-md mx-auto">
-          {pauseBeforeTool.lines.map((line, i) => (
-            <p key={i} className="font-body text-lg leading-relaxed text-muted-foreground rise-in" style={{ animationDelay: `${0.15 * (i + 1)}s` }}>
-              {line}
-            </p>
-          ))}
-        </div>
-        <div className="mt-12">
+    <SpiritLayout theme="ink" bleed footer={false}>
+      <section className="relative flex-1 bg-ink overflow-hidden flex items-center">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 75% 50% at 50% 20%, rgba(40,90,200,0.26), transparent 70%)",
+          }}
+        />
+
+        <div className="relative w-full max-w-[720px] mx-auto px-6 py-24 flex flex-col items-center text-center">
+          <div className="reveal-blur">
+            <BreathOrb size={200} variant="ink" />
+          </div>
+
+          <h1
+            className="mt-16 display-xl text-[2rem] sm:text-[2.75rem] text-on-ink max-w-xl reveal"
+            style={{ animationDelay: "0.2s" }}
+          >
+            {pauseBeforeTool.title}
+          </h1>
+
+          <div className="mt-8 space-y-4 max-w-md">
+            {pauseBeforeTool.lines.map((line, i) => (
+              <p
+                key={i}
+                className="body-lead text-[1.0625rem] sm:text-[1.1875rem] text-on-ink-muted reveal"
+                style={{ animationDelay: `${0.32 + 0.12 * i}s` }}
+              >
+                {line}
+              </p>
+            ))}
+          </div>
+
           <button
             onClick={continueNext}
-            className="rounded-full bg-primary text-primary-foreground px-8 py-4 text-lg font-medium hover:bg-primary/90 hover:shadow-lg transition-all duration-300 rise-in"
-            style={{ animationDelay: "0.5s" }}
+            className="mt-14 rounded-full bg-primary text-primary-foreground px-10 py-3.5 text-[1.0625rem] font-medium tracking-tight transition-all duration-500 ease-apple hover:brightness-110 active:scale-[0.97] reveal"
+            style={{ animationDelay: "0.62s" }}
           >
             {pauseBeforeTool.button}
           </button>
         </div>
-      </div>
+      </section>
     </SpiritLayout>
   );
 }
