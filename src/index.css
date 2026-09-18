@@ -1,77 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@200;300;400;500;600;700;800&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Neue Haas Unica — the Helvetica Neue lineage Apple built its brand on. */
-@font-face {
-  font-family: 'Neue Haas Unica';
-  src: url('https://media.base44.com/files/public/builder-assets/wix-fonts/neue-haas-unica-350-normal.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Neue Haas Unica';
-  src: url('https://media.base44.com/files/public/builder-assets/wix-fonts/neue-haas-unica-400-normal.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Neue Haas Unica';
-  src: url('https://media.base44.com/files/public/builder-assets/wix-fonts/neue-haas-unica-500-normal.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Neue Haas Unica';
-  src: url('https://media.base44.com/files/public/builder-assets/wix-fonts/neue-haas-unica-700-normal.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
 @layer base {
   :root {
-    /* Apple system greys */
-    --background: 240 9% 96%;
-    --foreground: 240 3% 12%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 3% 12%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 3% 12%;
-    --primary: 211 100% 45%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 240 6% 92%;
-    --secondary-foreground: 240 3% 12%;
-    --muted: 240 6% 94%;
-    --muted-foreground: 240 2% 44%;
-    --accent: 211 100% 45%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 3 100% 47%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 240 6% 84%;
-    --input: 240 6% 84%;
-    --ring: 211 100% 45%;
-
-    /* brand extensions */
-    --ink: 0 0% 0%;
-    --ink-soft: 240 6% 11%;
-    --on-ink: 240 9% 96%;
-    --on-ink-muted: 240 3% 74%;
-    --hairline: 240 6% 84%;
-    --hairline-ink: 0 0% 100%;
-
-    --radius: 1.125rem;
-    --radius-bento: 1.75rem;
-
-    --font-heading: "Neue Haas Unica", "Heebo", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-    --font-body: "Neue Haas Unica", "Heebo", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-    --font-display: "Neue Haas Unica", "Heebo", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-    --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+    --background: 36 33% 96%;
+    --foreground: 30 8% 20%;
+    --card: 40 36% 98%;
+    --card-foreground: 30 8% 20%;
+    --popover: 40 36% 98%;
+    --popover-foreground: 30 8% 20%;
+    --primary: 30 8% 22%;
+    --primary-foreground: 40 36% 98%;
+    --secondary: 36 20% 92%;
+    --secondary-foreground: 30 8% 22%;
+    --muted: 36 18% 90%;
+    --muted-foreground: 30 5% 42%;
+    --accent: 40 34% 62%;
+    --accent-foreground: 30 10% 20%;
+    --destructive: 10 40% 50%;
+    --destructive-foreground: 40 36% 98%;
+    --border: 36 18% 88%;
+    --input: 36 18% 88%;
+    --ring: 200 12% 46%;
+    --gold: 40 34% 62%;
+    --slate: 200 12% 46%;
+    --radius: 1.25rem;
+    --font-heading: "Frank Ruhl Libre", "David Libre", Georgia, "Times New Roman", serif;
+    --font-body: "Assistant", "Heebo", "Segoe UI", system-ui, sans-serif;
+    --font-display: "Frank Ruhl Libre", "David Libre", Georgia, serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   }
 }
 
@@ -82,139 +40,56 @@
 
   html {
     scroll-behavior: smooth;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
-    @apply bg-background text-foreground font-body;
-    letter-spacing: -0.01em;
+    @apply bg-background text-foreground font-body antialiased;
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(circle at 18% 12%, rgba(201, 178, 126, 0.10), transparent 42%),
+      radial-gradient(circle at 82% 88%, rgba(107, 122, 130, 0.08), transparent 46%);
+    background-attachment: fixed;
     min-height: 100vh;
-  }
-
-  ::selection {
-    background: hsl(211 100% 45% / 0.22);
   }
 }
 
 @layer utilities {
   .font-heading { font-family: var(--font-heading); }
   .font-display { font-family: var(--font-display); }
+  .text-gold { color: hsl(var(--gold)); }
+  .text-slate-soft { color: hsl(var(--slate)); }
+  .bg-gold-soft { background-color: hsl(40 34% 62% / 0.12); }
 
-  /* Apple-grade display typography: huge, tight, optically balanced */
-  .display-hero {
-    font-weight: 600;
-    letter-spacing: -0.035em;
-    line-height: 0.98;
-  }
-  .display-xl {
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1.05;
-  }
-  .display-lg {
-    font-weight: 600;
-    letter-spacing: -0.025em;
-    line-height: 1.1;
-  }
-  .body-lead {
-    font-weight: 400;
-    letter-spacing: -0.005em;
-    line-height: 1.5;
-  }
-  .eyebrow {
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    font-size: 0.8125rem;
-    line-height: 1.2;
-  }
-
-  .bg-ink { background-color: hsl(var(--ink)); }
-  .bg-ink-soft { background-color: hsl(var(--ink-soft)); }
-  .text-on-ink { color: hsl(var(--on-ink)); }
-  .text-on-ink-muted { color: hsl(var(--on-ink-muted)); }
-  .rounded-bento { border-radius: var(--radius-bento); }
-
-  .full-bleed {
-    width: 100vw;
-    margin-right: 50%;
-    transform: translateX(50%);
-  }
-
-  /* Apple glass chrome */
-  .glass-light {
-    background: hsl(0 0% 100% / 0.72);
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-  }
-  .glass-ink {
-    background: hsl(0 0% 0% / 0.6);
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-  }
-
-  .elev-card {
-    box-shadow: 0 1px 2px hsl(240 6% 40% / 0.04), 0 8px 28px -8px hsl(240 6% 30% / 0.10);
-  }
-  .elev-card-hover {
-    box-shadow: 0 2px 6px hsl(240 6% 40% / 0.06), 0 22px 50px -12px hsl(240 6% 30% / 0.18);
-  }
-
-  /* תאימות: מסכים שעדיין מפנים לטוקן המבטא הישן מקבלים את כחול המערכת */
-  .text-gold { color: hsl(var(--primary)); }
-  .text-slate-soft { color: hsl(var(--muted-foreground)); }
-  .bg-gold-soft { background-color: hsl(var(--primary) / 0.08); }
-
-  .hairline-t { border-top: 1px solid hsl(var(--hairline)); }
-  .hairline-b { border-bottom: 1px solid hsl(var(--hairline)); }
-
-  /* Motion — Apple's ease curves, long and calm */
-  .ease-apple { transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1); }
-
-  .reveal {
-    animation: reveal 1s cubic-bezier(0.32, 0.72, 0, 1) both;
-  }
-  .reveal-blur {
-    animation: revealBlur 1.2s cubic-bezier(0.32, 0.72, 0, 1) both;
-  }
   .breath-ring {
-    animation: breath 11s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-  }
-  .orb-drift {
-    animation: orbDrift 16s ease-in-out infinite;
-  }
-  .soft-pulse {
-    animation: softPulse 7s ease-in-out infinite;
+    animation: breath 9s ease-in-out infinite;
   }
   .fade-in {
-    animation: reveal 0.9s cubic-bezier(0.32, 0.72, 0, 1) both;
+    animation: fadeIn 1.1s ease both;
   }
   .rise-in {
-    animation: reveal 1s cubic-bezier(0.32, 0.72, 0, 1) both;
+    animation: riseIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
-}
-
-@keyframes reveal {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes revealBlur {
-  from { opacity: 0; transform: translateY(30px) scale(0.97); filter: blur(12px); }
-  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+  .soft-pulse {
+    animation: softPulse 6s ease-in-out infinite;
+  }
 }
 
 @keyframes breath {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.075); }
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.12); opacity: 1; }
 }
 
-@keyframes orbDrift {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(0, -14px, 0); }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes softPulse {
-  0%, 100% { opacity: 0.45; }
-  50% { opacity: 0.95; }
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.9; }
 }

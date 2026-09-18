@@ -65,29 +65,27 @@ export default function StepFlow({ steps, onComplete, intro, backLabel = "הקו
   return (
     <div className="flex-1 flex flex-col fade-in" key={index}>
       {intro && index === 0 && (
-        <p className="body-lead text-[1.1875rem] text-muted-foreground mb-10 reveal">{intro}</p>
+        <p className="font-display text-xl leading-relaxed text-foreground/80 mb-8 rise-in">{intro}</p>
       )}
 
       <div className="flex-1 flex flex-col justify-center min-h-[40vh]">
         {step.letter && (
-          <div className="flex justify-center mb-10">
-            <span className="display-hero text-[5rem] text-primary soft-pulse">{step.letter}</span>
+          <div className="flex justify-center mb-8">
+            <span className="font-display text-6xl text-gold/70 soft-pulse">{step.letter}</span>
           </div>
         )}
-        {step.title && (
-          <h2 className="display-xl text-[1.875rem] sm:text-[2.25rem] text-center text-foreground mb-5">{step.title}</h2>
-        )}
-        <p className="body-lead text-[1.25rem] sm:text-[1.5rem] text-foreground text-center max-w-lg mx-auto tracking-tight">{step.text}</p>
+        {step.title && <h2 className="font-display text-2xl text-center text-foreground mb-4">{step.title}</h2>}
+        <p className="font-body text-lg leading-relaxed text-foreground/85 text-center max-w-md mx-auto">{step.text}</p>
 
         {step.kind === "input" && (
-          <div className="mt-10 max-w-lg w-full mx-auto">
+          <div className="mt-8 max-w-md w-full mx-auto">
             {step.multiline ? (
               <textarea
                 value={draft}
                 onChange={(e) => setDraft(e.target.value)}
                 placeholder={step.placeholder}
                 rows={5}
-                className="w-full rounded-2xl bg-card elev-card px-5 py-4 text-[1.125rem] leading-relaxed text-foreground placeholder:text-muted-foreground/50 border border-transparent focus:outline-none focus:border-primary/60 focus:ring-4 focus:ring-primary/10 transition-all duration-300 resize-none"
+                className="w-full rounded-2xl border border-border bg-card/70 px-5 py-4 text-lg leading-relaxed text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/15 transition resize-none"
               />
             ) : (
               <input
@@ -95,21 +93,21 @@ export default function StepFlow({ steps, onComplete, intro, backLabel = "הקו
                 value={draft}
                 onChange={(e) => setDraft(e.target.value)}
                 placeholder={step.placeholder}
-                className="w-full rounded-2xl bg-card elev-card px-5 py-4 text-[1.125rem] text-foreground placeholder:text-muted-foreground/50 border border-transparent focus:outline-none focus:border-primary/60 focus:ring-4 focus:ring-primary/10 transition-all duration-300"
+                className="w-full rounded-2xl border border-border bg-card/70 px-5 py-4 text-lg text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/15 transition"
               />
             )}
           </div>
         )}
 
         {step.kind === "choice" && (
-          <div className="mt-10 space-y-3 max-w-lg w-full mx-auto">
+          <div className="mt-8 space-y-3 max-w-md w-full mx-auto">
             {step.options.map((opt) => (
               <button
                 key={opt.value}
                 onClick={() => handleChoice(opt)}
                 className={cn(
-                  "w-full text-right rounded-2xl bg-card elev-card px-6 py-5 text-[1.125rem] font-medium tracking-tight text-foreground",
-                  "hover:elev-card-hover hover:-translate-y-0.5 active:scale-[0.985] transition-all duration-500 ease-apple"
+                  "w-full text-right rounded-2xl border border-border bg-card/60 px-5 py-4 text-lg text-foreground",
+                  "hover:border-gold/40 hover:bg-card transition-all duration-300"
                 )}
               >
                 {opt.label}
@@ -135,8 +133,8 @@ export default function StepFlow({ steps, onComplete, intro, backLabel = "הקו
           <button
             onClick={goNext}
             className={cn(
-              "rounded-full px-9 py-3.5 text-[1.0625rem] font-medium tracking-tight",
-              "bg-primary text-primary-foreground transition-all duration-500 ease-apple hover:brightness-110 active:scale-[0.97]"
+              "rounded-full px-8 py-3.5 text-lg font-medium transition-all duration-300",
+              "bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-lg"
             )}
           >
             {isLast ? finishLabel : nextLabel}
