@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SpiritLayout from "@/components/SpiritLayout";
-import StepFlow from "@/components/StepFlow";
+import FocusHeader from "@/components/FocusHeader";
 import BreathOrb from "@/components/BreathOrb";
+import StepFlow from "@/components/StepFlow";
+import ActionButton from "@/components/ActionButton";
 import { unclearFlow } from "@/lib/spiritContent";
 
 export default function ThoughtUnclear() {
   const navigate = useNavigate();
   const [phase, setPhase] = useState("steps");
-  const storageKey = "sl_unclear";
 
   const onComplete = (values) => {
     const route = values._route_q1 || values._route_q2 || values._route_q3;
@@ -20,31 +20,25 @@ export default function ThoughtUnclear() {
 
   if (phase === "fallback") {
     return (
-      <SpiritLayout>
-        <div className="flex-1 flex flex-col justify-center text-center">
-          <div className="mb-10"><BreathOrb size={140} /></div>
-          <p className="font-display text-xl leading-relaxed text-foreground/85 max-w-md mx-auto mb-10">
-            {unclearFlow.fallback.text}
-          </p>
-          <button
-            onClick={() => navigate("/tool/nesheama")}
-            className="rounded-full bg-primary text-primary-foreground px-8 py-4 text-lg font-medium hover:bg-primary/90 hover:shadow-lg transition mx-auto"
-          >
+      <div className="min-h-screen flex flex-col pb-10">
+        <FocusHeader kicker="תרגול" title="לא ברור לי" />
+        <div className="flex-1 flex flex-col items-center text-center px-6 pt-8">
+          <BreathOrb size={72} />
+          <p className="t-lead text-foreground/85 max-w-md mt-8">{unclearFlow.fallback.text}</p>
+          <ActionButton onClick={() => navigate("/tool/nesheama")} className="mt-8">
             {unclearFlow.fallback.button}
-          </button>
+          </ActionButton>
         </div>
-      </SpiritLayout>
+      </div>
     );
   }
 
   return (
-    <SpiritLayout>
-      <StepFlow
-        steps={unclearFlow.steps}
-        onComplete={onComplete}
-        storageKey={storageKey}
-        finishLabel="המשך"
-      />
-    </SpiritLayout>
+    <StepFlow
+      tool={{ name: "לא ברור לי", steps: unclearFlow.steps, mode: "read" }}
+      tone="thought"
+      onComplete={onComplete}
+      storageKey="sl_unclear"
+    />
   );
 }

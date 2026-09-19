@@ -1,40 +1,49 @@
 import React from "react";
-import BreathOrb from "@/components/BreathOrb";
-import FeelingSlip from "@/components/FeelingSlip";
-import { checkIn, guidedChoices } from "@/lib/spiritContent";
+import { toneIcons } from "@/lib/toneIcons";
+import { guidedChoices } from "@/lib/spiritContent";
 
-// full / tile / tile / full / tile / tile / full — an asymmetric rhythm
-// (How We Feel and Headspace tile their tools this way) instead of one
-// uniform stack of identical rows.
-const LAYOUT = ["full", "tile", "tile", "full", "tile", "tile", "full"];
-
+// The check-in, ported from the editorial import: a horizontally scrolling
+// row of circles, each holding a smaller organic blob in its own pigment and
+// shape, with a selection pip when chosen — not the vertical stack of cards
+// this screen used to be.
 export default function EmotionCheckIn({ selected, onSelect }) {
   return (
-    <div className="flex-1 flex flex-col">
-      <div className="pt-6 pb-10 flex flex-col items-start text-right fade-in">
-        <BreathOrb size={88} tone={selected ? `var(--pigment-${selected.tone})` : undefined} />
-        <h1 className="mt-8 t-display text-foreground">{checkIn.question}</h1>
-        <p className="mt-3 t-lead text-muted-foreground max-w-[19rem]">{checkIn.hint}</p>
-      </div>
-
-      <div className="fade-in grid grid-cols-2 gap-2.5 auto-rows-fr">
-        {guidedChoices.map((choice, i) => {
-          const size = LAYOUT[i] === "full" ? "feature" : "tile";
-          return (
-            <div key={choice.id} className={size === "feature" ? "col-span-2" : "col-span-1"}>
-              <FeelingSlip
-                label={choice.label}
-                sub={choice.leadsTo}
-                tone={choice.tone}
-                size={size}
-                selected={selected?.id === choice.id}
-                dimmed={selected && selected.id !== choice.id}
-                onClick={() => !selected && onSelect(choice)}
-              />
-            </div>
-          );
-        })}
-      </div>
+    <div className="scroll-x-quiet -mx-6 flex gap-3 overflow-x-auto px-6" style={{ scrollSnapType: "x mandatory" }}>
+      {guidedChoices.map((choice) => {
+        const pigment = `var(--pigment-${choice.tone})`;
+        const form = `var(--form-${choice.tone})`;
+        const Icon = toneIcons[choice.tone];
+        const on = selected?.id === choice.id;
+        return (
+          <button
+            key={choice.id}
+            onClick={() => onSelect(choice)}
+            className="press flex w-[7.75rem] shrink-0 flex-col items-center gap-2.5"
+            style={{ scrollSnapAlign: "center" }}
+          >
+            <span
+              className="relative grid h-[7.75rem] w-[7.75rem] place-items-center rounded-full transition-colors duration-300"
+              style={{ backgroundColor: on ? `hsl(${pigment} / 0.16)` : "hsl(var(--secondary))" }}
+            >
+              <span
+                className="grid h-14 w-14 place-items-center"
+                style={{ backgroundColor: `hsl(${pigment} / ${on ? 1 : 0.85})`, borderRadius: form }}
+              >
+                <Icon className="w-6 h-6 text-white" strokeWidth={1.5} />
+              </span>
+              {on && (
+                <span
+                  className="absolute top-2.5 left-2.5 w-2 h-2 rounded-full"
+                  style={{ backgroundColor: `hsl(${pigment})` }}
+                />
+              )}
+            </span>
+            <span className={`t-small text-center leading-snug ${on ? "font-semibold text-foreground" : "text-foreground/80"}`}>
+              {choice.label}
+            </span>
+          </button>
+        );
+      })}
     </div>
   );
 }

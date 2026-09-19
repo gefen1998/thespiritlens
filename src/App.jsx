@@ -10,6 +10,7 @@ import Home from '@/pages/Home';
 import Guided from '@/pages/Guided';
 import GuidedPause from '@/pages/GuidedPause';
 import Tools from '@/pages/Tools';
+import Book from '@/pages/Book';
 import ToolPage from '@/pages/ToolPage';
 import ThoughtMeeting from '@/pages/ThoughtMeeting';
 import ThoughtDocument from '@/pages/ThoughtDocument';
@@ -53,6 +54,7 @@ const AuthenticatedApp = () => {
       <Route path="/guided" element={<Guided />} />
       <Route path="/guided/pause" element={<GuidedPause />} />
       <Route path="/tools" element={<Tools />} />
+      <Route path="/book" element={<Book />} />
       <Route path="/tool/:toolId" element={<ToolPage />} />
       <Route path="/thought" element={<ThoughtMeeting />} />
       <Route path="/thought/document" element={<ThoughtDocument />} />

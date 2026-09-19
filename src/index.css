@@ -48,6 +48,19 @@
     --pigment-spirit: 40 72% 42%;
     --pigment-open: 205 14% 40%;
 
+    /*
+     * One organic "blob" shape per state of mind, ported from the editorial
+     * design import — each emotion gets a distinct silhouette as well as a
+     * distinct color, not just a uniform rounded square.
+     */
+    --form-body: 42% 58% 55% 45% / 48% 42% 58% 52%;
+    --form-thought: 60% 40% 45% 55% / 50% 55% 42% 58%;
+    --form-emotion: 50% 50% 62% 38% / 42% 58% 45% 55%;
+    --form-fatigue: 55% 45% 38% 62% / 58% 42% 52% 48%;
+    --form-memory: 38% 62% 50% 50% / 52% 48% 60% 40%;
+    --form-spirit: 999px;
+    --form-open: 26%;
+
     --radius: 1.5rem;
     --font-heading: "Rubik", "Assistant", "Segoe UI", system-ui, sans-serif;
     --font-body: "Assistant", "Heebo", "Segoe UI", system-ui, sans-serif;
@@ -172,6 +185,21 @@
   .press:active {
     transform: scale(0.975);
   }
+  .ring-breathe {
+    animation: ringBreathe 11s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  }
+  .ring-orbit {
+    animation: ringOrbit 11s linear infinite;
+  }
+  .sheet-rise {
+    animation: sheetRise 340ms cubic-bezier(0.32, 0.72, 0, 1) both;
+  }
+  .scroll-x-quiet {
+    scrollbar-width: none;
+  }
+  .scroll-x-quiet::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* Inhale 4.5s, rest 1s, exhale 4.5s — a pace a person can actually follow. */
@@ -200,10 +228,27 @@
   50% { opacity: 1; }
 }
 
+@keyframes ringBreathe {
+  0%, 100% { transform: scale(0.72); }
+  45%, 55% { transform: scale(1); }
+}
+
+@keyframes ringOrbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes sheetRise {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .breath-ring,
   .breath-ring-inner,
-  .soft-pulse {
+  .soft-pulse,
+  .ring-breathe,
+  .ring-orbit {
     animation: none;
   }
   .rise-in,

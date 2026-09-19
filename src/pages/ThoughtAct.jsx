@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import SpiritLayout from "@/components/SpiritLayout";
 import StepFlow from "@/components/StepFlow";
 import PersonalCard from "@/components/PersonalCard";
 import { actFlow } from "@/lib/spiritContent";
@@ -8,13 +6,12 @@ import { actFlow } from "@/lib/spiritContent";
 const whenLabels = { now: "עכשיו", today: "היום", tomorrow: "מחר", other: "זמן אחר" };
 
 export default function ThoughtAct() {
-  const navigate = useNavigate();
   const [values, setValues] = useState(null);
   const storageKey = "sl_act";
 
   if (values) {
     return (
-      <SpiritLayout>
+      <div className="min-h-screen flex flex-col">
         <PersonalCard
           fields={[
             { label: actFlow.card.titleLabel, value: values[actFlow.card.titleKey] || "" },
@@ -27,19 +24,16 @@ export default function ThoughtAct() {
             setValues(null);
           }}
         />
-      </SpiritLayout>
+      </div>
     );
   }
 
   return (
-    <SpiritLayout>
-      <StepFlow
-        steps={actFlow.steps}
-        intro={actFlow.intro}
-        onComplete={setValues}
-        storageKey={storageKey}
-        finishLabel="לשמור"
-      />
-    </SpiritLayout>
+    <StepFlow
+      tool={{ name: "לפעול", steps: actFlow.steps, mode: "read", audioNote: actFlow.intro }}
+      tone="thought"
+      onComplete={setValues}
+      storageKey={storageKey}
+    />
   );
 }

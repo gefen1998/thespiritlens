@@ -1,18 +1,15 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import SpiritLayout from "@/components/SpiritLayout";
 import StepFlow from "@/components/StepFlow";
 import PersonalCard from "@/components/PersonalCard";
 import { documentFlow } from "@/lib/spiritContent";
 
 export default function ThoughtDocument() {
-  const navigate = useNavigate();
   const [values, setValues] = useState(null);
   const storageKey = "sl_doc";
 
   if (values) {
     return (
-      <SpiritLayout>
+      <div className="min-h-screen flex flex-col">
         <PersonalCard
           fields={[
             { label: documentFlow.card.titleLabel, value: values[documentFlow.card.titleKey] || "" },
@@ -25,19 +22,16 @@ export default function ThoughtDocument() {
             setValues(null);
           }}
         />
-      </SpiritLayout>
+      </div>
     );
   }
 
   return (
-    <SpiritLayout>
-      <StepFlow
-        steps={documentFlow.steps}
-        intro={documentFlow.intro}
-        onComplete={setValues}
-        storageKey={storageKey}
-        finishLabel="לשמור"
-      />
-    </SpiritLayout>
+    <StepFlow
+      tool={{ name: "לתעד", steps: documentFlow.steps, mode: "read", audioNote: documentFlow.intro }}
+      tone="thought"
+      onComplete={setValues}
+      storageKey={storageKey}
+    />
   );
 }

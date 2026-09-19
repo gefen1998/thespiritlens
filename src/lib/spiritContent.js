@@ -41,6 +41,28 @@ export const guidedChoices = [
   { id: "just-pause", label: "אני לא יודע/ת — רק זקוק/ה לרגע של עצירה", tone: "open", leadsTo: "רגע אחד של נשימה", target: { type: "tool", toolId: "nesheama" } },
 ];
 
+export const editorial = {
+  tabs: { home: "היום", library: "כלים", book: "הספר" },
+  home: {
+    helloLine: "שלום.",
+    headline: ["איך אתם", "מרגישים עכשיו?"],
+    note: "אין תשובה נכונה, ואין צורך לדעת. אפשר גם לדלג ישר לרשימת התרגולים.",
+    startHere: "להתחיל מכאן",
+    quickTitle: "קצר ופשוט",
+    allTools: "כל הכלים",
+  },
+  library: {
+    headline: ["אוסף", "הכלים"],
+    note: "תרגולים קצרים, לפי מה שנכון לכם עכשיו.",
+    search: "חיפוש",
+    noResults: "אין תרגול בשם הזה. אפשר לנקות את החיפוש ולעיין באוסף.",
+  },
+  book: {
+    headline: ["ארבעה", "שערים"],
+    note: "מודל נשמ״ה, כפי שהוא מופיע בספר. לכל שער עמוד משלו.",
+  },
+};
+
 export const pauseBeforeTool = {
   title: "לפני שנבחר מה לעשות, נעצור לרגע.",
   lines: [
@@ -85,12 +107,17 @@ export function toolTone(toolId) {
   return gates.find((gate) => gate.tools.includes(toolId))?.tone ?? "open";
 }
 
+// נשמ״ה isn't in any gate — its four steps carry their own tone per letter
+// instead of one flat tone for the whole tool.
+export const letterTone = { נ: "body", ש: "thought", מ: "memory", ה: "spirit" };
+
 export const tools = {
   "gentle-exhale": {
     id: "gentle-exhale",
     name: "נשיפה שקטה",
     description: "תרגול קצר של דקה להארכת הנשיפה והרגעת הגוף",
     duration: "דקה",
+    mode: "breath",
     steps: [
       { kind: "text", text: "ננשום יחד נשימה אחת, לאט." },
       { kind: "text", text: "שאפו בעדינות דרך האף, ככל שנוח לכם." },
@@ -169,6 +196,7 @@ export const tools = {
     name: "קרן אור — דמיון מודרך",
     description: "תרגול דמיון עדין לחיבור למשאב פנימי",
     duration: "חמש דקות",
+    mode: "breath",
     audioReady: false,
     audioNote: "בקרוב יתאפשר להאזין להקלטה מונחית. בינתיים, נלווה אתכם בכתב.",
     steps: [
