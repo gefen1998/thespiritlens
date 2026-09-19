@@ -1,59 +1,86 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
 import SpiritLayout from "@/components/SpiritLayout";
 import BreathOrb from "@/components/BreathOrb";
-import { site, safetyContent } from "@/lib/spiritContent";
+import EmotionCheckIn from "@/components/EmotionCheckIn";
+import ActionButton from "@/components/ActionButton";
+import { site, checkIn, firstVisit } from "@/lib/spiritContent";
+
+const WELCOME_KEY = "sl_seen_welcome";
 
 export default function Home() {
   const navigate = useNavigate();
+  const [showWelcome, setShowWelcome] = useState(() => {
+    try {
+      return localStorage.getItem(WELCOME_KEY) !== "1";
+    } catch {
+      return true;
+    }
+  });
+  const [chosen, setChosen] = useState(null);
+
+  useEffect(() => {
+    if (!chosen) return;
+    const timer = setTimeout(
+      () => navigate("/guided/pause", { state: { target: chosen.target } }),
+      560
+    );
+    return () => clearTimeout(timer);
+  }, [chosen, navigate]);
+
+  const enter = () => {
+    try {
+      localStorage.setItem(WELCOME_KEY, "1");
+    } catch {
+      // Storage can be blocked; the welcome simply shows again next time.
+    }
+    setShowWelcome(false);
+  };
+
+  if (showWelcome) {
+    return (
+      <SpiritLayout hideNav footer={false}>
+        <div className="flex-1 flex flex-col justify-end pb-10">
+          <div className="fade-in">
+            <BreathOrb size={72} />
+
+            <h1 className="mt-8 t-display text-foreground">{site.title}</h1>
+            <p className="mt-2 t-lead text-muted-foreground">{site.subtitle}</p>
+          </div>
+
+          <div
+            className="mt-8 rounded-3xl px-6 py-8 sm:px-10 fade-in text-right"
+            style={{ backgroundColor: "hsl(var(--flame) / 0.08)" }}
+          >
+            <p className="t-title text-foreground max-w-sm">{firstVisit.title}</p>
+
+            <div className="mt-5 space-y-4 max-w-sm">
+              {firstVisit.lines.map((line, i) => (
+                <p key={i} className="t-lead text-muted-foreground">
+                  {line}
+                </p>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-8 flex justify-end fade-in">
+            <ActionButton onClick={enter}>{firstVisit.button}</ActionButton>
+          </div>
+        </div>
+      </SpiritLayout>
+    );
+  }
 
   return (
-    <SpiritLayout hideNav>
-      <div className="flex-1 flex flex-col justify-center text-center -mt-6">
-        <div className="mb-10 rise-in">
-          <BreathOrb size={150} />
-        </div>
-
-        <h1 className="font-display text-4xl sm:text-5xl text-foreground tracking-tight rise-in" style={{ animationDelay: "0.1s" }}>
-          {site.title}
-        </h1>
-        <p className="mt-3 font-display text-lg text-muted-foreground rise-in" style={{ animationDelay: "0.2s" }}>
-          {site.subtitle}
-        </p>
-
-        <div className="mt-10 space-y-5 max-w-md mx-auto rise-in" style={{ animationDelay: "0.3s" }}>
-          <p className="font-body text-lg leading-relaxed text-foreground/85">{site.welcome}</p>
-          <p className="font-body text-base leading-relaxed text-muted-foreground">{site.intro}</p>
-          <p className="font-body text-base leading-relaxed text-muted-foreground">{site.intro2}</p>
-        </div>
-
-        <div className="mt-10 space-y-3 max-w-sm mx-auto rise-in" style={{ animationDelay: "0.45s" }}>
-          <button
-            onClick={() => navigate("/guided")}
-            className="w-full rounded-full bg-primary text-primary-foreground px-8 py-4 text-lg font-medium hover:bg-primary/90 hover:shadow-lg transition-all duration-300"
-          >
-            עזרו לי לבחור
-          </button>
-          <Link
-            to="/tools"
-            className="block w-full rounded-full border border-border bg-card/70 text-foreground px-8 py-4 text-lg font-medium hover:border-gold/40 hover:bg-card transition-all duration-300"
-          >
-            לכל הכלים
-          </Link>
-        </div>
-
-        <p className="mt-8 text-sm text-muted-foreground/70 max-w-xs mx-auto rise-in" style={{ animationDelay: "0.6s" }}>
-          {site.hint}
-        </p>
+    <SpiritLayout>
+      <div className="flex-1 flex flex-col">
+        <EmotionCheckIn selected={chosen} onSelect={setChosen} />
 
         <Link
-          to="/safety"
-          className="mt-10 inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors rise-in"
-          style={{ animationDelay: "0.7s" }}
+          to="/tools"
+          className="mt-10 text-right t-small text-muted-foreground hover:text-flame transition-colors"
         >
-          <span className="underline underline-offset-4 decoration-border">{safetyContent.link}</span>
-          <ArrowLeft className="w-4 h-4" />
+          {checkIn.browseLabel}
         </Link>
       </div>
     </SpiritLayout>

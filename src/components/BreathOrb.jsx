@@ -1,25 +1,34 @@
 import React from "react";
 
-export default function BreathOrb({ size = 180, subtle = true }) {
+// The lens: concentric rings around a lit core, breathing.
+export default function BreathOrb({ size = 180, tone = "var(--flame)" }) {
   return (
     <div className="flex items-center justify-center" aria-hidden="true">
-      <div
-        className="relative breath-ring rounded-full"
-        style={{
-          width: size,
-          height: size,
-          background:
-            "radial-gradient(circle at 38% 32%, rgba(201,178,126,0.28), rgba(107,122,130,0.10) 60%, transparent 72%)",
-          boxShadow: subtle
-            ? "0 0 60px 10px rgba(201,178,126,0.10)"
-            : "0 0 80px 16px rgba(201,178,126,0.18)",
-        }}
-      >
+      <div className="relative" style={{ width: size, height: size }}>
         <div
-          className="absolute inset-6 rounded-full"
+          className="absolute rounded-full breath-ring"
           style={{
-            background:
-              "radial-gradient(circle at 42% 36%, rgba(253,251,247,0.6), transparent 70%)",
+            inset: "-26%",
+            background: `radial-gradient(circle, hsl(${tone} / 0.16), hsl(${tone} / 0.04) 45%, transparent 68%)`,
+            filter: "blur(4px)",
+            transition: "background 900ms ease",
+          }}
+        />
+        <div
+          className="absolute inset-0 rounded-full breath-ring"
+          style={{
+            border: `1.5px solid hsl(${tone} / 0.55)`,
+            boxShadow: `0 0 34px hsl(${tone} / 0.16), inset 0 0 28px hsl(${tone} / 0.08)`,
+            transition: "border-color 900ms ease, box-shadow 900ms ease",
+          }}
+        />
+        <div
+          className="absolute rounded-full breath-ring-inner"
+          style={{
+            inset: "18%",
+            border: `1px solid hsl(${tone} / 0.32)`,
+            background: `radial-gradient(circle at 46% 42%, hsl(${tone} / 0.30), hsl(var(--background) / 0.4) 60%, transparent 78%)`,
+            transition: "border-color 900ms ease, background 900ms ease",
           }}
         />
       </div>

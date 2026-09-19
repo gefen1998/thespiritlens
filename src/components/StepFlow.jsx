@@ -1,11 +1,28 @@
 import React, { useState } from "react";
-import { ChevronLeft } from "lucide-react";
+import { ChevronRight } from "lucide-react";
+import BreathOrb from "@/components/BreathOrb";
+import ActionButton from "@/components/ActionButton";
+import ChoiceCard from "@/components/ChoiceCard";
+import { Progress } from "@/components/ui/progress";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { toneIcons } from "@/lib/toneIcons";
 import { cn } from "@/lib/utils";
 
 // רכיב גנרי להרצת שלבים עוקבים: טקסט / קלט / בחירה.
 // steps: [{ kind: 'text'|'input'|'choice', key?, text, placeholder?, optional?, multiline?, options?, letter?, title? }]
 // onComplete(values) — נקראת בסיום עם אוסף הערכים שנאספו.
-export default function StepFlow({ steps, onComplete, intro, backLabel = "הקודם", nextLabel = "הבא", finishLabel = "סיום", storageKey }) {
+export default function StepFlow({
+  steps,
+  onComplete,
+  intro,
+  label,
+  tone = "open",
+  backLabel = "הקודם",
+  nextLabel = "הבא",
+  finishLabel = "סיום",
+  storageKey,
+}) {
   const [index, setIndex] = useState(0);
   const [values, setValues] = useState(() => {
     if (storageKey) {
@@ -20,13 +37,12 @@ export default function StepFlow({ steps, onComplete, intro, backLabel = "הקו
 
   const step = steps[index];
   const isLast = index === steps.length - 1;
+  const pigment = `var(--pigment-${tone})`;
+  const Icon = toneIcons[tone];
 
   const persist = (next) => {
     const updated = { ...values };
     if (step.kind === "input" && draft.trim()) updated[step.key] = draft.trim();
-    if (step.kind === "choice" && step.options) {
-      // choice handled via direct click
-    }
     setValues(updated);
     if (storageKey) {
       try { sessionStorage.setItem(storageKey, JSON.stringify(updated)); } catch {}
@@ -62,95 +78,103 @@ export default function StepFlow({ steps, onComplete, intro, backLabel = "הקו
     }
   };
 
+  const inputClasses =
+    "h-auto w-full rounded-lg border-2 border-transparent bg-card px-5 py-4 t-practice text-foreground text-right shadow-none placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:border-flame/50 transition-colors";
+
   return (
-    <div className="flex-1 flex flex-col fade-in" key={index}>
-      {intro && index === 0 && (
-        <p className="font-display text-xl leading-relaxed text-foreground/80 mb-8 rise-in">{intro}</p>
-      )}
+    <div className="flex-1 flex flex-col pb-24">
+      <Progress
+        value={((index + 1) / steps.length) * 100}
+        className="h-1 bg-border/50 [&>div]:bg-flame [&>div]:transition-all [&>div]:duration-700"
+      />
+      {label && <p className="mt-5 t-micro text-muted-foreground text-right">{label}</p>}
 
-      <div className="flex-1 flex flex-col justify-center min-h-[40vh]">
-        {step.letter && (
-          <div className="flex justify-center mb-8">
-            <span className="font-display text-6xl text-gold/70 soft-pulse">{step.letter}</span>
-          </div>
-        )}
-        {step.title && <h2 className="font-display text-2xl text-center text-foreground mb-4">{step.title}</h2>}
-        <p className="font-body text-lg leading-relaxed text-foreground/85 text-center max-w-md mx-auto">{step.text}</p>
+      <div
+        className="relative mt-5 flex-1 flex flex-col overflow-hidden rounded-3xl px-6 py-8 sm:px-10"
+        style={{ backgroundColor: `hsl(${pigment} / 0.08)` }}
+        key={index}
+      >
+        <Icon
+          aria-hidden="true"
+          strokeWidth={1.25}
+          className="absolute -bottom-8 -left-8 w-40 h-40 pointer-events-none"
+          style={{ color: `hsl(${pigment} / 0.10)` }}
+        />
+        <div className="relative fade-in flex-1 flex flex-col justify-center items-start text-right">
+          {intro && index === 0 && <p className="t-lead text-muted-foreground max-w-md mb-10">{intro}</p>}
 
-        {step.kind === "input" && (
-          <div className="mt-8 max-w-md w-full mx-auto">
-            {step.multiline ? (
-              <textarea
-                value={draft}
-                onChange={(e) => setDraft(e.target.value)}
-                placeholder={step.placeholder}
-                rows={5}
-                className="w-full rounded-2xl border border-border bg-card/70 px-5 py-4 text-lg leading-relaxed text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/15 transition resize-none"
-              />
-            ) : (
-              <input
-                type="text"
-                value={draft}
-                onChange={(e) => setDraft(e.target.value)}
-                placeholder={step.placeholder}
-                className="w-full rounded-2xl border border-border bg-card/70 px-5 py-4 text-lg text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/15 transition"
-              />
-            )}
-          </div>
-        )}
-
-        {step.kind === "choice" && (
-          <div className="mt-8 space-y-3 max-w-md w-full mx-auto">
-            {step.options.map((opt) => (
-              <button
-                key={opt.value}
-                onClick={() => handleChoice(opt)}
-                className={cn(
-                  "w-full text-right rounded-2xl border border-border bg-card/60 px-5 py-4 text-lg text-foreground",
-                  "hover:border-gold/40 hover:bg-card transition-all duration-300"
-                )}
+          {step.letter && (
+            <div className="mb-8">
+              <div
+                className="w-16 h-16 rounded-2xl flex items-center justify-center soft-pulse"
+                style={{ backgroundColor: `hsl(${pigment})` }}
               >
-                {opt.label}
-              </button>
-            ))}
-          </div>
-        )}
+                <span className="font-display text-3xl font-bold leading-none text-white">{step.letter}</span>
+              </div>
+            </div>
+          )}
+
+          {step.title && <h2 className="t-title text-foreground mb-4">{step.title}</h2>}
+
+          <p className="t-practice text-foreground max-w-md text-balance">{step.text}</p>
+
+          {step.kind === "input" && (
+            <div className="mt-10 w-full max-w-md">
+              {step.multiline ? (
+                <Textarea
+                  value={draft}
+                  onChange={(e) => setDraft(e.target.value)}
+                  placeholder={step.placeholder}
+                  rows={3}
+                  className={cn(inputClasses, "resize-none leading-relaxed")}
+                />
+              ) : (
+                <Input
+                  type="text"
+                  value={draft}
+                  onChange={(e) => setDraft(e.target.value)}
+                  placeholder={step.placeholder}
+                  className={inputClasses}
+                />
+              )}
+              {step.optional && (
+                <p className="mt-3 t-micro text-muted-foreground">אפשר גם להמשיך בלי לכתוב</p>
+              )}
+            </div>
+          )}
+
+          {step.kind === "choice" && (
+            <div className="mt-10 w-full max-w-md">
+              {step.options.map((opt) => (
+                <ChoiceCard key={opt.value} label={opt.label} onClick={() => handleChoice(opt)} />
+              ))}
+            </div>
+          )}
+
+          {!step.letter && step.kind === "text" && (
+            <div className="mt-10 self-center">
+              <BreathOrb size={72} tone={pigment} />
+            </div>
+          )}
+        </div>
       </div>
 
       {step.kind !== "choice" && (
-        <div className="flex items-center justify-between mt-10">
-          <div>
-            {index > 0 && (
+        <div className="fixed inset-x-0 bottom-0 z-20 bg-gradient-to-t from-background via-background/95 to-transparent pt-8">
+          <div className="max-w-xl mx-auto px-5 pb-6 flex items-center justify-between gap-4">
+            {index > 0 ? (
               <button
                 onClick={goBack}
-                className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="flex items-center gap-1 t-small text-muted-foreground hover:text-foreground transition-colors"
               >
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronRight className="w-4 h-4" />
                 {backLabel}
               </button>
+            ) : (
+              <span />
             )}
+            <ActionButton onClick={goNext}>{isLast ? finishLabel : nextLabel}</ActionButton>
           </div>
-          <button
-            onClick={goNext}
-            className={cn(
-              "rounded-full px-8 py-3.5 text-lg font-medium transition-all duration-300",
-              "bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-lg"
-            )}
-          >
-            {isLast ? finishLabel : nextLabel}
-          </button>
-        </div>
-      )}
-
-      {step.kind === "choice" && index > 0 && (
-        <div className="mt-8">
-          <button
-            onClick={goBack}
-            className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ChevronLeft className="w-4 h-4" />
-            {backLabel}
-          </button>
         </div>
       )}
     </div>

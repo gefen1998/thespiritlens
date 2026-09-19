@@ -16,14 +16,29 @@ export const site = {
 
 export const guidedQuestion = "מה מבקש ממך תשומת לב עכשיו?";
 
+export const checkIn = {
+  question: "איך אתם, עכשיו?",
+  hint: "אין תשובה נכונה או שגויה. בחרו את מה שקרוב למה שעובר עליכם.",
+  browseLabel: "לעיין בכל הכלים ולבחור בעצמכם",
+};
+
+export const firstVisit = {
+  title: "הגעתם לכאן מתוך הספר.",
+  lines: [
+    "עדשת הרוח היא המרחב המתורגל שלו — תרגולים קצרים שאפשר לעשות כאן, ברגע שבו אתם נמצאים.",
+    "אין צורך לדעת מראש מה אתם מרגישים או מה יעזור. נתחיל בשאלה אחת.",
+  ],
+  button: "אני כאן",
+};
+
 export const guidedChoices = [
-  { id: "body-tension", label: "הגוף שלי במתח", target: { type: "gate", gate: "body" } },
-  { id: "lingering-thought", label: "מחשבה שאינה מרפה", target: { type: "tool", toolId: "thought-meeting" } },
-  { id: "flooding-emotion", label: "רגש שמציף אותי", target: { type: "flow", flow: "emotion" } },
-  { id: "fatigue", label: "עייפות או ריקנות", target: { type: "flow", flow: "fatigue" } },
-  { id: "memory", label: "אירוע או זיכרון שאני נושא/ת", target: { type: "flow", flow: "memory" } },
-  { id: "strengthen", label: "אני מבקש/ת להתחזק ולהתמלא", target: { type: "gate", gate: "spirit" } },
-  { id: "just-pause", label: "אני לא יודע/ת — רק זקוק/ה לרגע של עצירה", target: { type: "tool", toolId: "nesheama" } },
+  { id: "body-tension", label: "הגוף שלי במתח", tone: "body", leadsTo: "נשימה, נוכחות וקרקוע", target: { type: "gate", gate: "body" } },
+  { id: "lingering-thought", label: "מחשבה שאינה מרפה", tone: "thought", leadsTo: "לפגוש את המחשבה ולבחור איתה", target: { type: "tool", toolId: "thought-meeting" } },
+  { id: "flooding-emotion", label: "רגש שמציף אותי", tone: "emotion", leadsTo: "לתת מקום לרגש, בלי למהר לפתור", target: { type: "flow", flow: "emotion" } },
+  { id: "fatigue", label: "עייפות או ריקנות", tone: "fatigue", leadsTo: "דבר קטן שיכול להזין עכשיו", target: { type: "flow", flow: "fatigue" } },
+  { id: "memory", label: "אירוע או זיכרון שאני נושא/ת", tone: "memory", leadsTo: "לתת לזיכרון מקום, בלי להיכנס לכל פרטיו", target: { type: "flow", flow: "memory" } },
+  { id: "strengthen", label: "אני מבקש/ת להתחזק ולהתמלא", tone: "spirit", leadsTo: "חיבור למשאב, למשמעות ולטוב", target: { type: "gate", gate: "spirit" } },
+  { id: "just-pause", label: "אני לא יודע/ת — רק זקוק/ה לרגע של עצירה", tone: "open", leadsTo: "רגע אחד של נשימה", target: { type: "tool", toolId: "nesheama" } },
 ];
 
 export const pauseBeforeTool = {
@@ -38,29 +53,37 @@ export const pauseBeforeTool = {
 export const gates = [
   {
     id: "body",
+    tone: "body",
     title: "להרגיע את הגוף",
     subtitle: "כלים של נשימה, נוכחות וקרקוע",
     tools: ["gentle-exhale", "return-to-senses", "ground-touch", "body-scan", "light-beam", "anchoring"],
   },
   {
     id: "thought",
+    tone: "thought",
     title: "לפגוש מחשבה",
     subtitle: "להכיר במחשבה ולבחור איתה",
     tools: ["thought-meeting"],
   },
   {
     id: "emotion",
+    tone: "emotion",
     title: "לתת מקום לרגש",
     subtitle: "להרגיש בעדינות, בלי למהר לפתור",
     tools: ["emotion-space"],
   },
   {
     id: "spirit",
+    tone: "spirit",
     title: "לחזק את הרוח",
     subtitle: "חיבור למשאב, למשמעות ולטוב",
     tools: ["light-beam", "gratitude-moment", "word-for-path", "meaning-choice", "strengthening-memory", "anchoring"],
   },
 ];
+
+export function toolTone(toolId) {
+  return gates.find((gate) => gate.tools.includes(toolId))?.tone ?? "open";
+}
 
 export const tools = {
   "gentle-exhale": {

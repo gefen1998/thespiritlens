@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SpiritLayout from "@/components/SpiritLayout";
 import BreathOrb from "@/components/BreathOrb";
+import ActionButton from "@/components/ActionButton";
 import { pauseBeforeTool } from "@/lib/spiritContent";
 
 function resolveTarget(target) {
@@ -18,41 +19,34 @@ function resolveTarget(target) {
 
 export default function GuidedPause() {
   const navigate = useNavigate();
-  const [target, setTarget] = useState(null);
+  const location = useLocation();
+  const [target, setTarget] = useState(location.state?.target ?? null);
 
   useEffect(() => {
+    if (target) return;
     const raw = sessionStorage.getItem("sl_guided_target");
     if (raw) setTarget(JSON.parse(raw));
-  }, []);
-
-  const continueNext = () => {
-    navigate(resolveTarget(target));
-  };
+  }, [target]);
 
   return (
-    <SpiritLayout>
-      <div className="flex-1 flex flex-col justify-center text-center">
-        <div className="mb-12">
-          <BreathOrb size={170} />
+    <SpiritLayout footer={false}>
+      <div className="flex-1 flex flex-col justify-end pb-10">
+        <BreathOrb size={64} />
+
+        <div className="mt-6 rounded-3xl px-6 py-8 sm:px-10 fade-in text-right" style={{ backgroundColor: "hsl(var(--flame) / 0.08)" }}>
+          <h1 className="t-title text-foreground max-w-sm">{pauseBeforeTool.title}</h1>
+
+          <div className="mt-5 space-y-4 max-w-sm">
+            {pauseBeforeTool.lines.map((line, i) => (
+              <p key={i} className="t-lead text-muted-foreground">
+                {line}
+              </p>
+            ))}
+          </div>
         </div>
-        <h1 className="font-display text-2xl text-foreground leading-relaxed mb-8 rise-in">
-          {pauseBeforeTool.title}
-        </h1>
-        <div className="space-y-4 max-w-md mx-auto">
-          {pauseBeforeTool.lines.map((line, i) => (
-            <p key={i} className="font-body text-lg leading-relaxed text-muted-foreground rise-in" style={{ animationDelay: `${0.15 * (i + 1)}s` }}>
-              {line}
-            </p>
-          ))}
-        </div>
-        <div className="mt-12">
-          <button
-            onClick={continueNext}
-            className="rounded-full bg-primary text-primary-foreground px-8 py-4 text-lg font-medium hover:bg-primary/90 hover:shadow-lg transition-all duration-300 rise-in"
-            style={{ animationDelay: "0.5s" }}
-          >
-            {pauseBeforeTool.button}
-          </button>
+
+        <div className="mt-8 flex justify-end">
+          <ActionButton onClick={() => navigate(resolveTarget(target))}>{pauseBeforeTool.button}</ActionButton>
         </div>
       </div>
     </SpiritLayout>

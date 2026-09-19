@@ -44,6 +44,12 @@ module.exports = {
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
+  			flame: 'hsl(var(--flame))',
+  			gold: 'hsl(var(--gold))',
+  			paper: {
+  				DEFAULT: 'hsl(var(--paper))',
+  				ink: 'hsl(var(--paper-ink))'
+  			},
   			chart: {
   				'1': 'hsl(var(--chart-1))',
   				'2': 'hsl(var(--chart-2))',

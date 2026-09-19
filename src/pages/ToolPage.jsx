@@ -6,12 +6,18 @@ import BreathOrb from "@/components/BreathOrb";
 import StepFlow from "@/components/StepFlow";
 import PersonalCard from "@/components/PersonalCard";
 import ChoiceCard from "@/components/ChoiceCard";
-import { tools, emotionNeedMap } from "@/lib/spiritContent";
+import ActionButton from "@/components/ActionButton";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { tools, emotionNeedMap, toolTone } from "@/lib/spiritContent";
+import { cn } from "@/lib/utils";
 
 export default function ToolPage() {
   const { toolId } = useParams();
   const navigate = useNavigate();
   const tool = tools[toolId];
+  const tone = toolTone(toolId);
+  const pigment = `var(--pigment-${tone})`;
   const [phase, setPhase] = useState("steps"); // steps | phrase | takeaway | done
   const [values, setValues] = useState({});
   const [phrase, setPhrase] = useState("");
@@ -22,7 +28,7 @@ export default function ToolPage() {
     return (
       <SpiritLayout>
         <div className="flex-1 flex flex-col justify-center text-center">
-          <p className="text-muted-foreground">הכלי לא נמצא.</p>
+          <p className="t-lead text-muted-foreground">הכלי לא נמצא.</p>
         </div>
       </SpiritLayout>
     );
@@ -36,8 +42,7 @@ export default function ToolPage() {
     else if (tool.ending?.kind === "takeaway") setPhase("takeaway");
     else if (tool.ending?.kind === "card") setPhase("done");
     else if (tool.ending?.kind === "flow") {
-      const need = collected[tool.ending.flow === "emotion-need" ? "need" : "need"];
-      const map = emotionNeedMap[need];
+      const map = emotionNeedMap[collected.need];
       if (map) navigate(`/tool/${map.toolId}`);
       else navigate("/tools");
     } else {
@@ -45,46 +50,52 @@ export default function ToolPage() {
     }
   };
 
+  const inputClasses =
+    "h-auto w-full rounded-lg border-2 border-transparent bg-card px-5 py-4 t-practice text-foreground text-right shadow-none placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:border-flame/50 transition-colors";
+
   // ---- Phrase ending ----
   if (phase === "phrase") {
     const options = tool.ending.options;
     const showCustom = phrase === "משפט אישי משלי." || customPhrase.length > 0;
     return (
-      <SpiritLayout>
-        <div className="flex-1 flex flex-col justify-center text-center">
-          <div className="mb-10"><BreathOrb size={130} /></div>
-          <h2 className="font-display text-2xl text-foreground mb-8">איזה משפט נכון לך לקחת מכאן?</h2>
-          <div className="space-y-3 max-w-md mx-auto">
-            {options.map((opt) => (
-              <ChoiceCard
-                key={opt}
-                label={opt}
-                subtle={phrase === opt}
-                onClick={() => setPhrase(opt)}
+      <SpiritLayout footer={false}>
+        <div className="flex-1 flex flex-col pb-24">
+          <div
+            className="flex-1 rounded-3xl px-6 py-8 sm:px-10 fade-in flex flex-col items-start text-right"
+            style={{ backgroundColor: `hsl(${pigment} / 0.08)` }}
+          >
+            <BreathOrb size={72} tone={pigment} />
+            <h2 className="mt-8 t-title text-foreground max-w-sm">איזה משפט נכון לך לקחת מכאן?</h2>
+
+            <div className="mt-8 w-full max-w-md">
+              {options.map((opt) => (
+                <ChoiceCard key={opt} label={opt} subtle={phrase === opt} onClick={() => setPhrase(opt)} />
+              ))}
+            </div>
+
+            {showCustom && (
+              <Input
+                type="text"
+                value={customPhrase}
+                onChange={(e) => setCustomPhrase(e.target.value)}
+                placeholder="כתבו את המשפט שלכם…"
+                className={cn(inputClasses, "mt-2 max-w-md")}
               />
-            ))}
+            )}
           </div>
-          {showCustom && (
-            <input
-              type="text"
-              value={customPhrase}
-              onChange={(e) => setCustomPhrase(e.target.value)}
-              placeholder="כתבו את המשפט שלכם…"
-              className="mt-4 max-w-md mx-auto w-full rounded-2xl border border-border bg-card/70 px-5 py-4 text-lg text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-gold/50 transition"
-            />
-          )}
-          <div className="mt-10">
-            <button
-              onClick={() => {
-                const final = customPhrase.trim() || phrase;
-                setPhrase(final);
-                setPhase("done");
-              }}
-              disabled={!phrase && !customPhrase.trim()}
-              className="rounded-full bg-primary text-primary-foreground px-8 py-4 text-lg font-medium hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed transition"
-            >
-              לשמור את הרגע
-            </button>
+
+          <div className="fixed inset-x-0 bottom-0 z-20 bg-gradient-to-t from-background via-background/95 to-transparent pt-8">
+            <div className="max-w-xl mx-auto px-5 pb-6 flex justify-end">
+              <ActionButton
+                onClick={() => {
+                  setPhrase(customPhrase.trim() || phrase);
+                  setPhase("done");
+                }}
+                disabled={!phrase && !customPhrase.trim()}
+              >
+                לשמור את הרגע
+              </ActionButton>
+            </div>
           </div>
         </div>
       </SpiritLayout>
@@ -94,43 +105,55 @@ export default function ToolPage() {
   // ---- Takeaway ending (קרן אור) ----
   if (phase === "takeaway") {
     return (
-      <SpiritLayout>
-        <div className="flex-1 flex flex-col justify-center">
-          <h2 className="font-display text-2xl text-foreground text-center mb-8 leading-relaxed">
-            {tool.ending.prompt}
-          </h2>
-          <div className="max-w-md mx-auto w-full space-y-4">
-            <textarea
-              value={takeaway}
-              onChange={(e) => setTakeaway(e.target.value)}
-              placeholder="מילה, תמונה, תחושה או משפט…"
-              rows={4}
-              className="w-full rounded-2xl border border-border bg-card/70 px-5 py-4 text-lg leading-relaxed text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-gold/50 transition resize-none"
-            />
-            <button
-              disabled
-              className="w-full flex items-center justify-center gap-2 rounded-2xl border border-border bg-secondary/30 px-5 py-4 text-muted-foreground/60 cursor-not-allowed"
-            >
-              <Mic className="w-5 h-5" />
-              <span className="text-base">הקלטה קולית — תתאפשר בהמשך</span>
-            </button>
-            <p className="text-xs text-center text-muted-foreground/70">
-              נשמר את פרטיותכם. ההקלטה תיושם רק כשנוכל להבטיח שהיא פרטית ובטוחה.
-            </p>
+      <SpiritLayout footer={false}>
+        <div className="flex-1 flex flex-col pb-24">
+          <div
+            className="flex-1 rounded-3xl px-6 py-8 sm:px-10 fade-in flex flex-col items-start text-right"
+            style={{ backgroundColor: `hsl(${pigment} / 0.08)` }}
+          >
+            <h2 className="t-title text-foreground max-w-md">{tool.ending.prompt}</h2>
+
+            <div className="mt-8 w-full max-w-md">
+              <Textarea
+                value={takeaway}
+                onChange={(e) => setTakeaway(e.target.value)}
+                placeholder="מילה, תמונה, תחושה או משפט…"
+                rows={3}
+                className={cn(inputClasses, "resize-none leading-relaxed")}
+              />
+              <button
+                disabled
+                className="mt-6 w-full flex items-center justify-center gap-2 py-3 t-small text-muted-foreground/70 cursor-not-allowed"
+              >
+                <Mic className="w-4 h-4" />
+                הקלטה קולית — תתאפשר בהמשך
+              </button>
+              <p className="mt-2 t-micro text-muted-foreground leading-relaxed">
+                ההקלטה תיושם רק כשנוכל להבטיח שהיא פרטית ובטוחה.
+              </p>
+            </div>
           </div>
-          <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto w-full">
-            <button
-              onClick={() => { setValues({ ...values, takeaway: takeaway.trim() }); setPhase("done"); }}
-              className="flex-1 rounded-full bg-primary text-primary-foreground px-8 py-4 text-lg font-medium hover:bg-primary/90 transition"
-            >
-              לשמור
-            </button>
-            <button
-              onClick={() => { setValues({ ...values, takeaway: "" }); setPhase("done"); }}
-              className="flex-1 rounded-full border border-border bg-card text-foreground px-8 py-4 text-lg font-medium hover:border-gold/40 transition"
-            >
-              דילוג
-            </button>
+
+          <div className="fixed inset-x-0 bottom-0 z-20 bg-gradient-to-t from-background via-background/95 to-transparent pt-8">
+            <div className="max-w-xl mx-auto px-5 pb-6 flex items-center justify-between gap-4">
+              <button
+                onClick={() => {
+                  setValues({ ...values, takeaway: "" });
+                  setPhase("done");
+                }}
+                className="t-small text-muted-foreground hover:text-foreground transition-colors"
+              >
+                דילוג
+              </button>
+              <ActionButton
+                onClick={() => {
+                  setValues({ ...values, takeaway: takeaway.trim() });
+                  setPhase("done");
+                }}
+              >
+                לשמור
+              </ActionButton>
+            </div>
           </div>
         </div>
       </SpiritLayout>
@@ -154,7 +177,7 @@ export default function ToolPage() {
       closing = e.closing;
     }
     return (
-      <SpiritLayout>
+      <SpiritLayout footer={false}>
         <PersonalCard
           fields={fields}
           closing={closing}
@@ -170,19 +193,14 @@ export default function ToolPage() {
 
   // ---- Steps ----
   return (
-    <SpiritLayout>
-      <div className="pt-2 pb-2">
-        <h1 className="font-display text-2xl text-foreground leading-snug">{tool.name}</h1>
-        {tool.audioReady === false && tool.audioNote && (
-          <p className="mt-2 text-xs text-muted-foreground/80 bg-secondary/40 rounded-xl px-4 py-2.5 leading-relaxed">
-            {tool.audioNote}
-          </p>
-        )}
-      </div>
+    <SpiritLayout footer={false}>
       <StepFlow
         steps={tool.steps}
         onComplete={onComplete}
         storageKey={storageKey}
+        label={tool.name}
+        tone={tone}
+        intro={tool.audioReady === false ? tool.audioNote : undefined}
         finishLabel="סיום"
       />
     </SpiritLayout>
