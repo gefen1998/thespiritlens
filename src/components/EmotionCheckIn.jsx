@@ -36,8 +36,8 @@ export default function EmotionCheckIn({ selected, onSelect }) {
               >
                 {Icon && (
                   <Icon
-                    className="w-[22px] h-[22px] text-white"
-                    strokeWidth={1.8}
+                    className="w-[23px] h-[23px] text-white/95"
+                    strokeWidth={1.35}
                   />
                 )}
               </span>
