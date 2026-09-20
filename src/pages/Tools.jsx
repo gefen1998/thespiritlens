@@ -53,8 +53,8 @@ export default function Tools() {
   })).filter((sec) => sec.toolIds.length > 0);
 
   return (
-    <div dir="rtl" lang="he" className="min-h-screen bg-background text-foreground flex flex-col justify-between">
-      <div className="max-w-md mx-auto w-full px-6 pt-6 pb-24">
+    <div dir="rtl" lang="he" className="min-h-screen bg-background text-foreground flex flex-col justify-between overflow-x-hidden">
+      <div className="max-w-md mx-auto w-full px-6 pt-6 pb-28">
         {/* Title */}
         <div className="text-right">
           <h1 className="leading-[1.1]">
