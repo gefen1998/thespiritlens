@@ -32,21 +32,20 @@ export const firstVisit = {
 };
 
 export const guidedChoices = [
-  { id: "body-tension", label: "הגוף שלי במתח", tone: "body", leadsTo: "נשימה, נוכחות וקרקוע", target: { type: "gate", gate: "body" } },
-  { id: "lingering-thought", label: "מחשבה שאינה מרפה", tone: "thought", leadsTo: "לפגוש את המחשבה ולבחור איתה", target: { type: "tool", toolId: "thought-meeting" } },
-  { id: "flooding-emotion", label: "רגש שמציף אותי", tone: "emotion", leadsTo: "לתת מקום לרגש, בלי למהר לפתור", target: { type: "flow", flow: "emotion" } },
-  { id: "fatigue", label: "עייפות או ריקנות", tone: "fatigue", leadsTo: "דבר קטן שיכול להזין עכשיו", target: { type: "flow", flow: "fatigue" } },
-  { id: "memory", label: "אירוע או זיכרון שאני נושא/ת", tone: "memory", leadsTo: "לתת לזיכרון מקום, בלי להיכנס לכל פרטיו", target: { type: "flow", flow: "memory" } },
-  { id: "strengthen", label: "אני מבקש/ת להתחזק ולהתמלא", tone: "spirit", leadsTo: "חיבור למשאב, למשמעות ולטוב", target: { type: "gate", gate: "spirit" } },
-  { id: "just-pause", label: "אני לא יודע/ת — רק זקוק/ה לרגע של עצירה", tone: "open", leadsTo: "רגע אחד של נשימה", target: { type: "tool", toolId: "nesheama" } },
+  { id: "calm", label: "רגוע", tone: "body", leadsTo: "רגע אחד של נשימה", target: { type: "tool", toolId: "nesheama" } },
+  { id: "tired", label: "עייף", tone: "thought", leadsTo: "דבר קטן שיכול להזין עכשיו", target: { type: "flow", flow: "fatigue" } },
+  { id: "stressed", label: "לחוץ", tone: "memory", leadsTo: "נשיפה, נוכחות וקרקוע", target: { type: "tool", toolId: "gentle-exhale" } },
+  { id: "flooding", label: "מוצף", tone: "emotion", leadsTo: "לתת מקום לרגש, בלי למהר לפתור", target: { type: "flow", flow: "emotion" } },
+  { id: "seeking", label: "מחפש כיוון", tone: "spirit", leadsTo: "חיבור למשאב, למשמעות ולטוב", target: { type: "gate", gate: "spirit" } },
+  { id: "open", label: "לא יודע", tone: "open", leadsTo: "רק רגע של עצירה", target: { type: "tool", toolId: "nesheama" } },
 ];
 
 export const editorial = {
   tabs: { home: "היום", library: "כלים", book: "הספר" },
   home: {
     helloLine: "שלום.",
-    headline: ["איך אתם", "מרגישים עכשיו?"],
-    note: "אין תשובה נכונה, ואין צורך לדעת. אפשר גם לדלג ישר לרשימת התרגולים.",
+    headline: ["איך אתה", "מרגיש עכשיו?"],
+    note: "אין תשובה נכונה, ואין צורך לדעת.\nאפשר גם לדלג ישר לרשימת התרגילים.",
     startHere: "להתחיל מכאן",
     quickTitle: "קצר ופשוט",
     allTools: "כל הכלים",

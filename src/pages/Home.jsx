@@ -16,9 +16,9 @@ function recoToolId(choice) {
   const t = choice.target;
   if (t.type === "tool") return t.toolId;
   if (t.type === "gate") return gates.find((g) => g.id === t.gate)?.tools[0] ?? "nesheama";
-  if (t.type === "flow" && t.flow === "fatigue") return fatigueOptions[0].toolId;
-  if (t.type === "flow" && t.flow === "memory") return memoryFlow.options[0].toolId;
-  if (t.type === "flow" && t.flow === "emotion") return "emotion-space";
+  if (t.flow === "fatigue") return fatigueOptions[0].toolId;
+  if (t.flow === "memory") return memoryFlow.options[0].toolId;
+  if (t.flow === "emotion") return "emotion-space";
   return "nesheama";
 }
 
@@ -92,11 +92,11 @@ export default function Home() {
       <div className="max-w-xl mx-auto px-6 pt-12 pb-32">
         {/* Top Header with Book Button */}
         <div className="flex items-start justify-between gap-4">
-          <h1 className="t-display text-foreground leading-[1.18]">
-            <span className="block text-[#8f8a82] font-bold text-[32px] sm:text-[38px]">
+          <h1 className="t-display text-foreground leading-[1.15]">
+            <span className="block text-[#8f8a82] font-bold text-[34px] sm:text-[40px]">
               {editorial.home.helloLine}
             </span>
-            <span className="block font-bold text-[34px] sm:text-[40px] text-foreground mt-0.5">
+            <span className="block font-bold text-[36px] sm:text-[42px] text-foreground mt-1">
               איך אתה
               <br />
               מרגיש עכשיו?
@@ -118,39 +118,38 @@ export default function Home() {
           אפשר גם לדלג ישר לרשימת התרגילים.
         </p>
 
-        {/* Emotion Check-in */}
+        {/* Emotion Check-in circles */}
         <div className="mt-6">
           <EmotionCheckIn selected={chosen} onSelect={setChosen} />
         </div>
 
-        {/* Black Container (Matching Reference) */}
+        {/* Full-bleed Black Container (No side margins, extends edge-to-edge) */}
         <div className="mt-8">
-          <p className="text-xs font-medium text-[#7d7973] mb-2 text-right">
+          <p className="text-xs font-medium text-[#7d7973] mb-2.5 text-right">
             {chosen ? `מתאים ל${chosen.label}` : editorial.home.startHere}
           </p>
 
           <button
             onClick={goReco}
-            className="press group relative block w-full rounded-[24px] px-6 py-6 text-right overflow-hidden transition-all shadow-sm"
-            style={{ backgroundColor: "#18191b" }}
+            className="press group relative block -mx-6 w-[calc(100%+3rem)] bg-[#161719] px-6 py-6 sm:py-7 text-right overflow-hidden transition-all shadow-sm rounded-none border-0 select-none"
           >
             {/* Top row: Description on right, Arrow on left */}
             <div className="flex items-start justify-between gap-4">
-              <span className="text-[13.5px] sm:text-[14.5px] font-medium text-white/85 leading-snug text-right">
+              <span className="text-[14px] sm:text-[15px] font-medium text-white/90 leading-snug text-right">
                 {displayDescription}
               </span>
               <ArrowUpLeft
-                className="w-5 h-5 text-white/70 shrink-0 mt-0.5 group-hover:text-white transition-colors"
+                className="w-5 h-5 text-white/75 shrink-0 mt-0.5 group-hover:text-white transition-colors"
                 strokeWidth={1.8}
               />
             </div>
 
             {/* Bottom row: Title on right, Duration on left */}
-            <div className="flex items-baseline gap-3.5 mt-6 text-right">
-              <span className="text-[34px] sm:text-[40px] font-bold text-white tracking-tight leading-none">
+            <div className="flex items-baseline gap-4 mt-7 text-right">
+              <span className="text-[36px] sm:text-[42px] font-bold text-white tracking-tight leading-none">
                 {displayName}
               </span>
-              <span className="text-[26px] sm:text-[30px] font-bold text-white/40 tabular-nums leading-none">
+              <span className="text-[28px] sm:text-[32px] font-bold text-white/40 tabular-nums leading-none">
                 {displayDuration}
               </span>
             </div>
@@ -158,7 +157,7 @@ export default function Home() {
         </div>
 
         {/* Quick Tools Section */}
-        <div className="flex items-baseline justify-between mt-8 mb-3">
+        <div className="flex items-baseline justify-between mt-7 mb-3">
           <span className="text-xs font-medium text-[#7d7973]">{editorial.home.quickTitle}</span>
           <Link
             to="/tools"
