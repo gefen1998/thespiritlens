@@ -4,9 +4,9 @@ import { BookOpen, ArrowUpLeft } from "lucide-react";
 import BottomTabs from "@/components/BottomTabs";
 import BreathOrb from "@/components/BreathOrb";
 import EmotionCheckIn from "@/components/EmotionCheckIn";
-import EditorialCard from "@/components/EditorialCard";
+import EditorialCard, { TOOL_CARD_META } from "@/components/EditorialCard";
 import ActionButton from "@/components/ActionButton";
-import { site, editorial, firstVisit, gates, tools, fatigueOptions, memoryFlow, toolTone } from "@/lib/spiritContent";
+import { site, editorial, firstVisit, gates, tools, fatigueOptions, memoryFlow } from "@/lib/spiritContent";
 
 const WELCOME_KEY = "sl_seen_welcome";
 const QUICK_IDS = ["gentle-exhale", "gratitude-moment", "ground-touch", "word-for-path"];
@@ -26,9 +26,9 @@ export default function Home() {
   const navigate = useNavigate();
   const [showWelcome, setShowWelcome] = useState(() => {
     try {
-      return localStorage.getItem(WELCOME_KEY) !== "1";
+      return localStorage.getItem(WELCOME_KEY) === "first";
     } catch {
-      return true;
+      return false;
     }
   });
   const [chosen, setChosen] = useState(null);
@@ -36,9 +36,7 @@ export default function Home() {
   const enter = () => {
     try {
       localStorage.setItem(WELCOME_KEY, "1");
-    } catch {
-      // Storage can be blocked; the welcome simply shows again next time.
-    }
+    } catch {}
     setShowWelcome(false);
   };
 
@@ -68,7 +66,18 @@ export default function Home() {
   }
 
   const recoId = recoToolId(chosen);
-  const reco = tools[recoId];
+  const reco = tools[recoId] || tools["nesheama"];
+  const meta = TOOL_CARD_META[recoId];
+
+  let displayName = meta ? (meta.line1 + (meta.line2 ? " " + meta.line2 : "")) : reco.name;
+  let displayDuration = meta?.time || reco.duration;
+  let displayDescription = reco.description;
+
+  if (recoId === "nesheama") {
+    displayName = "נשמ״ה";
+    displayDuration = "04:00";
+    displayDescription = "תרגול קצר בארבעה שלבים, על פי מודל נשמ״ה";
+  }
 
   const goReco = () => {
     const target = { type: "tool", toolId: recoId };
@@ -80,54 +89,88 @@ export default function Home() {
 
   return (
     <div dir="rtl" lang="he" className="min-h-screen">
-      <div className="max-w-xl mx-auto px-6 pt-14 pb-32">
+      <div className="max-w-xl mx-auto px-6 pt-12 pb-32">
+        {/* Top Header with Book Button */}
         <div className="flex items-start justify-between gap-4">
-          <h1 className="t-display text-foreground">
-            <span className="block text-foreground/40">{editorial.home.helloLine}</span>
-            <span className="block">
-              {editorial.home.headline[0]}
+          <h1 className="t-display text-foreground leading-[1.18]">
+            <span className="block text-[#8f8a82] font-bold text-[32px] sm:text-[38px]">
+              {editorial.home.helloLine}
+            </span>
+            <span className="block font-bold text-[34px] sm:text-[40px] text-foreground mt-0.5">
+              איך אתה
               <br />
-              {editorial.home.headline[1]}
+              מרגיש עכשיו?
             </span>
           </h1>
           <Link
             to="/book"
             aria-label={editorial.tabs.book}
-            className="press grid place-items-center w-10 h-10 shrink-0 mt-1.5 rounded-full bg-secondary text-foreground"
+            className="press grid place-items-center w-11 h-11 shrink-0 mt-1 rounded-full bg-[#ded8cb] text-foreground hover:bg-[#d5cfc2] transition-colors"
           >
-            <BookOpen className="w-[18px] h-[18px]" strokeWidth={1.75} />
+            <BookOpen className="w-[19px] h-[19px]" strokeWidth={1.75} />
           </Link>
         </div>
-        <p className="mt-3.5 max-w-[13rem] t-small text-muted-foreground">{editorial.home.note}</p>
 
+        {/* Subtitle / note */}
+        <p className="mt-3.5 text-xs sm:text-[13px] text-[#7d7973] leading-relaxed">
+          אין תשובה נכונה, ואין צורך לדעת.
+          <br />
+          אפשר גם לדלג ישר לרשימת התרגילים.
+        </p>
+
+        {/* Emotion Check-in */}
         <div className="mt-6">
           <EmotionCheckIn selected={chosen} onSelect={setChosen} />
         </div>
 
-        <p className="mt-9 t-micro text-muted-foreground">
-          {chosen ? `מתאים ל${chosen.label}` : editorial.home.startHere}
-        </p>
-        <button
-          onClick={goReco}
-          className="press relative block w-full mt-2 rounded-[18px] px-6 py-6 text-right overflow-hidden bg-primary text-primary-foreground"
-        >
-          <ArrowUpLeft className="absolute top-6 left-6 w-[18px] h-[18px] opacity-75" strokeWidth={1.75} />
-          <span className="block max-w-[13.5rem] t-small opacity-75">{reco.description}</span>
-          <span className="flex items-end gap-3.5 mt-5">
-            <span className="t-display leading-none">{reco.name}</span>
-            <span className="t-display leading-none opacity-35 whitespace-nowrap">{reco.duration}</span>
-          </span>
-        </button>
+        {/* Black Container (Matching Reference) */}
+        <div className="mt-8">
+          <p className="text-xs font-medium text-[#7d7973] mb-2 text-right">
+            {chosen ? `מתאים ל${chosen.label}` : editorial.home.startHere}
+          </p>
 
-        <div className="flex items-baseline justify-between mt-9">
-          <span className="t-micro text-muted-foreground">{editorial.home.quickTitle}</span>
-          <Link to="/tools" className="t-small text-muted-foreground underline underline-offset-4">
+          <button
+            onClick={goReco}
+            className="press group relative block w-full rounded-[24px] px-6 py-6 text-right overflow-hidden transition-all shadow-sm"
+            style={{ backgroundColor: "#18191b" }}
+          >
+            {/* Top row: Description on right, Arrow on left */}
+            <div className="flex items-start justify-between gap-4">
+              <span className="text-[13.5px] sm:text-[14.5px] font-medium text-white/85 leading-snug text-right">
+                {displayDescription}
+              </span>
+              <ArrowUpLeft
+                className="w-5 h-5 text-white/70 shrink-0 mt-0.5 group-hover:text-white transition-colors"
+                strokeWidth={1.8}
+              />
+            </div>
+
+            {/* Bottom row: Title on right, Duration on left */}
+            <div className="flex items-baseline gap-3.5 mt-6 text-right">
+              <span className="text-[34px] sm:text-[40px] font-bold text-white tracking-tight leading-none">
+                {displayName}
+              </span>
+              <span className="text-[26px] sm:text-[30px] font-bold text-white/40 tabular-nums leading-none">
+                {displayDuration}
+              </span>
+            </div>
+          </button>
+        </div>
+
+        {/* Quick Tools Section */}
+        <div className="flex items-baseline justify-between mt-8 mb-3">
+          <span className="text-xs font-medium text-[#7d7973]">{editorial.home.quickTitle}</span>
+          <Link
+            to="/tools"
+            className="text-xs font-medium text-[#7d7973] underline underline-offset-4 hover:text-foreground transition-colors"
+          >
             {editorial.home.allTools}
           </Link>
         </div>
-        <div className="grid grid-cols-2 gap-2.5 mt-2.5">
+
+        <div className="grid grid-cols-2 gap-2.5">
           {QUICK_IDS.map((id) => (
-            <EditorialCard key={id} tool={tools[id]} tone={toolTone(id)} />
+            <EditorialCard key={id} tool={tools[id]} />
           ))}
         </div>
       </div>
