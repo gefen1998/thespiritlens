@@ -4,34 +4,65 @@
 
 @layer base {
   :root {
-    /* Warm paper ground — content pops in color, the page itself stays quiet. */
-    --background: 42 28% 93%;
-    --foreground: 30 18% 14%;
-    --card: 42 30% 96%;
-    --card-foreground: 30 18% 14%;
-    --popover: 42 30% 97%;
-    --popover-foreground: 30 18% 14%;
-    --primary: 30 20% 13%;
-    --primary-foreground: 42 30% 97%;
-    --secondary: 40 18% 88%;
-    --secondary-foreground: 30 18% 16%;
-    --muted: 40 16% 87%;
-    --muted-foreground: 32 9% 40%;
-    --accent: 38 46% 46%;
-    --accent-foreground: 30 18% 14%;
-    --destructive: 8 46% 40%;
-    --destructive-foreground: 42 30% 96%;
-    --border: 38 16% 80%;
-    --input: 38 16% 80%;
-    --ring: 38 46% 46%;
+    /* Paper & charcoal ground — paper-0/1/2/3 + ink-1/2/3. */
+    --paper-0: 45 22% 96.5%;
+    --paper-1: 48 15% 93.5%;
+    --paper-2: 45 14% 89%;
+    --paper-3: 45 13% 82%;
+    --ink-1: 240 8% 9.4%;
+    --ink-2: 60 4% 32%;
+    --ink-3: 52 4% 40%;
 
-    --flame: 38 52% 40%;
-    --gold: 38 52% 40%;
-    --slate: 205 14% 42%;
+    --background: var(--paper-1);
+    --foreground: var(--ink-1);
+    --card: var(--paper-0);
+    --card-foreground: var(--ink-1);
+    --popover: var(--paper-0);
+    --popover-foreground: var(--ink-1);
+    --primary: var(--ink-1);
+    --primary-foreground: var(--paper-0);
+    --secondary: var(--paper-2);
+    --secondary-foreground: var(--ink-1);
+    --muted: var(--paper-2);
+    --muted-foreground: var(--ink-3);
+    --accent: 40 49% 46%;
+    --accent-foreground: var(--ink-1);
+    --destructive: 16 41% 49%;
+    --destructive-foreground: var(--paper-0);
+    --border: var(--paper-3);
+    --input: var(--paper-3);
+    --ring: 40 49% 46%;
+
+    --flame: 40 49% 46%;
+    --gold: 40 49% 46%;
+    --slate: 207 20% 44%;
 
     /* The keepsake card is the one true-white page in the app. */
-    --paper: 40 38% 97%;
-    --paper-ink: 30 18% 14%;
+    --paper: var(--paper-0);
+    --paper-ink: var(--ink-1);
+
+    /* Seven pigments — wash / tint / ink */
+    --sage: 104 17% 47%;
+    --sage-tint: 90 19% 81%;
+    --sage-ink: 102 18% 25%;
+    --dusk: 207 20% 44%;
+    --dusk-tint: 209 23% 82%;
+    --dusk-ink: 204 23% 24%;
+    --clay: 16 41% 49%;
+    --clay-tint: 21 40% 82%;
+    --clay-ink: 15 46% 28%;
+    --indigo: 230 24% 40%;
+    --indigo-tint: 233 19% 82%;
+    --indigo-ink: 230 26% 23%;
+    --mauve: 295 15% 43%;
+    --mauve-tint: 300 14% 82%;
+    --mauve-ink: 293 20% 24%;
+    --stone: 36 11% 44%;
+    --stone-tint: 41 16% 81%;
+    --stone-ink: 35 14% 24%;
+    --ochre: 40 49% 46%;
+    --ochre-tint: 42 48% 81%;
+    --ochre-ink: 41 54% 24%;
 
     /*
      * One pigment per state of mind — vivid, not muted, the way How We Feel
@@ -40,13 +71,29 @@
      * app lives; everything around it stays paper. "open" (the catch-all
      * "I don't know") stays deliberately desaturated — the one calm exception.
      */
-    --pigment-body: 168 58% 32%;
-    --pigment-thought: 217 62% 45%;
-    --pigment-emotion: 348 65% 46%;
-    --pigment-fatigue: 272 48% 48%;
-    --pigment-memory: 20 68% 40%;
-    --pigment-spirit: 40 72% 42%;
-    --pigment-open: 205 14% 40%;
+    --pigment-body: var(--sage);
+    --pigment-thought: var(--dusk);
+    --pigment-emotion: var(--clay);
+    --pigment-fatigue: var(--mauve);
+    --pigment-memory: var(--indigo);
+    --pigment-spirit: var(--ochre);
+    --pigment-open: var(--stone);
+
+    --tint-body: var(--sage-tint);
+    --tint-thought: var(--dusk-tint);
+    --tint-emotion: var(--clay-tint);
+    --tint-fatigue: var(--mauve-tint);
+    --tint-memory: var(--indigo-tint);
+    --tint-spirit: var(--ochre-tint);
+    --tint-open: var(--stone-tint);
+
+    --ink-body: var(--sage-ink);
+    --ink-thought: var(--dusk-ink);
+    --ink-emotion: var(--clay-ink);
+    --ink-fatigue: var(--mauve-ink);
+    --ink-memory: var(--indigo-ink);
+    --ink-spirit: var(--ochre-ink);
+    --ink-open: var(--stone-ink);
 
     /*
      * One organic "blob" shape per state of mind, ported from the editorial

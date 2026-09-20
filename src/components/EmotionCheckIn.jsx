@@ -23,7 +23,7 @@ export default function EmotionCheckIn({ selected, onSelect }) {
             <span
               className="relative grid h-[6.2rem] w-[6.2rem] place-items-center rounded-full transition-all duration-200"
               style={{
-                backgroundColor: on ? `hsl(${pigment} / 0.22)` : "#ded8cb",
+                backgroundColor: on ? `hsl(${pigment} / 0.22)` : "#E7E5DF",
                 transform: on ? "scale(1.03)" : "scale(1)",
               }}
             >

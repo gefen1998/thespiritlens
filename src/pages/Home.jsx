@@ -93,10 +93,10 @@ export default function Home() {
         {/* Top Header with Book Button */}
         <div className="flex items-start justify-between gap-4">
           <h1 className="leading-[1.1]">
-            <span className="block text-[32px] sm:text-[36px] font-bold text-[#8c877e]">
+            <span className="block text-[32px] sm:text-[36px] font-bold text-[#6B6A63]">
               {editorial.home.helloLine}
             </span>
-            <span className="block text-[34px] sm:text-[38px] font-bold text-[#1f1c19] mt-0.5">
+            <span className="block text-[34px] sm:text-[38px] font-bold text-[#16161A] mt-0.5">
               איך אתה
               <br />
               מרגיש עכשיו?
@@ -105,14 +105,14 @@ export default function Home() {
           <Link
             to="/book"
             aria-label={editorial.tabs.book}
-            className="press grid place-items-center w-11 h-11 shrink-0 mt-0.5 rounded-full bg-[#ded8cb] text-[#1f1c19] hover:bg-[#d5cfc2] transition-colors"
+            className="press grid place-items-center w-11 h-11 shrink-0 mt-0.5 rounded-full bg-[#E7E5DF] text-[#16161A] hover:bg-[#D8D5CC] transition-colors"
           >
             <BookOpen className="w-[19px] h-[19px]" strokeWidth={1.75} />
           </Link>
         </div>
 
         {/* Subtitle / note */}
-        <p className="mt-2 text-[13px] text-[#78736a] leading-relaxed">
+        <p className="mt-2 text-[13px] text-[#6B6A63] leading-relaxed">
           אין תשובה נכונה, ואין צורך לדעת.
           <br />
           אפשר גם לדלג ישר לרשימת התרגילים.
@@ -125,30 +125,30 @@ export default function Home() {
 
         {/* Featured Card — Warm Cream & Sand Paper Elevation */}
         <div className="mt-5">
-          <p className="text-[12px] font-medium text-[#78736a] mb-2 text-right">
+          <p className="text-[12px] font-medium text-[#6B6A63] mb-2 text-right">
             {chosen ? `מתאים ל${chosen.label}` : editorial.home.startHere}
           </p>
 
           <button
             onClick={goReco}
-            className="press group relative block w-full rounded-[22px] bg-[#faf7f2] border border-[#ded6c7] p-5 text-right transition-colors duration-200 select-none hover:bg-[#f5f0e7] shadow-[0_2px_8px_rgba(0,0,0,0.03)]"
+            className="press group relative block w-full rounded-[22px] bg-[#16161A] p-5 text-right transition-colors duration-200 select-none hover:bg-[#22222A] shadow-[0_2px_10px_rgba(0,0,0,0.08)]"
           >
             {/* Top row: Description on right, Arrow on left */}
             <div className="flex items-start justify-between gap-4">
-              <span className="text-[13.5px] sm:text-[14.5px] font-medium text-[#423c34] leading-snug text-right flex-1">
+              <span className="text-[13.5px] sm:text-[14.5px] font-medium text-[#E7E5DF] leading-snug text-right flex-1">
                 {displayDescription}
               </span>
-              <div className="w-8 h-8 rounded-full bg-[#f0ebdff0] grid place-items-center shrink-0 -mt-0.5 text-[#423c34]/70 group-hover:text-[#201d19] group-hover:bg-[#e7e0d2] transition-colors">
+              <div className="w-8 h-8 rounded-full bg-white/10 grid place-items-center shrink-0 -mt-0.5 text-[#F1F0EC] group-hover:bg-white/20 transition-colors">
                 <ArrowUpLeft className="w-4 h-4" strokeWidth={2} />
               </div>
             </div>
 
             {/* Bottom row: Title on right, Duration on left */}
             <div className="flex items-baseline justify-between gap-3 mt-4 text-right">
-              <span className="text-[28px] sm:text-[32px] font-bold text-[#201d19] tracking-tight leading-none">
+              <span className="text-[28px] sm:text-[32px] font-bold text-[#F8F7F4] tracking-tight leading-none">
                 {displayName}
               </span>
-              <span className="text-[22px] sm:text-[25px] font-bold text-[#8f877b] tabular-nums leading-none shrink-0">
+              <span className="text-[22px] sm:text-[25px] font-bold text-[#8C8B84] tabular-nums leading-none shrink-0">
                 {displayDuration}
               </span>
             </div>
@@ -157,10 +157,10 @@ export default function Home() {
 
         {/* Quick Tools Section */}
         <div className="flex items-baseline justify-between mt-5 mb-2.5">
-          <span className="text-xs font-medium text-[#78736a]">{editorial.home.quickTitle}</span>
+          <span className="text-xs font-medium text-[#6B6A63]">{editorial.home.quickTitle}</span>
           <Link
             to="/tools"
-            className="text-xs font-medium text-[#78736a] underline underline-offset-4 hover:text-[#1f1c19] transition-colors"
+            className="text-xs font-medium text-[#6B6A63] underline underline-offset-4 hover:text-[#16161A] transition-colors"
           >
             {editorial.home.allTools}
           </Link>

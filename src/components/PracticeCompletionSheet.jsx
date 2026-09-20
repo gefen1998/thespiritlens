@@ -5,8 +5,8 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
   const meta = (tool && TOOL_CARD_META[tool.id]) || {
     line1: tool?.name || "תרגול",
     line2: "",
-    bg: "#e6e2d8",
-    pebble: "#cbd8cb",
+    bg: "#D6D1C6",
+    pebble: "#7C7263",
     pebbleRadius: "50%",
   };
 
@@ -48,7 +48,7 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
       : meta.line1 + (meta.line2 ? ` ${meta.line2}` : "");
 
   // Pebble color specifically matched for calm pastel look
-  const pebbleColor = tool?.id === "nesheama" ? "#cbd8cb" : meta.pebble;
+  const pebbleColor = tool?.id === "nesheama" ? "#6E8C63" : meta.pebble;
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col justify-end bg-black/45 backdrop-blur-[1px] transition-opacity duration-300">
@@ -60,14 +60,14 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
         dir="rtl"
         lang="he"
         className="w-full max-w-md mx-auto rounded-t-[32px] px-6 pt-3 pb-8 sm:pb-10 shadow-[0_-12px_45px_rgba(0,0,0,0.22)] select-none animate-in fade-in slide-in-from-bottom-8 duration-300"
-        style={{ backgroundColor: "#eae5d9" }}
+        style={{ backgroundColor: "#F8F7F4" }}
       >
         {/* Drag handle */}
-        <div className="w-11 h-1 rounded-full bg-[#1c1c1e]/20 mx-auto mt-1 mb-5" />
+        <div className="w-11 h-1 rounded-full bg-[#16161A]/20 mx-auto mt-1 mb-5" />
 
         {/* Kicker */}
         <div className="text-right">
-          <span className="text-xs font-medium text-[#7d7973] block mb-2">
+          <span className="text-xs font-medium text-[#6B6A63] block mb-2">
             {kickerName}
           </span>
         </div>
@@ -79,7 +79,7 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
             onClick={nextPhrase}
             className={`text-right flex-1 ${phrases.length > 1 ? "cursor-pointer active:opacity-85" : ""}`}
           >
-            <p className="text-[25px] sm:text-[27px] font-bold text-[#191c1f] leading-[1.3] whitespace-pre-line">
+            <p className="text-[25px] sm:text-[27px] font-bold text-[#16161A] leading-[1.3] whitespace-pre-line">
               {currentPhrase}
             </p>
           </div>
@@ -102,7 +102,7 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
         </div>
 
         {/* Privacy Note */}
-        <p className="text-xs sm:text-[13px] text-[#7d7973] text-right leading-relaxed mt-5 mb-8">
+        <p className="text-xs sm:text-[13px] text-[#6B6A63] text-right leading-relaxed mt-5 mb-8">
           זה נשמר אצלך בלבד. אפשר גם לכתוב אותו בספר, בעמוד
           <br />
           של התרגול.
