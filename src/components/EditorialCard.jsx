@@ -1,5 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {
+  Wind,
+  Brain,
+  Waves,
+  Sun,
+  Anchor,
+  Compass,
+  Heart,
+  Sparkles,
+  Activity,
+  Feather,
+} from "lucide-react";
+import { toneIcons } from "@/lib/toneIcons";
+import { toolTone } from "@/lib/spiritContent";
 
 export const TOOL_CARD_META = {
   "gentle-exhale": {
@@ -11,6 +25,7 @@ export const TOOL_CARD_META = {
     textDark: "#223827",
     textMuted: "#6b866f",
     pebbleRadius: "46% 54% 58% 42% / 48% 52% 48% 52%",
+    icon: Wind,
   },
   "ground-touch": {
     line1: "מגע",
@@ -21,6 +36,7 @@ export const TOOL_CARD_META = {
     textDark: "#28231d",
     textMuted: "#7a7268",
     pebbleRadius: "58% 42% 46% 54% / 54% 46% 54% 46%",
+    icon: Compass,
   },
   "return-to-senses": {
     line1: "חזרה",
@@ -31,6 +47,7 @@ export const TOOL_CARD_META = {
     textDark: "#1a3048",
     textMuted: "#617c97",
     pebbleRadius: "42% 58% 54% 46% / 56% 44% 56% 44%",
+    icon: Waves,
   },
   "body-scan": {
     line1: "סריקת",
@@ -41,6 +58,7 @@ export const TOOL_CARD_META = {
     textDark: "#28231d",
     textMuted: "#7a7268",
     pebbleRadius: "54% 46% 42% 58% / 46% 54% 46% 54%",
+    icon: Activity,
   },
   "anchoring": {
     line1: "ניגון",
@@ -51,6 +69,7 @@ export const TOOL_CARD_META = {
     textDark: "#272b4c",
     textMuted: "#6c7295",
     pebbleRadius: "50% 50% 56% 44% / 44% 56% 44% 56%",
+    icon: Anchor,
   },
   "light-beam": {
     line1: "קרן",
@@ -61,6 +80,7 @@ export const TOOL_CARD_META = {
     textDark: "#4e3810",
     textMuted: "#8a7140",
     pebbleRadius: "48% 52% 52% 48% / 52% 48% 52% 48%",
+    icon: Sun,
   },
   "word-for-path": {
     line1: "מילה",
@@ -71,6 +91,7 @@ export const TOOL_CARD_META = {
     textDark: "#382440",
     textMuted: "#7a6383",
     pebbleRadius: "56% 44% 50% 50% / 50% 50% 50% 50%",
+    icon: Feather,
   },
   "gratitude-moment": {
     line1: "רגע",
@@ -81,6 +102,7 @@ export const TOOL_CARD_META = {
     textDark: "#4e3810",
     textMuted: "#8a7140",
     pebbleRadius: "52% 48% 46% 54% / 54% 46% 54% 46%",
+    icon: Heart,
   },
   "nesheama": {
     line1: "ארבעה",
@@ -91,6 +113,7 @@ export const TOOL_CARD_META = {
     textDark: "#223827",
     textMuted: "#6b866f",
     pebbleRadius: "46% 54% 58% 42% / 48% 52% 48% 52%",
+    icon: Sparkles,
   },
   "meaning-choice": {
     line1: "משמעות",
@@ -101,8 +124,39 @@ export const TOOL_CARD_META = {
     textDark: "#382440",
     textMuted: "#7a6383",
     pebbleRadius: "46% 54% 48% 52% / 52% 48% 54% 46%",
+    icon: Compass,
+  },
+  "thought-release": {
+    line1: "לשחרר",
+    line2: "",
+    time: "02:00",
+    bg: "#d7dced",
+    pebble: "#838ea9",
+    textDark: "#272b4c",
+    textMuted: "#6c7295",
+    pebbleRadius: "50% 50% 50% 50%",
+    icon: Feather,
+  },
+  "thought-meeting": {
+    line1: "מפגש עם",
+    line2: "המחשבה",
+    time: "03:00",
+    bg: "#d7dced",
+    pebble: "#838ea9",
+    textDark: "#272b4c",
+    textMuted: "#6c7295",
+    pebbleRadius: "50% 50% 50% 50%",
+    icon: Brain,
   },
 };
+
+export function getToolIcon(toolId) {
+  if (toolId && TOOL_CARD_META[toolId]?.icon) {
+    return TOOL_CARD_META[toolId].icon;
+  }
+  const tone = toolTone(toolId || "");
+  return toneIcons[tone] || Sparkles;
+}
 
 export default function EditorialCard({ tool }) {
   if (!tool) return null;
@@ -116,6 +170,8 @@ export default function EditorialCard({ tool }) {
     textMuted: "#7a7268",
     pebbleRadius: "50% 50% 50% 50%",
   };
+
+  const Icon = meta.icon || getToolIcon(tool.id);
 
   return (
     <Link
@@ -141,15 +197,22 @@ export default function EditorialCard({ tool }) {
         )}
       </div>
 
-      {/* The organic pebble texture on the left side of the card */}
+      {/* The organic pebble texture on the left side of the card with pattern icon */}
       <div className="absolute left-3 bottom-3 w-[72px] h-[72px] flex items-center justify-center pointer-events-none z-0">
         <div
-          className="w-full h-full transition-transform duration-300 group-hover:scale-105"
+          className="w-full h-full flex items-center justify-center transition-transform duration-300 group-hover:scale-105"
           style={{
             backgroundColor: meta.pebble,
             borderRadius: meta.pebbleRadius,
           }}
-        />
+        >
+          {Icon && (
+            <Icon
+              className="w-7 h-7 text-white/90 drop-shadow-sm"
+              strokeWidth={1.5}
+            />
+          )}
+        </div>
       </div>
 
       {/* Bottom right: Duration aligned under the text */}

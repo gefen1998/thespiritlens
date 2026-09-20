@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TOOL_CARD_META } from "@/components/EditorialCard";
+import { TOOL_CARD_META, getToolIcon } from "@/components/EditorialCard";
 
 export default function PracticeCompletionSheet({ tool, values = {}, onDone, onRepeat }) {
   const meta = (tool && TOOL_CARD_META[tool.id]) || {
@@ -9,6 +9,8 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
     pebble: "#cbd8cb",
     pebbleRadius: "50%",
   };
+
+  const Icon = meta.icon || getToolIcon(tool?.id);
 
   // Derive available phrases
   const rawOptions = tool?.ending?.options || [];
@@ -82,14 +84,21 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
             </p>
           </div>
 
-          {/* Pebble circle */}
+          {/* Pebble circle with pattern/icon */}
           <div
-            className="w-14 h-14 sm:w-16 sm:h-16 rounded-full shrink-0 shadow-[inset_0_1px_3px_rgba(0,0,0,0.05)]"
+            className="w-14 h-14 sm:w-16 sm:h-16 rounded-full shrink-0 flex items-center justify-center shadow-[inset_0_1px_3px_rgba(0,0,0,0.06)]"
             style={{
               backgroundColor: pebbleColor,
               borderRadius: meta.pebbleRadius || "50%",
             }}
-          />
+          >
+            {Icon && (
+              <Icon
+                className="w-6 h-6 sm:w-7 sm:h-7 text-white/95 drop-shadow-sm"
+                strokeWidth={1.5}
+              />
+            )}
+          </div>
         </div>
 
         {/* Privacy Note */}
