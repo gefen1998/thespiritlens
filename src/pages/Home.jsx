@@ -124,14 +124,14 @@ export default function Home() {
         </div>
 
         {/* Featured Card — Warm Cream & Sand Paper Elevation */}
-        <div className="mt-5">
-          <p className="text-[12px] font-medium text-[#6B6A63] mb-2 text-right">
+        <div className="mt-5 -mx-6">
+          <p className="px-6 text-[12px] font-medium text-[#6B6A63] mb-2 text-right">
             {chosen ? `מתאים ל${chosen.label}` : editorial.home.startHere}
           </p>
 
           <button
             onClick={goReco}
-            className="press group relative block w-full rounded-[22px] bg-[#16161A] p-5 text-right transition-colors duration-200 select-none hover:bg-[#22222A] shadow-[0_2px_10px_rgba(0,0,0,0.08)]"
+            className="press group relative block w-full bg-[#16161A] px-6 py-6 text-right transition-colors duration-200 select-none hover:bg-[#22222A] shadow-[0_2px_10px_rgba(0,0,0,0.08)]"
           >
             {/* Top row: Description on right, Arrow on left */}
             <div className="flex items-start justify-between gap-4">

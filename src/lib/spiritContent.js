@@ -34,8 +34,8 @@ export const firstVisit = {
 export const guidedChoices = [
   { id: "calm", label: "רגוע", tone: "body", leadsTo: "רגע אחד של נשימה", target: { type: "tool", toolId: "nesheama" } },
   { id: "tired", label: "עייף", tone: "thought", leadsTo: "דבר קטן שיכול להזין עכשיו", target: { type: "flow", flow: "fatigue" } },
-  { id: "stressed", label: "לחוץ", tone: "memory", leadsTo: "נשיפה, נוכחות וקרקוע", target: { type: "tool", toolId: "gentle-exhale" } },
-  { id: "flooding", label: "מוצף", tone: "emotion", leadsTo: "לתת מקום לרגש, בלי למהר לפתור", target: { type: "flow", flow: "emotion" } },
+  { id: "stressed", label: "לחוץ", tone: "emotion", leadsTo: "נשיפה, נוכחות וקרקוע", target: { type: "tool", toolId: "gentle-exhale" } },
+  { id: "flooding", label: "מוצף", tone: "memory", leadsTo: "לתת מקום לרגש, בלי למהר לפתור", target: { type: "flow", flow: "emotion" } },
   { id: "seeking", label: "מחפש כיוון", tone: "spirit", leadsTo: "חיבור למשאב, למשמעות ולטוב", target: { type: "gate", gate: "spirit" } },
   { id: "open", label: "לא יודע", tone: "open", leadsTo: "רק רגע של עצירה", target: { type: "tool", toolId: "nesheama" } },
 ];
