@@ -11,57 +11,6 @@ import { site, editorial, firstVisit, gates, tools, fatigueOptions, memoryFlow }
 const WELCOME_KEY = "sl_seen_welcome";
 const QUICK_IDS = ["gentle-exhale", "gratitude-moment", "ground-touch", "word-for-path"];
 
-const HERO_TONES = {
-  default: {
-    bg: "bg-[#dbe4dd]",
-    border: "border-[#c6d4c8]",
-    title: "text-[#1b251d]",
-    desc: "text-[#2b382e]",
-    subtle: "text-[#2b382e]/55",
-    arrow: "text-[#2b382e]/70 group-hover:text-[#1b251d]",
-  },
-  body: {
-    bg: "bg-[#dbe4dd]",
-    border: "border-[#c6d4c8]",
-    title: "text-[#1b251d]",
-    desc: "text-[#2b382e]",
-    subtle: "text-[#2b382e]/55",
-    arrow: "text-[#2b382e]/70 group-hover:text-[#1b251d]",
-  },
-  fatigue: {
-    bg: "bg-[#ded8e6]",
-    border: "border-[#c9bfd4]",
-    title: "text-[#261c31]",
-    desc: "text-[#3b2e46]",
-    subtle: "text-[#3b2e46]/55",
-    arrow: "text-[#3b2e46]/70 group-hover:text-[#261c31]",
-  },
-  emotion: {
-    bg: "bg-[#edd8dc]",
-    border: "border-[#d8bec3]",
-    title: "text-[#321b20]",
-    desc: "text-[#462d33]",
-    subtle: "text-[#462d33]/55",
-    arrow: "text-[#462d33]/70 group-hover:text-[#321b20]",
-  },
-  thought: {
-    bg: "bg-[#d8e2ed]",
-    border: "border-[#bed0e3]",
-    title: "text-[#182535]",
-    desc: "text-[#2a384a]",
-    subtle: "text-[#2a384a]/55",
-    arrow: "text-[#2a384a]/70 group-hover:text-[#182535]",
-  },
-  spirit: {
-    bg: "bg-[#ecdcc7]",
-    border: "border-[#d7c3a8]",
-    title: "text-[#312211]",
-    desc: "text-[#473521]",
-    subtle: "text-[#473521]/55",
-    arrow: "text-[#473521]/70 group-hover:text-[#312211]",
-  },
-};
-
 function recoToolId(choice) {
   if (!choice) return "nesheama";
   const t = choice.target;
@@ -174,42 +123,36 @@ export default function Home() {
           <EmotionCheckIn selected={chosen} onSelect={setChosen} />
         </div>
 
-        {/* Full-bleed Black Container (No side margins, extends edge-to-edge) */}
-        <div className="mt-8">
+        {/* Featured Card — Warm Cream & Sand Paper Elevation */}
+        <div className="mt-7">
           <p className="text-xs font-medium text-[#7d7973] mb-2.5 text-right">
             {chosen ? `מתאים ל${chosen.label}` : editorial.home.startHere}
           </p>
 
-          {(() => {
-            const activeTone = chosen?.tone && HERO_TONES[chosen.tone] ? HERO_TONES[chosen.tone] : HERO_TONES.default;
-            return (
-              <button
-                onClick={goReco}
-                className={`press group relative block -mx-6 w-[calc(100%+3rem)] ${activeTone.bg} border-y ${activeTone.border} px-6 py-6 sm:py-7 text-right overflow-hidden transition-colors duration-300 shadow-[0_1px_3px_rgba(0,0,0,0.03)] select-none`}
-              >
-                {/* Top row: Description on right, Arrow on left */}
-                <div className="flex items-start justify-between gap-4">
-                  <span className={`text-[14px] sm:text-[15px] font-medium ${activeTone.desc} leading-snug text-right`}>
-                    {displayDescription}
-                  </span>
-                  <ArrowUpLeft
-                    className={`w-5 h-5 ${activeTone.arrow} shrink-0 mt-0.5 transition-colors`}
-                    strokeWidth={1.8}
-                  />
-                </div>
+          <button
+            onClick={goReco}
+            className="press group relative block w-full bg-[#faf7f2] border border-[#ded6c7] rounded-[26px] p-6 sm:p-7 text-right overflow-hidden transition-all duration-200 shadow-[0_6px_24px_-6px_rgba(70,55,40,0.07)] hover:border-[#cfc5b3] hover:shadow-[0_8px_28px_-6px_rgba(70,55,40,0.11)] select-none"
+          >
+            {/* Top row: Description on right, Arrow on left */}
+            <div className="flex items-start justify-between gap-4">
+              <span className="text-[14px] sm:text-[15px] font-medium text-[#423c34] leading-snug text-right">
+                {displayDescription}
+              </span>
+              <div className="w-8 h-8 rounded-full bg-[#f0ebdff0] grid place-items-center shrink-0 -mt-1 -ml-1 text-[#423c34]/70 group-hover:text-[#201d19] group-hover:bg-[#e7e0d2] transition-colors">
+                <ArrowUpLeft className="w-4 h-4" strokeWidth={2} />
+              </div>
+            </div>
 
-                {/* Bottom row: Title on right, Duration on left */}
-                <div className="flex items-baseline gap-4 mt-7 text-right">
-                  <span className={`text-[36px] sm:text-[42px] font-bold ${activeTone.title} tracking-tight leading-none`}>
-                    {displayName}
-                  </span>
-                  <span className={`text-[28px] sm:text-[32px] font-bold ${activeTone.subtle} tabular-nums leading-none`}>
-                    {displayDuration}
-                  </span>
-                </div>
-              </button>
-            );
-          })()}
+            {/* Bottom row: Title on right, Duration on left */}
+            <div className="flex items-baseline gap-4 mt-6 text-right">
+              <span className="text-[34px] sm:text-[40px] font-bold text-[#201d19] tracking-tight leading-none">
+                {displayName}
+              </span>
+              <span className="text-[26px] sm:text-[30px] font-bold text-[#8f877b] tabular-nums leading-none">
+                {displayDuration}
+              </span>
+            </div>
+          </button>
         </div>
 
         {/* Quick Tools Section */}
