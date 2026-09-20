@@ -1,4 +1,5 @@
 import React from "react";
+import { toneIcons } from "@/lib/toneIcons";
 import { guidedChoices } from "@/lib/spiritContent";
 
 export default function EmotionCheckIn({ selected, onSelect }) {
@@ -10,6 +11,7 @@ export default function EmotionCheckIn({ selected, onSelect }) {
       {guidedChoices.map((choice) => {
         const pigment = `var(--pigment-${choice.tone})`;
         const form = `var(--form-${choice.tone})`;
+        const Icon = toneIcons[choice.tone];
         const on = selected?.id === choice.id;
         return (
           <button
@@ -26,12 +28,19 @@ export default function EmotionCheckIn({ selected, onSelect }) {
               }}
             >
               <span
-                className="w-14 h-14 transition-transform duration-200"
+                className="grid h-14 w-14 place-items-center transition-transform duration-200"
                 style={{
                   backgroundColor: `hsl(${pigment} / ${on ? 1 : 0.95})`,
                   borderRadius: form,
                 }}
-              />
+              >
+                {Icon && (
+                  <Icon
+                    className="w-[22px] h-[22px] text-white"
+                    strokeWidth={1.8}
+                  />
+                )}
+              </span>
               {on && (
                 <span
                   className="absolute top-2 left-2 w-2.5 h-2.5 rounded-full ring-2 ring-background"
