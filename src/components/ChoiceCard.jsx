@@ -1,25 +1,30 @@
 import React from "react";
+import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 export default function ChoiceCard({ label, sub, subtle = false, onClick, icon }) {
   return (
-    <button
+    <Card
       onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onClick?.()}
       className={cn(
-        "group w-full text-right rounded-3xl border px-6 py-6 transition-all duration-500 rise-in",
-        "hover:border-gold/40 hover:bg-card hover:shadow-[0_8px_40px_-12px_rgba(201,178,126,0.25)]",
-        subtle
-          ? "border-border/50 bg-secondary/30 text-muted-foreground"
-          : "border-border bg-card/60 text-foreground"
+        "press cursor-pointer select-none rounded-2xl border-0 text-right mb-2.5 transition-colors duration-300",
+        subtle ? "bg-primary" : "bg-secondary hover:bg-secondary/70"
       )}
     >
-      <div className="flex items-center justify-between gap-4">
-        <span className={cn("font-body text-lg leading-snug", subtle ? "font-normal" : "font-medium")}>
-          {label}
-        </span>
-        {icon && <span className="text-gold/70 group-hover:text-gold transition-colors">{icon}</span>}
-      </div>
-      {sub && <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">{sub}</p>}
-    </button>
+      <CardContent className="px-5 py-4">
+        <div className="flex items-center justify-between gap-3">
+          <span className={cn("t-row", subtle ? "text-primary-foreground" : "text-foreground")}>{label}</span>
+          {icon && <span className="text-flame shrink-0">{icon}</span>}
+        </div>
+        {sub && (
+          <p className={cn("mt-1 t-small", subtle ? "text-primary-foreground/75" : "text-muted-foreground")}>
+            {sub}
+          </p>
+        )}
+      </CardContent>
+    </Card>
   );
 }

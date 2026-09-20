@@ -1,61 +1,132 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
-import SpiritLayout from "@/components/SpiritLayout";
+import { BookOpen, ArrowUpLeft } from "lucide-react";
+import BottomTabs from "@/components/BottomTabs";
 import BreathOrb from "@/components/BreathOrb";
-import { site, safetyContent } from "@/lib/spiritContent";
+import EmotionCheckIn from "@/components/EmotionCheckIn";
+import EditorialCard from "@/components/EditorialCard";
+import ActionButton from "@/components/ActionButton";
+import { site, editorial, firstVisit, gates, tools, fatigueOptions, memoryFlow, toolTone } from "@/lib/spiritContent";
+
+const WELCOME_KEY = "sl_seen_welcome";
+const QUICK_IDS = ["gentle-exhale", "gratitude-moment", "ground-touch", "word-for-path"];
+
+function recoToolId(choice) {
+  if (!choice) return "nesheama";
+  const t = choice.target;
+  if (t.type === "tool") return t.toolId;
+  if (t.type === "gate") return gates.find((g) => g.id === t.gate)?.tools[0] ?? "nesheama";
+  if (t.type === "flow" && t.flow === "fatigue") return fatigueOptions[0].toolId;
+  if (t.type === "flow" && t.flow === "memory") return memoryFlow.options[0].toolId;
+  if (t.type === "flow" && t.flow === "emotion") return "emotion-space";
+  return "nesheama";
+}
 
 export default function Home() {
   const navigate = useNavigate();
+  const [showWelcome, setShowWelcome] = useState(() => {
+    try {
+      return localStorage.getItem(WELCOME_KEY) !== "1";
+    } catch {
+      return true;
+    }
+  });
+  const [chosen, setChosen] = useState(null);
+
+  const enter = () => {
+    try {
+      localStorage.setItem(WELCOME_KEY, "1");
+    } catch {
+      // Storage can be blocked; the welcome simply shows again next time.
+    }
+    setShowWelcome(false);
+  };
+
+  if (showWelcome) {
+    return (
+      <div dir="rtl" lang="he" className="min-h-screen flex flex-col justify-end px-6 pb-10">
+        <BreathOrb size={72} />
+        <h1 className="mt-8 t-display text-foreground">{site.title}</h1>
+        <p className="mt-2 t-lead text-muted-foreground">{site.subtitle}</p>
+
+        <div className="mt-8 rounded-[18px] px-6 py-8 sm:px-10" style={{ backgroundColor: "hsl(var(--flame) / 0.08)" }}>
+          <p className="t-title text-foreground max-w-sm">{firstVisit.title}</p>
+          <div className="mt-5 space-y-4 max-w-sm">
+            {firstVisit.lines.map((line, i) => (
+              <p key={i} className="t-lead text-muted-foreground">
+                {line}
+              </p>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-8 flex justify-end">
+          <ActionButton onClick={enter}>{firstVisit.button}</ActionButton>
+        </div>
+      </div>
+    );
+  }
+
+  const recoId = recoToolId(chosen);
+  const reco = tools[recoId];
+
+  const goReco = () => navigate("/guided/pause", { state: { target: chosen ? chosen.target : { type: "tool", toolId: "nesheama" } } });
 
   return (
-    <SpiritLayout hideNav>
-      <div className="flex-1 flex flex-col justify-center text-center -mt-6">
-        <div className="mb-10 rise-in">
-          <BreathOrb size={150} />
-        </div>
-
-        <h1 className="font-display text-4xl sm:text-5xl text-foreground tracking-tight rise-in" style={{ animationDelay: "0.1s" }}>
-          {site.title}
-        </h1>
-        <p className="mt-3 font-display text-lg text-muted-foreground rise-in" style={{ animationDelay: "0.2s" }}>
-          {site.subtitle}
-        </p>
-
-        <div className="mt-10 space-y-5 max-w-md mx-auto rise-in" style={{ animationDelay: "0.3s" }}>
-          <p className="font-body text-lg leading-relaxed text-foreground/85">{site.welcome}</p>
-          <p className="font-body text-base leading-relaxed text-muted-foreground">{site.intro}</p>
-          <p className="font-body text-base leading-relaxed text-muted-foreground">{site.intro2}</p>
-        </div>
-
-        <div className="mt-10 space-y-3 max-w-sm mx-auto rise-in" style={{ animationDelay: "0.45s" }}>
-          <button
-            onClick={() => navigate("/guided")}
-            className="w-full rounded-full bg-primary text-primary-foreground px-8 py-4 text-lg font-medium hover:bg-primary/90 hover:shadow-lg transition-all duration-300"
-          >
-            עזרו לי לבחור
-          </button>
+    <div dir="rtl" lang="he" className="min-h-screen">
+      <div className="max-w-xl mx-auto px-6 pt-14 pb-32">
+        <div className="flex items-start justify-between gap-4">
+          <h1 className="t-display text-foreground">
+            <span className="block text-foreground/40">{editorial.home.helloLine}</span>
+            <span className="block">
+              {editorial.home.headline[0]}
+              <br />
+              {editorial.home.headline[1]}
+            </span>
+          </h1>
           <Link
-            to="/tools"
-            className="block w-full rounded-full border border-border bg-card/70 text-foreground px-8 py-4 text-lg font-medium hover:border-gold/40 hover:bg-card transition-all duration-300"
+            to="/book"
+            aria-label={editorial.tabs.book}
+            className="press grid place-items-center w-10 h-10 shrink-0 mt-1.5 rounded-full bg-secondary text-foreground"
           >
-            לכל הכלים
+            <BookOpen className="w-[18px] h-[18px]" strokeWidth={1.75} />
           </Link>
         </div>
+        <p className="mt-3.5 max-w-[13rem] t-small text-muted-foreground">{editorial.home.note}</p>
 
-        <p className="mt-8 text-sm text-muted-foreground/70 max-w-xs mx-auto rise-in" style={{ animationDelay: "0.6s" }}>
-          {site.hint}
+        <div className="mt-6">
+          <EmotionCheckIn selected={chosen} onSelect={setChosen} />
+        </div>
+
+        <p className="mt-9 t-micro text-muted-foreground">
+          {chosen ? `מתאים ל${chosen.label}` : editorial.home.startHere}
         </p>
-
-        <Link
-          to="/safety"
-          className="mt-10 inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors rise-in"
-          style={{ animationDelay: "0.7s" }}
+        <button
+          onClick={goReco}
+          className="press relative block w-full mt-2 rounded-[18px] px-6 py-6 text-right overflow-hidden bg-primary text-primary-foreground"
         >
-          <span className="underline underline-offset-4 decoration-border">{safetyContent.link}</span>
-          <ArrowLeft className="w-4 h-4" />
-        </Link>
+          <ArrowUpLeft className="absolute top-6 left-6 w-[18px] h-[18px] opacity-75" strokeWidth={1.75} />
+          <span className="block max-w-[13.5rem] t-small opacity-75">{reco.description}</span>
+          <span className="flex items-end gap-3.5 mt-5">
+            <span className="t-display leading-none">{reco.name}</span>
+            <span className="t-display leading-none opacity-35 whitespace-nowrap">{reco.duration}</span>
+          </span>
+        </button>
+
+        <div className="flex items-baseline justify-between mt-9">
+          <span className="t-micro text-muted-foreground">{editorial.home.quickTitle}</span>
+          <Link to="/tools" className="t-small text-muted-foreground underline underline-offset-4">
+            {editorial.home.allTools}
+          </Link>
+        </div>
+        <div className="grid grid-cols-2 gap-2.5 mt-2.5">
+          {QUICK_IDS.map((id) => (
+            <EditorialCard key={id} tool={tools[id]} tone={toolTone(id)} />
+          ))}
+        </div>
       </div>
-    </SpiritLayout>
+
+      <BottomTabs />
+    </div>
   );
 }

@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import SpiritLayout from "@/components/SpiritLayout";
+import FocusHeader from "@/components/FocusHeader";
 import BreathOrb from "@/components/BreathOrb";
 import StepFlow from "@/components/StepFlow";
 import ChoiceCard from "@/components/ChoiceCard";
 import PersonalCard from "@/components/PersonalCard";
+import ActionButton from "@/components/ActionButton";
+import { Input } from "@/components/ui/input";
 import { releaseFlow } from "@/lib/spiritContent";
 
 export default function ThoughtRelease() {
-  const navigate = useNavigate();
   const [phase, setPhase] = useState("steps");
   const [phrase, setPhrase] = useState("");
   const [custom, setCustom] = useState("");
@@ -16,63 +16,62 @@ export default function ThoughtRelease() {
 
   if (phase === "done") {
     return (
-      <SpiritLayout>
+      <div className="min-h-screen flex flex-col">
         <PersonalCard
           fields={[{ label: "המשפט שלי", value: custom.trim() || phrase }]}
           closing="הנחתם את המחשבה לרגע. אינכם צריכים לשאת אותה לבד עכשיו."
           storageKey={storageKey}
           onReset={() => {
             sessionStorage.removeItem(storageKey);
-            setPhrase(""); setCustom(""); setPhase("steps");
+            setPhrase("");
+            setCustom("");
+            setPhase("steps");
           }}
         />
-      </SpiritLayout>
+      </div>
     );
   }
 
   if (phase === "phrase") {
     const showCustom = phrase === "משפט אישי משלי." || custom.length > 0;
     return (
-      <SpiritLayout>
-        <div className="flex-1 flex flex-col justify-center text-center">
-          <div className="mb-10"><BreathOrb size={130} /></div>
-          <h2 className="font-display text-2xl text-foreground mb-8">{releaseFlow.prompt}</h2>
-          <div className="space-y-3 max-w-md mx-auto">
+      <div className="min-h-screen flex flex-col pb-10">
+        <FocusHeader kicker="תרגול" title="לשחרר" />
+        <div className="flex-1 flex flex-col items-center text-center px-6 pt-8">
+          <BreathOrb size={72} />
+          <h2 className="mt-8 t-title text-foreground">{releaseFlow.prompt}</h2>
+          <div className="mt-8 w-full max-w-md text-right">
             {releaseFlow.options.map((opt) => (
               <ChoiceCard key={opt} label={opt} subtle={phrase === opt} onClick={() => setPhrase(opt)} />
             ))}
           </div>
           {showCustom && (
-            <input
+            <Input
               type="text"
               value={custom}
               onChange={(e) => setCustom(e.target.value)}
               placeholder="כתבו את המשפט שלכם…"
-              className="mt-4 max-w-md mx-auto w-full rounded-2xl border border-border bg-card/70 px-5 py-4 text-lg text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-gold/50 transition"
+              className="mt-2 max-w-md h-auto rounded-lg border-2 border-transparent bg-secondary/70 px-5 py-4 t-practice text-center shadow-none focus-visible:ring-0 focus-visible:border-flame/50"
             />
           )}
-          <div className="mt-10">
-            <button
-              onClick={() => setPhase("done")}
-              disabled={!phrase && !custom.trim()}
-              className="rounded-full bg-primary text-primary-foreground px-8 py-4 text-lg font-medium hover:bg-primary/90 disabled:opacity-40 transition"
-            >
-              לשמור את המשפט
-            </button>
-          </div>
+          <ActionButton
+            onClick={() => setPhase("done")}
+            disabled={!phrase && !custom.trim()}
+            className="mt-8"
+          >
+            לשמור את המשפט
+          </ActionButton>
         </div>
-      </SpiritLayout>
+      </div>
     );
   }
 
   return (
-    <SpiritLayout>
-      <StepFlow
-        steps={releaseFlow.steps}
-        onComplete={() => setPhase("phrase")}
-        storageKey={storageKey}
-        finishLabel="המשך"
-      />
-    </SpiritLayout>
+    <StepFlow
+      tool={{ name: "לשחרר", steps: releaseFlow.steps, mode: "breath" }}
+      tone="thought"
+      onComplete={() => setPhase("phrase")}
+      storageKey={storageKey}
+    />
   );
 }

@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Mic } from "lucide-react";
-import SpiritLayout from "@/components/SpiritLayout";
-import BreathOrb from "@/components/BreathOrb";
+import FocusHeader from "@/components/FocusHeader";
 import StepFlow from "@/components/StepFlow";
 import PersonalCard from "@/components/PersonalCard";
 import ChoiceCard from "@/components/ChoiceCard";
-import { tools, emotionNeedMap } from "@/lib/spiritContent";
+import ActionButton from "@/components/ActionButton";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { tools, thoughtBranches, emotionNeedMap, toolTone } from "@/lib/spiritContent";
+import { cn } from "@/lib/utils";
 
 export default function ToolPage() {
   const { toolId } = useParams();
   const navigate = useNavigate();
   const tool = tools[toolId];
-  const [phase, setPhase] = useState("steps"); // steps | phrase | takeaway | done
+  const tone = toolTone(toolId);
+  const [phase, setPhase] = useState("steps"); // steps | phrase | takeaway | branches | done
   const [values, setValues] = useState({});
   const [phrase, setPhrase] = useState("");
   const [customPhrase, setCustomPhrase] = useState("");
@@ -20,11 +24,10 @@ export default function ToolPage() {
 
   if (!tool) {
     return (
-      <SpiritLayout>
-        <div className="flex-1 flex flex-col justify-center text-center">
-          <p className="text-muted-foreground">הכלי לא נמצא.</p>
-        </div>
-      </SpiritLayout>
+      <div className="min-h-screen flex flex-col">
+        <FocusHeader title="הכלי לא נמצא" />
+        <p className="px-6 pt-8 t-lead text-muted-foreground">אולי הקישור השתנה. אפשר לחזור לרשימת הכלים.</p>
+      </div>
     );
   }
 
@@ -35,9 +38,13 @@ export default function ToolPage() {
     if (tool.ending?.kind === "phrase") setPhase("phrase");
     else if (tool.ending?.kind === "takeaway") setPhase("takeaway");
     else if (tool.ending?.kind === "card") setPhase("done");
-    else if (tool.ending?.kind === "flow") {
-      const need = collected[tool.ending.flow === "emotion-need" ? "need" : "need"];
-      const map = emotionNeedMap[need];
+    else if (tool.ending?.kind === "thought-branches") {
+      if (collected.thought) {
+        try { sessionStorage.setItem("sl_thought", collected.thought); } catch {}
+      }
+      setPhase("branches");
+    } else if (tool.ending?.kind === "flow") {
+      const map = emotionNeedMap[collected.need];
       if (map) navigate(`/tool/${map.toolId}`);
       else navigate("/tools");
     } else {
@@ -45,95 +52,115 @@ export default function ToolPage() {
     }
   };
 
+  const inputClasses =
+    "h-auto w-full rounded-lg border-2 border-transparent bg-secondary/70 px-5 py-4 t-practice text-foreground text-right shadow-none placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:border-flame/50 transition-colors";
+
+  // ---- Thought branches ----
+  if (phase === "branches") {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <FocusHeader kicker="תרגול" title="מה המחשבה מבקשת עכשיו?" />
+        <div className="px-6 pt-8">
+          <p className="t-lead text-muted-foreground mb-6">בחרו את הכיוון שנכון לכם. אין בחירה נכונה יותר מרעה.</p>
+          {thoughtBranches.map((b) => (
+            <ChoiceCard
+              key={b.id}
+              label={b.label}
+              sub={b.sub}
+              subtle={b.subtle}
+              onClick={() => navigate(`/thought/${b.id}`)}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   // ---- Phrase ending ----
   if (phase === "phrase") {
     const options = tool.ending.options;
     const showCustom = phrase === "משפט אישי משלי." || customPhrase.length > 0;
     return (
-      <SpiritLayout>
-        <div className="flex-1 flex flex-col justify-center text-center">
-          <div className="mb-10"><BreathOrb size={130} /></div>
-          <h2 className="font-display text-2xl text-foreground mb-8">איזה משפט נכון לך לקחת מכאן?</h2>
-          <div className="space-y-3 max-w-md mx-auto">
+      <div className="min-h-screen flex flex-col pb-10">
+        <FocusHeader kicker="תרגול" title={tool.name} />
+        <div className="flex-1 px-6 pt-8">
+          <h2 className="t-title text-foreground max-w-sm">איזה משפט נכון לך לקחת מכאן?</h2>
+          <div className="mt-6">
             {options.map((opt) => (
-              <ChoiceCard
-                key={opt}
-                label={opt}
-                subtle={phrase === opt}
-                onClick={() => setPhrase(opt)}
-              />
+              <ChoiceCard key={opt} label={opt} subtle={phrase === opt} onClick={() => setPhrase(opt)} />
             ))}
           </div>
           {showCustom && (
-            <input
+            <Input
               type="text"
               value={customPhrase}
               onChange={(e) => setCustomPhrase(e.target.value)}
               placeholder="כתבו את המשפט שלכם…"
-              className="mt-4 max-w-md mx-auto w-full rounded-2xl border border-border bg-card/70 px-5 py-4 text-lg text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-gold/50 transition"
+              className={cn(inputClasses, "mt-2")}
             />
           )}
-          <div className="mt-10">
-            <button
-              onClick={() => {
-                const final = customPhrase.trim() || phrase;
-                setPhrase(final);
-                setPhase("done");
-              }}
-              disabled={!phrase && !customPhrase.trim()}
-              className="rounded-full bg-primary text-primary-foreground px-8 py-4 text-lg font-medium hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed transition"
-            >
-              לשמור את הרגע
-            </button>
-          </div>
         </div>
-      </SpiritLayout>
+        <div className="px-6 mt-6">
+          <ActionButton
+            onClick={() => {
+              setPhrase(customPhrase.trim() || phrase);
+              setPhase("done");
+            }}
+            disabled={!phrase && !customPhrase.trim()}
+            className="w-full"
+          >
+            לשמור את הרגע
+          </ActionButton>
+        </div>
+      </div>
     );
   }
 
   // ---- Takeaway ending (קרן אור) ----
   if (phase === "takeaway") {
     return (
-      <SpiritLayout>
-        <div className="flex-1 flex flex-col justify-center">
-          <h2 className="font-display text-2xl text-foreground text-center mb-8 leading-relaxed">
-            {tool.ending.prompt}
-          </h2>
-          <div className="max-w-md mx-auto w-full space-y-4">
-            <textarea
-              value={takeaway}
-              onChange={(e) => setTakeaway(e.target.value)}
-              placeholder="מילה, תמונה, תחושה או משפט…"
-              rows={4}
-              className="w-full rounded-2xl border border-border bg-card/70 px-5 py-4 text-lg leading-relaxed text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-gold/50 transition resize-none"
-            />
-            <button
-              disabled
-              className="w-full flex items-center justify-center gap-2 rounded-2xl border border-border bg-secondary/30 px-5 py-4 text-muted-foreground/60 cursor-not-allowed"
-            >
-              <Mic className="w-5 h-5" />
-              <span className="text-base">הקלטה קולית — תתאפשר בהמשך</span>
-            </button>
-            <p className="text-xs text-center text-muted-foreground/70">
-              נשמר את פרטיותכם. ההקלטה תיושם רק כשנוכל להבטיח שהיא פרטית ובטוחה.
-            </p>
-          </div>
-          <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto w-full">
-            <button
-              onClick={() => { setValues({ ...values, takeaway: takeaway.trim() }); setPhase("done"); }}
-              className="flex-1 rounded-full bg-primary text-primary-foreground px-8 py-4 text-lg font-medium hover:bg-primary/90 transition"
-            >
-              לשמור
-            </button>
-            <button
-              onClick={() => { setValues({ ...values, takeaway: "" }); setPhase("done"); }}
-              className="flex-1 rounded-full border border-border bg-card text-foreground px-8 py-4 text-lg font-medium hover:border-gold/40 transition"
-            >
-              דילוג
-            </button>
-          </div>
+      <div className="min-h-screen flex flex-col pb-10">
+        <FocusHeader kicker="תרגול" title={tool.name} />
+        <div className="flex-1 px-6 pt-8">
+          <h2 className="t-title text-foreground">{tool.ending.prompt}</h2>
+          <Textarea
+            value={takeaway}
+            onChange={(e) => setTakeaway(e.target.value)}
+            placeholder="מילה, תמונה, תחושה או משפט…"
+            rows={3}
+            className={cn(inputClasses, "mt-6 resize-none leading-relaxed")}
+          />
+          <button
+            disabled
+            className="mt-5 w-full flex items-center justify-center gap-2 py-3 t-small text-muted-foreground/70 cursor-not-allowed"
+          >
+            <Mic className="w-4 h-4" />
+            הקלטה קולית — תתאפשר בהמשך
+          </button>
+          <p className="mt-1 t-micro text-muted-foreground leading-relaxed">
+            ההקלטה תיושם רק כשנוכל להבטיח שהיא פרטית ובטוחה.
+          </p>
         </div>
-      </SpiritLayout>
+        <div className="flex items-center justify-between gap-4 px-6 mt-6">
+          <button
+            onClick={() => {
+              setValues({ ...values, takeaway: "" });
+              setPhase("done");
+            }}
+            className="t-small text-muted-foreground hover:text-foreground transition-colors"
+          >
+            דילוג
+          </button>
+          <ActionButton
+            onClick={() => {
+              setValues({ ...values, takeaway: takeaway.trim() });
+              setPhase("done");
+            }}
+          >
+            לשמור
+          </ActionButton>
+        </div>
+      </div>
     );
   }
 
@@ -154,7 +181,7 @@ export default function ToolPage() {
       closing = e.closing;
     }
     return (
-      <SpiritLayout>
+      <div className="min-h-screen flex flex-col">
         <PersonalCard
           fields={fields}
           closing={closing}
@@ -164,27 +191,10 @@ export default function ToolPage() {
             navigate(`/tool/${toolId}`);
           }}
         />
-      </SpiritLayout>
+      </div>
     );
   }
 
   // ---- Steps ----
-  return (
-    <SpiritLayout>
-      <div className="pt-2 pb-2">
-        <h1 className="font-display text-2xl text-foreground leading-snug">{tool.name}</h1>
-        {tool.audioReady === false && tool.audioNote && (
-          <p className="mt-2 text-xs text-muted-foreground/80 bg-secondary/40 rounded-xl px-4 py-2.5 leading-relaxed">
-            {tool.audioNote}
-          </p>
-        )}
-      </div>
-      <StepFlow
-        steps={tool.steps}
-        onComplete={onComplete}
-        storageKey={storageKey}
-        finishLabel="סיום"
-      />
-    </SpiritLayout>
-  );
+  return <StepFlow tool={tool} tone={tone} onComplete={onComplete} storageKey={storageKey} />;
 }
