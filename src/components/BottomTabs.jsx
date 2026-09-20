@@ -9,31 +9,35 @@ const TABS = [
   { to: "/book", label: editorial.tabs.book, icon: BookOpen },
 ];
 
-// Pill tab bar — the shell screens (home/library/book) live under this
-// instead of a header + back-stack; a close-button header takes over only
-// once you step into a practice.
 export default function BottomTabs() {
   return (
-    <div className="fixed inset-x-0 bottom-0 z-30 flex justify-center gap-2 pb-6 pt-10 bg-gradient-to-t from-background via-background/95 to-transparent">
-      {TABS.map((tab) => (
-        <NavLink
-          key={tab.to}
-          to={tab.to}
-          end={tab.end}
-          className={({ isActive }) =>
-            `press flex items-center gap-2 rounded-full px-4 py-3 min-h-12 transition-colors ${
-              isActive ? "bg-primary text-primary-foreground" : "bg-secondary text-muted-foreground"
-            }`
-          }
-        >
-          {({ isActive }) => (
-            <>
-              <tab.icon className="w-[18px] h-[18px]" strokeWidth={1.75} />
-              {isActive && <span className="t-small font-semibold">{tab.label}</span>}
-            </>
-          )}
-        </NavLink>
-      ))}
+    <div
+      dir="rtl"
+      className="fixed inset-x-0 bottom-0 z-30 flex items-center justify-center gap-2.5 pb-6 pt-10 bg-gradient-to-t from-background via-background/95 to-transparent pointer-events-none"
+    >
+      <div className="flex items-center gap-2.5 pointer-events-auto">
+        {TABS.map((tab) => (
+          <NavLink
+            key={tab.to}
+            to={tab.to}
+            end={tab.end}
+            className={({ isActive }) =>
+              `press flex items-center justify-center transition-all duration-200 select-none ${
+                isActive
+                  ? "bg-foreground text-background px-5 h-12 rounded-full gap-2 font-medium shadow-sm ring-1 ring-foreground/70 ring-offset-2 ring-offset-background"
+                  : "bg-secondary/80 text-foreground/75 hover:text-foreground w-12 h-12 rounded-full"
+              }`
+            }
+          >
+            {({ isActive }) => (
+              <>
+                <tab.icon className="w-[18px] h-[18px] shrink-0" strokeWidth={1.8} />
+                {isActive && <span className="text-sm font-semibold whitespace-nowrap">{tab.label}</span>}
+              </>
+            )}
+          </NavLink>
+        ))}
+      </div>
     </div>
   );
 }
