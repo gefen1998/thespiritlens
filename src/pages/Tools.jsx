@@ -54,53 +54,53 @@ export default function Tools() {
 
   return (
     <div dir="rtl" lang="he" className="min-h-screen bg-background text-foreground flex flex-col justify-between">
-      <div className="max-w-md mx-auto w-full px-5 pt-8 pb-32">
+      <div className="max-w-md mx-auto w-full px-6 pt-6 pb-24">
         {/* Title */}
         <div className="text-right">
-          <h1 className="leading-tight">
-            <span className="block text-[36px] font-bold text-[#8f9499] leading-none">
+          <h1 className="leading-[1.1]">
+            <span className="block text-[32px] sm:text-[36px] font-bold text-[#8c877e]">
               אוסף
             </span>
-            <span className="block text-[36px] font-bold text-[#191c1f] leading-none mt-1">
+            <span className="block text-[34px] sm:text-[38px] font-bold text-[#1f1c19] mt-0.5">
               הכלים
             </span>
           </h1>
 
-          <div className="mt-4 text-[14px] text-[#6b6d70] leading-[1.5]">
+          <div className="mt-2.5 text-[13px] text-[#78736a] leading-relaxed">
             <p>תשעה תרגולים קצרים, נלווים לספר.</p>
             <p>אפשר לבחור לפי תחושה או לפי זמן.</p>
           </div>
         </div>
 
         {/* Search */}
-        <div className="mt-5">
-          <div className="relative flex items-center h-12 rounded-full bg-[#e8e4db] px-4">
+        <div className="mt-4">
+          <div className="relative flex items-center h-11 rounded-full bg-[#ded8cb] px-4">
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="חיפוש"
-              className="w-full bg-transparent border-0 outline-none text-sm font-medium text-[#191c1f] placeholder:text-[#888b90] pr-7 text-right"
+              className="w-full bg-transparent border-0 outline-none text-sm font-medium text-[#1f1c19] placeholder:text-[#7d7973] pr-7 text-right"
             />
-            <Search className="absolute right-4 w-4 h-4 text-[#888b90] pointer-events-none" strokeWidth={1.8} />
+            <Search className="absolute right-4 w-4 h-4 text-[#7d7973] pointer-events-none" strokeWidth={1.8} />
           </div>
         </div>
 
         {/* Sections */}
-        <div className="space-y-7 mt-7">
+        <div className="space-y-5 mt-5">
           {visibleSections.map((sec) => (
             <div key={sec.id}>
               {/* Section Header */}
-              <div className="flex items-center gap-2 mb-3">
-                <h2 className="text-[20px] font-bold text-[#1f1c19]">
+              <div className="flex items-center gap-2 mb-2.5">
+                <h2 className="text-[17px] font-bold text-[#1f1c19]">
                   {sec.title}
                 </h2>
-                <span className="text-[20px] font-normal text-[#8c8985] tabular-nums">
+                <span className="text-[17px] font-normal text-[#8c877e] tabular-nums">
                   {sec.toolIds.length}
                 </span>
               </div>
 
               {/* Grid */}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2.5">
                 {sec.toolIds.map((id) => (
                   <EditorialCard key={id} tool={tools[id]} />
                 ))}

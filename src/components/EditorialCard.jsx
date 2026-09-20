@@ -176,20 +176,20 @@ export default function EditorialCard({ tool }) {
   return (
     <Link
       to={`/tool/${tool.id}`}
-      className="press group relative flex flex-col justify-between h-[168px] p-4 rounded-[22px] overflow-hidden select-none transition-transform"
+      className="press group relative flex flex-col justify-between h-[148px] sm:h-[158px] p-3.5 sm:p-4 rounded-[20px] overflow-hidden select-none transition-transform"
       style={{ backgroundColor: meta.bg }}
     >
       {/* Top right: Title and Subtitle */}
       <div className="text-right z-10">
         <span
-          className="block font-bold text-[17px] leading-tight"
+          className="block font-bold text-[16px] sm:text-[17px] leading-tight"
           style={{ color: meta.textDark }}
         >
           {meta.line1}
         </span>
         {meta.line2 && (
           <span
-            className="block font-medium text-[14px] leading-tight mt-0.5"
+            className="block font-medium text-[13px] sm:text-[14px] leading-tight mt-0.5"
             style={{ color: meta.textMuted }}
           >
             {meta.line2}
@@ -198,7 +198,7 @@ export default function EditorialCard({ tool }) {
       </div>
 
       {/* The organic pebble texture on the left side of the card with pattern icon */}
-      <div className="absolute left-3 bottom-3 w-[72px] h-[72px] flex items-center justify-center pointer-events-none z-0">
+      <div className="absolute left-2.5 bottom-2.5 w-[62px] h-[62px] flex items-center justify-center pointer-events-none z-0">
         <div
           className="w-full h-full flex items-center justify-center transition-transform duration-300 group-hover:scale-105"
           style={{
@@ -208,8 +208,8 @@ export default function EditorialCard({ tool }) {
         >
           {Icon && (
             <Icon
-              className="w-7 h-7 text-white/90 drop-shadow-sm"
-              strokeWidth={1.5}
+              className="w-6 h-6 text-white/90 drop-shadow-sm"
+              strokeWidth={1.4}
             />
           )}
         </div>
@@ -218,7 +218,7 @@ export default function EditorialCard({ tool }) {
       {/* Bottom right: Duration aligned under the text */}
       <div className="text-right z-10 mt-auto">
         <span
-          className="text-xs font-normal tabular-nums"
+          className="text-[11.5px] sm:text-xs font-normal tabular-nums"
           style={{ color: meta.textMuted }}
         >
           {meta.time}

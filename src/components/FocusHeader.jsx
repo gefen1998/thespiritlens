@@ -10,7 +10,7 @@ import { X } from "lucide-react";
 export default function FocusHeader({ kicker, title, to, actions }) {
   const navigate = useNavigate();
   return (
-    <div className="flex items-start justify-between gap-4 px-6 pt-14">
+    <div className="flex items-start justify-between gap-4 px-6 pt-7 pb-2">
       <h1 className="t-title text-foreground">
         {kicker && <span className="block text-foreground/40 t-small font-normal mb-0.5">{kicker}</span>}
         <span className="block">{title}</span>
