@@ -70,7 +70,13 @@ export default function Home() {
   const recoId = recoToolId(chosen);
   const reco = tools[recoId];
 
-  const goReco = () => navigate("/guided/pause", { state: { target: chosen ? chosen.target : { type: "tool", toolId: "nesheama" } } });
+  const goReco = () => {
+    const target = { type: "tool", toolId: recoId };
+    try {
+      sessionStorage.setItem("sl_guided_target", JSON.stringify(target));
+    } catch {}
+    navigate("/guided/pause", { state: { target } });
+  };
 
   return (
     <div dir="rtl" lang="he" className="min-h-screen">

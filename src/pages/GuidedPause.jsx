@@ -3,11 +3,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import SpiritLayout from "@/components/SpiritLayout";
 import BreathOrb from "@/components/BreathOrb";
 import ActionButton from "@/components/ActionButton";
-import { pauseBeforeTool } from "@/lib/spiritContent";
+import { pauseBeforeTool, gates } from "@/lib/spiritContent";
 
 function resolveTarget(target) {
   if (!target) return "/";
-  if (target.type === "gate") return `/tools?gate=${target.gate}`;
+  if (target.type === "gate") {
+    const firstTool = gates.find((g) => g.id === target.gate)?.tools[0];
+    return firstTool ? `/tool/${firstTool}` : `/tools?gate=${target.gate}`;
+  }
   if (target.type === "tool") return `/tool/${target.toolId}`;
   if (target.type === "flow") {
     if (target.flow === "emotion") return "/tool/emotion-space";
