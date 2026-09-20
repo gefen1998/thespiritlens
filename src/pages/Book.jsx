@@ -66,7 +66,7 @@ export default function Book() {
             >
               {/* Circular badge */}
               <span
-                className="w-14 h-14 rounded-full flex items-center justify-center shrink-0 font-serif text-2xl text-foreground select-none transition-transform group-hover:scale-105"
+                className="w-14 h-14 rounded-full flex items-center justify-center shrink-0 font-bold text-2xl text-foreground select-none transition-transform group-hover:scale-105"
                 style={{ backgroundColor: c.bg }}
               >
                 {c.letter}

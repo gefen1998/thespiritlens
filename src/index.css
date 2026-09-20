@@ -62,10 +62,10 @@
     --form-open: 26%;
 
     --radius: 1.5rem;
-    --font-heading: "Rubik", "Assistant", "Segoe UI", system-ui, sans-serif;
-    --font-body: "Assistant", "Heebo", "Segoe UI", system-ui, sans-serif;
-    --font-display: "Rubik", "Assistant", "Segoe UI", system-ui, sans-serif;
-    --font-serif: "Frank Ruhl Libre", "David Libre", Georgia, serif;
+    --font-heading: "Assistant", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-body: "Assistant", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-display: "Assistant", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-serif: "Assistant", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   }
 }
