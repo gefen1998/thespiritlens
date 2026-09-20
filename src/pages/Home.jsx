@@ -131,7 +131,7 @@ export default function Home() {
 
           <button
             onClick={goReco}
-            className="press group relative block w-full bg-[#faf7f2] border border-[#ded6c7] rounded-[26px] p-6 sm:p-7 text-right overflow-hidden transition-all duration-200 shadow-[0_6px_24px_-6px_rgba(70,55,40,0.07)] hover:border-[#cfc5b3] hover:shadow-[0_8px_28px_-6px_rgba(70,55,40,0.11)] select-none"
+            className="press group relative block -mx-6 w-[calc(100%+3rem)] bg-[#faf7f2] border-y border-[#ded6c7] px-6 py-6 sm:py-7 text-right overflow-hidden transition-colors duration-200 select-none hover:bg-[#f5f0e7]"
           >
             {/* Top row: Description on right, Arrow on left */}
             <div className="flex items-start justify-between gap-4">
