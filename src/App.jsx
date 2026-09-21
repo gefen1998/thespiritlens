@@ -21,6 +21,7 @@ import FatigueFlow from '@/pages/FatigueFlow';
 import MemoryFlow from '@/pages/MemoryFlow';
 import Safety from '@/pages/Safety';
 import Commits from '@/pages/Commits';
+import CreditLine from '@/components/CreditLine';
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -79,6 +80,7 @@ function App() {
         <Router>
           <ScrollToTop />
           <AuthenticatedApp />
+          <CreditLine className="pb-28 pt-2" />
         </Router>
         <Toaster />
       </QueryClientProvider>

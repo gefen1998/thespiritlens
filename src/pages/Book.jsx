@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import BottomTabs from "@/components/BottomTabs";
-import { site } from "@/lib/spiritContent";
 
 const CHAPTERS = [
   {
@@ -100,10 +99,6 @@ export default function Book() {
           ))}
         </div>
 
-        {/* Credit line below items */}
-        <p className="mt-3.5 text-[11.5px] sm:text-[12px] text-[#6B6A63] leading-relaxed text-right">
-          {site.footerCredit}.
-        </p>
       </div>
 
       <BottomTabs />
