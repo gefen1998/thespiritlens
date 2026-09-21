@@ -158,7 +158,7 @@ export function getToolIcon(toolId) {
   return toneIcons[tone] || Sparkles;
 }
 
-export default function EditorialCard({ tool }) {
+export default function EditorialCard({ tool, showTime = true }) {
   if (!tool) return null;
   const meta = TOOL_CARD_META[tool.id] || {
     line1: tool.name,
@@ -216,14 +216,16 @@ export default function EditorialCard({ tool }) {
       </div>
 
       {/* Bottom right: Duration aligned under the text */}
-      <div className="text-right z-10 mt-auto">
-        <span
-          className="text-[11.5px] sm:text-xs font-normal tabular-nums"
-          style={{ color: meta.textMuted }}
-        >
-          {meta.time}
-        </span>
-      </div>
+      {showTime && (
+        <div className="text-right z-10 mt-auto">
+          <span
+            className="text-[11.5px] sm:text-xs font-normal tabular-nums"
+            style={{ color: meta.textMuted }}
+          >
+            {meta.time}
+          </span>
+        </div>
+      )}
     </Link>
   );
 }

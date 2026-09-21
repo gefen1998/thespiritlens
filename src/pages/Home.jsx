@@ -132,7 +132,7 @@ export default function Home() {
         </div>
 
         {/* Quick Tools Section */}
-        <div className="flex items-baseline justify-between mt-5 mb-2.5">
+        <div className="flex items-baseline justify-between mt-8 mb-3">
           <span className="text-xs font-medium text-[#6B6A63]">{editorial.home.quickTitle}</span>
           <Link
             to="/tools"
@@ -144,7 +144,7 @@ export default function Home() {
 
         <div className="grid grid-cols-2 gap-2.5">
           {QUICK_IDS.map((id) => (
-            <EditorialCard key={id} tool={tools[id]} />
+            <EditorialCard key={id} tool={tools[id]} showTime={false} />
           ))}
         </div>
       </div>
