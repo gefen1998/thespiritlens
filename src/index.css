@@ -105,8 +105,8 @@
     --form-emotion: 50% 50% 62% 38% / 42% 58% 45% 55%;
     --form-fatigue: 55% 45% 38% 62% / 58% 42% 52% 48%;
     --form-memory: 38% 62% 50% 50% / 52% 48% 60% 40%;
-    --form-spirit: 999px;
-    --form-open: 26%;
+    --form-spirit: 45% 55% 58% 42% / 55% 45% 55% 45%;
+    --form-open: 62% 38% 42% 58% / 45% 58% 42% 55%;
 
     --radius: 1.5rem;
     --font-heading: "Assistant", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
