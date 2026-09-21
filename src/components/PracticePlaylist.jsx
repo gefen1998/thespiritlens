@@ -16,8 +16,8 @@ export default function PracticePlaylist({ playlist }) {
   const watchUrl = `https://www.youtube.com/playlist?list=${playlist.listId}`;
 
   return (
-    <div dir="rtl" className="fixed inset-x-0 bottom-0 z-20 px-4 pb-4 pointer-events-none">
-      <div className="max-w-md mx-auto pointer-events-auto rounded-[20px] bg-[#16161A] text-[#F1F0EC] shadow-[0_4px_20px_rgba(0,0,0,0.18)] overflow-hidden">
+    <div dir="rtl" className="px-4 pb-8 pt-2">
+      <div className="max-w-md mx-auto rounded-[20px] bg-[#16161A] text-[#F1F0EC] shadow-[0_4px_20px_rgba(0,0,0,0.18)] overflow-hidden">
         <button
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}

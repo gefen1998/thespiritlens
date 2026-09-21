@@ -76,7 +76,7 @@ export default function ToolPage() {
 
   return (
     <div className="relative min-h-screen">
-      <div className={tool.playlist ? "pb-28" : undefined}>
+      <div>
         <StepFlow
           key={runKey}
           tool={tool}
