@@ -252,7 +252,7 @@ export default function StepFlow({ tool, tone = "open", onComplete, storageKey }
     const phase = phaseOf(stepElapsed);
     return (
       <div className="min-h-screen flex flex-col pb-10">
-        <FocusHeader kicker={phase.label} title={tool.name} actions={headerActions} />
+        <FocusHeader kicker={phase.label} title={tool.name} to="/" actions={headerActions} />
         <div className="flex-1 flex flex-col items-center justify-center gap-8 px-6">
           <BreathRing tone={tone} running={running} hint={phase.hint} />
           <p className="t-practice text-foreground text-center max-w-md text-balance">{step.text}</p>
@@ -304,7 +304,7 @@ export default function StepFlow({ tool, tone = "open", onComplete, storageKey }
 
   return (
     <div className="min-h-screen flex flex-col pb-10">
-      <FocusHeader kicker={ordinal} title={tool.name} actions={headerActions} />
+      <FocusHeader kicker={ordinal} title={tool.name} to="/" actions={headerActions} />
       <div className="flex-1 px-6 pt-8">
         {tool.audioNote && index === 0 && <p className="t-lead text-muted-foreground mb-8">{tool.audioNote}</p>}
 
