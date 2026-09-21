@@ -26,7 +26,7 @@ export default function EmotionCheckIn({ selected, onSelect }) {
 
   return (
     <div
-      className="scroll-x-quiet -mx-6 flex gap-3.5 overflow-x-auto px-6 py-2 select-none"
+      className="scroll-x-quiet -mx-6 flex gap-3.5 overflow-x-auto px-6 pb-2 pt-0 select-none"
       style={{ scrollSnapType: "x mandatory" }}
     >
       {guidedChoices.map((choice) => {
