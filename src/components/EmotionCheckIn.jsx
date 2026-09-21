@@ -73,11 +73,11 @@ export default function EmotionCheckIn({ selected, onSelect }) {
                 )}
               </span>
 
-              {/* Selection Dot: var(--accent) / #B08A3C */}
+              {/* Selection Dot: solid filled ochre dot as in reference */}
               {on && (
                 <span
-                  className="absolute top-2 left-2 w-2.5 h-2.5 rounded-full ring-2 ring-white/90 shadow-xs"
-                  style={{ backgroundColor: "var(--accent, #B08A3C)" }}
+                  className="absolute top-0.5 left-1.5 w-2.5 h-2.5 rounded-full"
+                  style={{ backgroundColor: "#B08A3C" }}
                   aria-hidden="true"
                 />
               )}
