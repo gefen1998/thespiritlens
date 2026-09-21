@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { Search } from "lucide-react";
 import BottomTabs from "@/components/BottomTabs";
 import EditorialCard, { TOOL_CARD_META } from "@/components/EditorialCard";
+import ToolListRow from "@/components/ToolListRow";
+import ViewToggle from "@/components/ViewToggle";
 import { tools } from "@/lib/spiritContent";
+
+const VIEW_KEY = "sl_tools_view";
 
 const SECTIONS = [
   {
@@ -29,7 +33,21 @@ const SECTIONS = [
 
 export default function Tools() {
   const [query, setQuery] = useState("");
+  const [view, setView] = useState(() => {
+    try {
+      return localStorage.getItem(VIEW_KEY) === "grid" ? "grid" : "list";
+    } catch {
+      return "list";
+    }
+  });
   const q = query.trim().toLowerCase();
+
+  const changeView = (next) => {
+    setView(next);
+    try {
+      localStorage.setItem(VIEW_KEY, next);
+    } catch {}
+  };
 
   const matches = (toolId) => {
     if (!q) return true;
@@ -72,9 +90,9 @@ export default function Tools() {
           </div>
         </div>
 
-        {/* Search */}
-        <div className="mt-4">
-          <div className="relative flex items-center h-11 rounded-full bg-[#E7E5DF] px-4">
+        {/* Search + view toggle */}
+        <div className="mt-4 flex items-center gap-2">
+          <div className="relative flex flex-1 items-center h-11 rounded-full bg-[#E7E5DF] px-4">
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
@@ -83,6 +101,7 @@ export default function Tools() {
             />
             <Search className="absolute right-4 w-4 h-4 text-[#6B6A63] pointer-events-none" strokeWidth={1.8} />
           </div>
+          <ViewToggle value={view} onChange={changeView} />
         </div>
 
         {/* Sections */}
@@ -99,12 +118,19 @@ export default function Tools() {
                 </span>
               </div>
 
-              {/* Grid */}
-              <div className="grid grid-cols-2 gap-2.5">
-                {sec.toolIds.map((id) => (
-                  <EditorialCard key={id} tool={tools[id]} />
-                ))}
-              </div>
+              {view === "grid" ? (
+                <div className="grid grid-cols-2 gap-2.5">
+                  {sec.toolIds.map((id) => (
+                    <EditorialCard key={id} tool={tools[id]} />
+                  ))}
+                </div>
+              ) : (
+                <div className="divide-y divide-[#D8D5CC] border-y border-[#D8D5CC]">
+                  {sec.toolIds.map((id) => (
+                    <ToolListRow key={id} tool={tools[id]} category={sec.title} />
+                  ))}
+                </div>
+              )}
             </div>
           ))}
 
