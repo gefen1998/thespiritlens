@@ -74,9 +74,9 @@ export default function Home() {
   let displayDescription = reco.description;
 
   if (recoId === "nesheama") {
-    displayName = "נשמ״ה";
+    displayName = "כלי נשמ״ה";
     displayDuration = "04:00";
-    displayDescription = "תרגול קצר בארבעה שלבים, על פי מודל נשמ״ה";
+    displayDescription = "תרגול קצר בארבעה שלבים, על פי מודל עדשת הרוח";
   }
 
   const goReco = () => {
