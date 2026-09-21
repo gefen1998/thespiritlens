@@ -91,37 +91,37 @@ export default function Home() {
         </div>
 
         {/* Subtitle / note */}
-        <div className="mt-2 text-[13.5px] text-[#6B6A63] leading-relaxed">
-          <p className="font-medium text-[#4A4943]">לפעמים די ברגע אחד של עצירה.</p>
-          <p className="mt-0.5">
-            אפשר להיעזר במסלול קצר ומונחה,
+        <div className="mt-2 text-[14px] text-[#55544E] leading-relaxed">
+          <p>
+            בסוף כל דרך יש כתיבה. אפשר לפתוח בה ישר, או
             <br />
-            או לבחור בעצמכם כלי מתוך המרחב.
+            להירגע קודם ולהגיע אליה אחר כך.
           </p>
         </div>
 
         {/* שתי דרכים לבחור בהן — Two Paths Containers */}
         <div className="mt-6 mb-3">
-          <p className="text-[12px] font-medium text-[#7C7A72] text-right mb-2">
+          <p className="text-[13px] font-medium text-[#6B6A63] text-right mb-2.5">
             שתי דרכים לבחור בהן
           </p>
           <div className="grid grid-cols-2 gap-3">
             {/* כרטיס 1: לכתוב ישר */}
             <Link
               to="/write"
-              className="press relative flex flex-col justify-between h-[155px] p-4 rounded-[26px] bg-[#B35C44] text-white select-none shadow-[0_4px_16px_rgba(179,92,68,0.22)] overflow-hidden transition-transform"
+              style={{ backgroundColor: "hsl(var(--pigment-emotion))" }}
+              className="press relative flex flex-col justify-between h-[165px] p-4 rounded-[28px] text-white select-none shadow-[0_4px_16px_rgba(176,92,74,0.18)] overflow-hidden transition-transform"
             >
               <div className="flex items-center justify-between w-full">
-                <div className="w-8 h-8 rounded-full bg-white/20 grid place-items-center text-white text-[13px] font-bold">
+                <div className="w-8 h-8 rounded-full bg-black/15 grid place-items-center text-white text-[14px] font-bold">
                   1
                 </div>
-                <PenLine className="w-5 h-5 text-white/95" strokeWidth={1.8} />
+                <PenLine className="w-5 h-5 text-white/95" strokeWidth={1.75} />
               </div>
               <div className="text-right mt-auto">
-                <span className="block text-[20px] font-bold leading-tight">
+                <span className="block text-[22px] font-bold leading-tight text-white tracking-tight">
                   לכתוב ישר
                 </span>
-                <span className="block text-[12px] text-white/90 leading-tight mt-1 font-medium">
+                <span className="block text-[12.5px] text-white/90 leading-snug mt-1.5 font-normal">
                   לפתוח את מדריך הכתיבה עכשיו
                 </span>
               </div>
@@ -134,19 +134,19 @@ export default function Home() {
                 const el = document.getElementById("check-in-section");
                 if (el) el.scrollIntoView({ behavior: "smooth" });
               }}
-              className="press relative flex flex-col justify-between h-[155px] p-4 rounded-[26px] bg-[#DDD9D0] text-[#16161A] select-none text-right overflow-hidden transition-transform"
+              className="press relative flex flex-col justify-between h-[165px] p-4 rounded-[28px] bg-[#DCD8CF] text-[#16161A] select-none text-right overflow-hidden transition-transform"
             >
               <div className="flex items-center justify-between w-full">
-                <div className="w-8 h-8 rounded-full bg-white/60 grid place-items-center text-[#2C2B26] text-[13px] font-bold">
+                <div className="w-8 h-8 rounded-full bg-[#EAE7DF] grid place-items-center text-[#16161A] text-[14px] font-bold">
                   2
                 </div>
-                <ArrowDown className="w-5 h-5 text-[#2C2B26]" strokeWidth={1.8} />
+                <ArrowDown className="w-5 h-5 text-[#16161A]" strokeWidth={1.75} />
               </div>
               <div className="text-right mt-auto">
-                <span className="block text-[20px] font-bold leading-tight text-[#16161A]">
+                <span className="block text-[22px] font-bold leading-tight text-[#16161A] tracking-tight">
                   לפנות מקום
                 </span>
-                <span className="block text-[12px] text-[#6B6A63] leading-tight mt-1 font-medium">
+                <span className="block text-[12.5px] text-[#55544E] leading-snug mt-1.5 font-normal">
                   מסלול קצר מונחה
                   <br />
                   כדי להיפתח לכתיבה
