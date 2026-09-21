@@ -7,7 +7,7 @@ const CHAPTERS = [
     letter: "נ",
     title: "נשימה ונוכחות",
     note: "חזרה עדינה אל הגוף ואל הרגע הזה.",
-    page: 41,
+    page: 237,
     bg: "#CFD8C6", // sage tint
     ink: "#3A4A33",
     shape: "46% 54% 58% 42% / 48% 52% 48% 52%",
@@ -16,7 +16,7 @@ const CHAPTERS = [
     letter: "ש",
     title: "שקט פנימי והתבוננות",
     note: "לשים לב למה שנוכח, בלי למהר לשנות.",
-    page: 68,
+    page: 237,
     bg: "#C7D2DC", // dusk tint
     ink: "#2F404B",
     shape: "58% 42% 46% 54% / 54% 46% 54% 46%",
@@ -25,7 +25,7 @@ const CHAPTERS = [
     letter: "מ",
     title: "משמעות ובחירה",
     note: "מה נמצא בידי, ומה נכון לבחור עכשיו.",
-    page: 96,
+    page: 237,
     bg: "#C9CBDA", // indigo tint
     ink: "#2B3049",
     shape: "50% 50% 56% 44% / 44% 56% 44% 56%",
@@ -34,7 +34,7 @@ const CHAPTERS = [
     letter: "ה",
     title: "הכרת תודה",
     note: "להכיר בדבר אחד קטן שתומך בנו.",
-    page: 124,
+    page: 238,
     bg: "#E6D8B8", // ochre tint
     ink: "#5F4A1C",
     shape: "52% 48% 46% 54% / 54% 46% 54% 46%",
