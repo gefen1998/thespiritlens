@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BookOpen, ArrowUpLeft } from "lucide-react";
 import BottomTabs from "@/components/BottomTabs";
-import BreathOrb from "@/components/BreathOrb";
+import WelcomeSheet from "@/components/WelcomeSheet";
 import EmotionCheckIn from "@/components/EmotionCheckIn";
 import EditorialCard, { TOOL_CARD_META } from "@/components/EditorialCard";
-import ActionButton from "@/components/ActionButton";
-import { site, editorial, firstVisit, gates, tools, fatigueOptions, memoryFlow } from "@/lib/spiritContent";
+import { editorial, gates, tools, fatigueOptions, memoryFlow } from "@/lib/spiritContent";
 
 const WELCOME_KEY = "sl_seen_welcome";
 const QUICK_IDS = ["gentle-exhale", "gratitude-moment", "ground-touch", "word-for-path"];
@@ -26,7 +25,7 @@ export default function Home() {
   const navigate = useNavigate();
   const [showWelcome, setShowWelcome] = useState(() => {
     try {
-      return localStorage.getItem(WELCOME_KEY) === "first";
+      return !localStorage.getItem(WELCOME_KEY);
     } catch {
       return false;
     }
@@ -39,31 +38,6 @@ export default function Home() {
     } catch {}
     setShowWelcome(false);
   };
-
-  if (showWelcome) {
-    return (
-      <div dir="rtl" lang="he" className="min-h-screen flex flex-col justify-end px-6 pb-10">
-        <BreathOrb size={72} />
-        <h1 className="mt-8 t-display text-foreground">{site.title}</h1>
-        <p className="mt-2 t-lead text-muted-foreground">{site.subtitle}</p>
-
-        <div className="mt-8 rounded-[18px] px-6 py-8 sm:px-10" style={{ backgroundColor: "hsl(var(--flame) / 0.08)" }}>
-          <p className="t-title text-foreground max-w-sm">{firstVisit.title}</p>
-          <div className="mt-5 space-y-4 max-w-sm">
-            {firstVisit.lines.map((line, i) => (
-              <p key={i} className="t-lead text-muted-foreground">
-                {line}
-              </p>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-8 flex justify-end">
-          <ActionButton onClick={enter}>{firstVisit.button}</ActionButton>
-        </div>
-      </div>
-    );
-  }
 
   const recoId = recoToolId(chosen);
   const reco = tools[recoId] || tools["nesheama"];
@@ -174,6 +148,8 @@ export default function Home() {
       </div>
 
       <BottomTabs />
+
+      {showWelcome && <WelcomeSheet onClose={enter} />}
     </div>
   );
 }
