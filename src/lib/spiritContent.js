@@ -192,7 +192,7 @@ export const tools = {
   },
   "light-beam": {
     id: "light-beam",
-    name: "קרן אור — דמיון מודרך",
+    name: "קרן אור - דמיון מודרך",
     description: "תרגול דמיון עדין לחיבור למשאב פנימי",
     duration: "חמש דקות",
     mode: "breath",
