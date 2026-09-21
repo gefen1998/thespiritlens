@@ -30,7 +30,11 @@ export default function BottomTabs() {
                 }`}
                 style={{ transition: `background-color 320ms ${EASE}, color 320ms ${EASE}, padding 380ms ${EASE}, width 380ms ${EASE}` }}
               >
-                <tab.icon className="w-[18px] h-[18px] shrink-0" strokeWidth={1.8} />
+                <tab.icon
+                  className="shrink-0"
+                  style={{ width: 18, height: 18, minWidth: 18, minHeight: 18 }}
+                  strokeWidth={1.8}
+                />
                 <span
                   className="text-sm font-semibold whitespace-nowrap overflow-hidden"
                   style={{
