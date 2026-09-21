@@ -68,16 +68,19 @@ export default function Home() {
       <div className="max-w-xl mx-auto px-6 pt-6 pb-28">
         {/* Top Header with Book Button */}
         <div className="flex items-start justify-between gap-4">
-          <h1 className="leading-[1.1]">
-            <span className="block text-[32px] sm:text-[36px] font-bold text-[#6B6A63]">
-              {editorial.home.helloLine}
-            </span>
-            <span className="block text-[34px] sm:text-[38px] font-bold text-[#16161A] mt-0.5">
-              איך אתה
-              <br />
-              מרגיש עכשיו?
-            </span>
-          </h1>
+          <div>
+            <h1 className="leading-[1.1]">
+              <span className="block text-[32px] sm:text-[36px] font-bold text-[#6B6A63]">
+                מרחב
+              </span>
+              <span className="block text-[34px] sm:text-[38px] font-bold text-[#16161A] mt-0.5">
+                עדשת הרוח
+              </span>
+            </h1>
+            <p className="mt-1 text-[14px] text-[#6B6A63] font-medium">
+              מרחב של נשימה, התבוננות ובחירה
+            </p>
+          </div>
           <Link
             to="/book"
             aria-label={editorial.tabs.book}
