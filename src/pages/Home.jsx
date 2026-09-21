@@ -91,11 +91,14 @@ export default function Home() {
         </div>
 
         {/* Subtitle / note */}
-        <p className="mt-2 text-[13px] text-[#6B6A63] leading-relaxed">
-          אין תשובה נכונה, ואין צורך לדעת.
-          <br />
-          אפשר גם לדלג ישר לרשימת התרגילים.
-        </p>
+        <div className="mt-2 text-[13.5px] text-[#6B6A63] leading-relaxed">
+          <p className="font-medium text-[#4A4943]">לפעמים די ברגע אחד של עצירה.</p>
+          <p className="mt-0.5">
+            אפשר להיעזר במסלול קצר ומונחה,
+            <br />
+            או לבחור בעצמכם כלי מתוך המרחב.
+          </p>
+        </div>
 
         {/* Emotion Check-in circles */}
         <div className="mt-4">
