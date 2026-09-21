@@ -77,7 +77,7 @@ export const gates = [
     tone: "body",
     title: "להרגיע את הגוף",
     subtitle: "כלים של נשימה, נוכחות וקרקוע",
-    tools: ["gentle-exhale", "return-to-senses", "ground-touch", "body-scan", "light-beam", "anchoring"],
+    tools: ["gentle-exhale", "return-to-senses", "ground-touch", "body-scan"],
   },
   {
     id: "thought",

@@ -17,8 +17,6 @@ const SECTIONS = [
       "return-to-senses",
       "ground-touch",
       "body-scan",
-      "light-beam",
-      "anchoring",
     ],
   },
   {

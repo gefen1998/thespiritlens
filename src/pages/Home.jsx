@@ -108,20 +108,20 @@ export default function Home() {
             {/* כרטיס 1: לכתוב ישר */}
             <Link
               to="/write"
-              style={{ backgroundColor: "hsl(var(--pigment-emotion))" }}
-              className="press relative flex flex-col justify-between h-[165px] p-4 rounded-[28px] text-white select-none shadow-[0_4px_16px_rgba(176,92,74,0.18)] overflow-hidden transition-transform"
+              style={{ backgroundColor: "#B0654A", color: "#FBFAF7" }}
+              className="press relative flex flex-col justify-between h-[165px] p-4 rounded-[28px] select-none shadow-[0_4px_16px_rgba(176,101,74,0.2)] overflow-hidden transition-transform"
             >
               <div className="flex items-center justify-between w-full">
-                <div className="w-8 h-8 rounded-full bg-black/15 grid place-items-center text-white text-[14px] font-bold">
+                <div className="w-8 h-8 rounded-full bg-black/15 grid place-items-center text-[#FBFAF7] text-[14px] font-bold">
                   1
                 </div>
-                <PenLine className="w-5 h-5 text-white/95" strokeWidth={1.75} />
+                <PenLine className="w-5 h-5 text-[#FBFAF7]" strokeWidth={1.75} />
               </div>
               <div className="text-right mt-auto">
-                <span className="block text-[22px] font-bold leading-tight text-white tracking-tight">
+                <span className="block text-[22px] font-bold leading-tight text-[#FBFAF7] tracking-tight">
                   לכתוב ישר
                 </span>
-                <span className="block text-[12.5px] text-white/90 leading-snug mt-1.5 font-normal">
+                <span className="block text-[12.5px] text-[#FBFAF7]/90 leading-snug mt-1.5 font-normal">
                   לפתוח את מדריך הכתיבה עכשיו
                 </span>
               </div>
@@ -134,10 +134,11 @@ export default function Home() {
                 const el = document.getElementById("check-in-section");
                 if (el) el.scrollIntoView({ behavior: "smooth" });
               }}
-              className="press relative flex flex-col justify-between h-[165px] p-4 rounded-[28px] bg-[#DCD8CF] text-[#16161A] select-none text-right overflow-hidden transition-transform"
+              style={{ backgroundColor: "rgba(22, 22, 26, 0.06)" }}
+              className="press relative flex flex-col justify-between h-[165px] p-4 rounded-[28px] text-[#16161A] select-none text-right overflow-hidden transition-transform"
             >
               <div className="flex items-center justify-between w-full">
-                <div className="w-8 h-8 rounded-full bg-[#EAE7DF] grid place-items-center text-[#16161A] text-[14px] font-bold">
+                <div className="w-8 h-8 rounded-full bg-white/70 grid place-items-center text-[#16161A] text-[14px] font-bold">
                   2
                 </div>
                 <ArrowDown className="w-5 h-5 text-[#16161A]" strokeWidth={1.75} />
@@ -146,7 +147,7 @@ export default function Home() {
                 <span className="block text-[22px] font-bold leading-tight text-[#16161A] tracking-tight">
                   לפנות מקום
                 </span>
-                <span className="block text-[12.5px] text-[#55544E] leading-snug mt-1.5 font-normal">
+                <span className="block text-[12.5px] text-[#6B6A63] leading-snug mt-1.5 font-normal">
                   מסלול קצר מונחה
                   <br />
                   כדי להיפתח לכתיבה
