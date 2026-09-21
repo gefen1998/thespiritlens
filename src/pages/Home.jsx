@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { BookOpen, ArrowUpLeft } from "lucide-react";
+import { BookOpen, ArrowUpLeft, PenLine, ArrowDown } from "lucide-react";
 import BottomTabs from "@/components/BottomTabs";
 import WelcomeSheet from "@/components/WelcomeSheet";
 import EmotionCheckIn from "@/components/EmotionCheckIn";
@@ -100,8 +100,62 @@ export default function Home() {
           </p>
         </div>
 
+        {/* שתי דרכים לבחור בהן — Two Paths Containers */}
+        <div className="mt-6 mb-3">
+          <p className="text-[12px] font-medium text-[#7C7A72] text-right mb-2">
+            שתי דרכים לבחור בהן
+          </p>
+          <div className="grid grid-cols-2 gap-3">
+            {/* כרטיס 1: לכתוב ישר */}
+            <Link
+              to="/write"
+              className="press relative flex flex-col justify-between h-[155px] p-4 rounded-[26px] bg-[#B35C44] text-white select-none shadow-[0_4px_16px_rgba(179,92,68,0.22)] overflow-hidden transition-transform"
+            >
+              <div className="flex items-center justify-between w-full">
+                <div className="w-8 h-8 rounded-full bg-white/20 grid place-items-center text-white text-[13px] font-bold">
+                  1
+                </div>
+                <PenLine className="w-5 h-5 text-white/95" strokeWidth={1.8} />
+              </div>
+              <div className="text-right mt-auto">
+                <span className="block text-[20px] font-bold leading-tight">
+                  לכתוב ישר
+                </span>
+                <span className="block text-[12px] text-white/90 leading-tight mt-1 font-medium">
+                  לפתוח את מדריך הכתיבה עכשיו
+                </span>
+              </div>
+            </Link>
+
+            {/* כרטיס 2: לפנות מקום */}
+            <button
+              type="button"
+              onClick={() => {
+                const el = document.getElementById("check-in-section");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="press relative flex flex-col justify-between h-[155px] p-4 rounded-[26px] bg-[#DDD9D0] text-[#16161A] select-none text-right overflow-hidden transition-transform"
+            >
+              <div className="flex items-center justify-between w-full">
+                <div className="w-8 h-8 rounded-full bg-white/60 grid place-items-center text-[#2C2B26] text-[13px] font-bold">
+                  2
+                </div>
+                <ArrowDown className="w-5 h-5 text-[#2C2B26]" strokeWidth={1.8} />
+              </div>
+              <div className="text-right mt-auto">
+                <span className="block text-[20px] font-bold leading-tight text-[#16161A]">
+                  לפנות מקום
+                </span>
+                <span className="block text-[12px] text-[#6B6A63] leading-tight mt-1 font-medium">
+                  לבחור כלי לפי הרגשה, ולהגיע מוכן לכתוב
+                </span>
+              </div>
+            </button>
+          </div>
+        </div>
+
         {/* Emotion Check-in circles */}
-        <div className="mt-4">
+        <div id="check-in-section" className="mt-4 scroll-mt-6">
           <EmotionCheckIn selected={chosen} onSelect={setChosen} />
         </div>
 

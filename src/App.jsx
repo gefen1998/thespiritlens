@@ -21,6 +21,7 @@ import FatigueFlow from '@/pages/FatigueFlow';
 import MemoryFlow from '@/pages/MemoryFlow';
 import Safety from '@/pages/Safety';
 import Commits from '@/pages/Commits';
+import WriteGuide from '@/pages/WriteGuide';
 import CreditLine from '@/components/CreditLine';
 // Add page imports here
 
@@ -66,6 +67,7 @@ const AuthenticatedApp = () => {
       <Route path="/flow/memory" element={<MemoryFlow />} />
       <Route path="/safety" element={<Safety />} />
       <Route path="/commits" element={<Commits />} />
+      <Route path="/write" element={<WriteGuide />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

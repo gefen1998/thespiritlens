@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { PenLine } from "lucide-react";
 import { TOOL_CARD_META, getToolIcon } from "@/components/EditorialCard";
 
 export default function PracticeCompletionSheet({ tool, values = {}, onDone, onRepeat }) {
+  const navigate = useNavigate();
   const meta = (tool && TOOL_CARD_META[tool.id]) || {
     line1: tool?.name || "תרגול",
     line2: "",
@@ -109,22 +112,35 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
         </p>
 
         {/* Action Buttons */}
-        <div className="flex items-center gap-3 w-full">
-          {/* תרגול נוסף (Right button in RTL) */}
+        <div className="space-y-2.5 w-full">
+          {/* לכתוב על זה - Terracotta direct CTA */}
           <button
-            onClick={onRepeat}
-            className="py-4 px-6 rounded-full bg-[#ded9ce] hover:bg-[#d5cfc2] active:scale-95 text-[#1c1c1e] text-[15px] font-bold transition-all text-center shrink-0"
+            onClick={() => {
+              if (onDone) onDone();
+              navigate("/write");
+            }}
+            className="w-full py-4 px-6 rounded-full bg-[#B35C44] hover:bg-[#A3513B] active:scale-[0.98] text-white text-[16px] font-bold transition-all flex items-center justify-center gap-2.5 shadow-[0_3px_12px_rgba(179,92,68,0.22)] select-none"
           >
-            תרגול נוסף
+            <span>לכתוב על זה</span>
+            <PenLine className="w-5 h-5 text-white/95" strokeWidth={1.8} />
           </button>
 
-          {/* סיימתי (Left button in RTL) */}
-          <button
-            onClick={onDone}
-            className="flex-1 py-4 px-8 rounded-full bg-[#1c1c1e] hover:bg-[#2c2c2e] active:scale-95 text-white text-[15px] font-bold transition-all text-center"
-          >
-            סיימתי
-          </button>
+          {/* Secondary row */}
+          <div className="flex items-center gap-2.5 w-full">
+            <button
+              onClick={onDone}
+              className="flex-1 py-3.5 px-6 rounded-full bg-[#16161A] hover:bg-[#2A2A33] active:scale-95 text-white text-[15px] font-bold transition-all text-center"
+            >
+              סיימתי
+            </button>
+
+            <button
+              onClick={onRepeat}
+              className="py-3.5 px-6 rounded-full bg-[#DDD9D0] hover:bg-[#D5D0C6] active:scale-95 text-[#16161A] text-[15px] font-bold transition-all text-center shrink-0"
+            >
+              תרגול נוסף
+            </button>
+          </div>
         </div>
       </div>
     </div>
