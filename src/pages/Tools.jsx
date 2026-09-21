@@ -85,8 +85,8 @@ export default function Tools() {
           </h1>
 
           <div className="mt-2.5 text-[13px] text-[#6B6A63] leading-relaxed">
-            <p>תשעה תרגולים קצרים, נלווים לספר.</p>
-            <p>אפשר לבחור לפי תחושה או לפי זמן.</p>
+            <p>הכלים מאורגנים לפי ארבעה שערים.</p>
+            <p>בחרו את מה שנכון לכם עכשיו.</p>
           </div>
         </div>
 
