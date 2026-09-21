@@ -10,9 +10,7 @@ export default function PracticePlaylist({ playlist }) {
   const [open, setOpen] = useState(false);
   if (!playlist?.listId) return null;
 
-  const src = `https://www.youtube.com/embed/videoseries?list=${playlist.listId}&rel=0&modestbranding=1&playsinline=1${
-    open ? "&autoplay=1" : ""
-  }`;
+  const src = `https://www.youtube.com/embed/videoseries?list=${playlist.listId}&rel=0&modestbranding=1&playsinline=1`;
   const watchUrl = `https://www.youtube.com/playlist?list=${playlist.listId}`;
 
   return (
