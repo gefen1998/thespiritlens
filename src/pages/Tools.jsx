@@ -10,24 +10,38 @@ const VIEW_KEY = "sl_tools_view";
 
 const SECTIONS = [
   {
-    id: "breath",
-    title: "נשימה",
-    tools: ["gentle-exhale", "ground-touch"],
+    id: "body",
+    title: "הרגעת הגוף",
+    tools: [
+      "gentle-exhale",
+      "return-to-senses",
+      "ground-touch",
+      "body-scan",
+      "light-beam",
+      "anchoring",
+    ],
   },
   {
-    id: "quiet",
-    title: "שקט",
-    tools: ["return-to-senses", "body-scan", "anchoring"],
+    id: "thought",
+    title: "מחשבה",
+    tools: ["thought-meeting"],
   },
   {
-    id: "meaning",
-    title: "משמעות",
-    tools: ["light-beam", "word-for-path"],
+    id: "emotion",
+    title: "מתן מקום לרגש",
+    tools: ["emotion-space"],
   },
   {
-    id: "gratitude",
-    title: "הכרת תודה",
-    tools: ["gratitude-moment", "nesheama"],
+    id: "spirit",
+    title: "חיזוק הרוח",
+    tools: [
+      "light-beam",
+      "gratitude-moment",
+      "word-for-path",
+      "meaning-choice",
+      "strengthening-memory",
+      "anchoring",
+    ],
   },
 ];
 
