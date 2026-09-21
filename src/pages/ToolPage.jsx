@@ -4,6 +4,7 @@ import FocusHeader from "@/components/FocusHeader";
 import StepFlow from "@/components/StepFlow";
 import ChoiceCard from "@/components/ChoiceCard";
 import PracticeCompletionSheet from "@/components/PracticeCompletionSheet";
+import PracticePlaylist from "@/components/PracticePlaylist";
 import { tools, thoughtBranches, emotionNeedMap, toolTone } from "@/lib/spiritContent";
 
 export default function ToolPage() {
@@ -82,6 +83,8 @@ export default function ToolPage() {
         onComplete={onComplete}
         storageKey={storageKey}
       />
+
+      {tool.playlist && <PracticePlaylist playlist={tool.playlist} />}
 
       {phase === "completed" && (
         <PracticeCompletionSheet

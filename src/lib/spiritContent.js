@@ -215,6 +215,11 @@ export const tools = {
     name: "ניגון כעוגן",
     description: "חיבור לנקודת אחיזה פנימית יציבה",
     duration: "שלוש דקות",
+    playlist: {
+      listId: "PLKPbaa9gVqEVJK7fH-TO2wigjEOrQrZD3",
+      title: "ניגונים להאזנה",
+      note: "אפשר להאזין במקביל לתרגול, בעוצמה נעימה לכם.",
+    },
     steps: [
       { kind: "text", text: "עוגן הוא מקום בתוכנו שאינו זז, גם כשהגלים סוערים." },
       { kind: "text", text: "נשימה אחת. נזכור רגע שבו הרגשתם יציבות, אפילו לרגע." },
