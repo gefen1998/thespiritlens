@@ -75,7 +75,7 @@ export default function ToolPage() {
 
   return (
     <div className="relative min-h-screen">
-      <div>
+      <div className={phase === "completed" ? "pointer-events-none select-none" : ""}>
         <StepFlow
           key={runKey}
           tool={tool}

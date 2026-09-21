@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { PenLine } from "lucide-react";
 import { TOOL_CARD_META, getToolIcon } from "@/components/EditorialCard";
@@ -31,6 +31,20 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
     }
   }
 
+  // Lock body scroll while the completion sheet is open
+  useEffect(() => {
+    const originalOverflow = document.body.style.overflow;
+    const originalTouchAction = document.body.style.touchAction;
+
+    document.body.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.body.style.touchAction = originalTouchAction;
+    };
+  }, []);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   let currentPhrase = phrases[currentIndex % phrases.length];
 
@@ -54,7 +68,15 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
   const pebbleColor = tool?.id === "nesheama" ? "#6E8C63" : meta.pebble;
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col justify-end bg-black/45 backdrop-blur-[1px] transition-opacity duration-300">
+    <div
+      className="fixed inset-0 z-50 flex flex-col justify-end bg-black/60 transition-opacity duration-200 touch-none overscroll-none"
+      onTouchMove={(e) => {
+        // Prevent background scrolling completely when touching the overlay
+        if (e.target === e.currentTarget) {
+          e.preventDefault();
+        }
+      }}
+    >
       {/* Click outside to close */}
       <div className="flex-1 cursor-pointer" onClick={onDone} />
 
@@ -62,7 +84,7 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
       <div
         dir="rtl"
         lang="he"
-        className="w-full max-w-md mx-auto rounded-t-[32px] px-6 pt-3 pb-8 sm:pb-10 shadow-[0_-12px_45px_rgba(0,0,0,0.22)] select-none animate-in fade-in slide-in-from-bottom-8 duration-300"
+        className="w-full max-w-md mx-auto rounded-t-[32px] px-6 pt-3 pb-8 sm:pb-10 shadow-[0_-12px_45px_rgba(0,0,0,0.25)] select-none animate-in fade-in slide-in-from-bottom-6 duration-250 touch-auto"
         style={{ backgroundColor: "#F8F7F4" }}
       >
         {/* Drag handle */}
