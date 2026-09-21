@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Music, ChevronDown } from "lucide-react";
+import { Music, ChevronDown, ExternalLink } from "lucide-react";
 
 /**
  * A quiet listening bar for a practice: a YouTube playlist that can play
@@ -10,9 +10,10 @@ export default function PracticePlaylist({ playlist }) {
   const [open, setOpen] = useState(false);
   if (!playlist?.listId) return null;
 
-  const src = `https://www.youtube-nocookie.com/embed/videoseries?list=${playlist.listId}&rel=0&modestbranding=1&playsinline=1${
+  const src = `https://www.youtube.com/embed/videoseries?list=${playlist.listId}&rel=0&modestbranding=1&playsinline=1${
     open ? "&autoplay=1" : ""
   }`;
+  const watchUrl = `https://www.youtube.com/playlist?list=${playlist.listId}`;
 
   return (
     <div dir="rtl" className="fixed inset-x-0 bottom-0 z-20 px-4 pb-4 pointer-events-none">
@@ -42,10 +43,20 @@ export default function PracticePlaylist({ playlist }) {
                 src={src}
                 title={playlist.title}
                 className="w-full h-[170px] border-0 block"
-                allow="autoplay; encrypted-media; picture-in-picture"
+                allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
               />
             </div>
+            <a
+              href={watchUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 flex items-center justify-center gap-1.5 text-[12px] text-[#A8A69D] hover:text-[#F1F0EC] transition-colors"
+            >
+              <ExternalLink className="w-3.5 h-3.5" strokeWidth={1.8} />
+              פתיחת הפלייליסט ביוטיוב
+            </a>
           </div>
         )}
       </div>
