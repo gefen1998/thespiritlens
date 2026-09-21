@@ -155,11 +155,11 @@ export default function Home() {
               style={{ backgroundColor: "#B0654A", color: "#FBFAF7" }}
               className="press relative flex flex-col justify-between h-[165px] p-4 rounded-[28px] select-none overflow-hidden transition-transform"
             >
-              {/* Authentic corner single wing motif */}
+              {/* Subtle corner wing branding watermark */}
               <CornerWingMotif
-                className="-bottom-1 -left-1 w-[100px] h-[100px]"
-                color="#FBFAF7"
-                opacity={0.18}
+                className="bottom-0 left-0 w-24 h-24"
+                color="#FFFFFF"
+                opacity={0.16}
               />
               <div className="relative z-10 flex items-center justify-between w-full">
                 <div className="w-8 h-8 rounded-full bg-black/15 grid place-items-center text-[#FBFAF7] text-[14px] font-bold">
@@ -187,11 +187,11 @@ export default function Home() {
               style={{ backgroundColor: "rgba(22, 22, 26, 0.06)" }}
               className="press relative flex flex-col justify-between h-[165px] p-4 rounded-[28px] text-[#16161A] select-none text-right overflow-hidden transition-transform"
             >
-              {/* Authentic corner single wing motif */}
+              {/* Subtle corner wing branding watermark */}
               <CornerWingMotif
-                className="-bottom-1 -left-1 w-[100px] h-[100px]"
+                className="bottom-0 left-0 w-24 h-24"
                 color="#16161A"
-                opacity={0.12}
+                opacity={0.11}
               />
               <div className="relative z-10 flex items-center justify-between w-full">
                 <div className="w-8 h-8 rounded-full bg-white/70 grid place-items-center text-[#16161A] text-[14px] font-bold">

@@ -36,15 +36,23 @@ export default function PracticePlaylist({ playlist, className = "" }) {
 
         {open && (
           <div className="px-3 pb-3">
-            <div className="rounded-[14px] overflow-hidden bg-black">
+            <div className="relative rounded-[14px] overflow-hidden bg-black h-[170px]">
               <iframe
                 src={src}
                 title={playlist.title}
-                className="w-full h-[170px] border-0 block"
+                className="absolute inset-0 w-full h-full border-0 block"
                 allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
                 referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
               />
+              {/* Keep one steady playlist cover instead of a changing per-track frame */}
+              {playlist.coverUrl && (
+                <img
+                  src={playlist.coverUrl}
+                  alt={playlist.title}
+                  className="absolute top-0 right-0 left-0 bottom-[38px] w-full h-[132px] object-cover pointer-events-none"
+                />
+              )}
             </div>
             <a
               href={watchUrl}

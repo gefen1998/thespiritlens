@@ -288,6 +288,7 @@ export const tools = {
     duration: "שלוש דקות",
     playlist: {
       listId: "PLKPbaa9gVqEVJK7fH-TO2wigjEOrQrZD3",
+      coverUrl: "https://i.ytimg.com/vi/Ieg5AvyikfA/hqdefault.jpg",
       title: "ניגונים להאזנה",
       note: "אפשר להאזין במקביל לתרגול, בעוצמה נעימה לכם.",
     },
