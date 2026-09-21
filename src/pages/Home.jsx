@@ -7,6 +7,7 @@ import WelcomeSheet from "@/components/WelcomeSheet";
 import EmotionCheckIn from "@/components/EmotionCheckIn";
 import EditorialCard, { TOOL_CARD_META } from "@/components/EditorialCard";
 import { editorial, gates, tools, fatigueOptions, memoryFlow } from "@/lib/spiritContent";
+import { SpiritWingsWatermark, CornerWingMotif, SpiritBrandMark } from "@/components/SpiritWings";
 
 const WELCOME_KEY = "sl_seen_welcome";
 const QUICK_IDS = ["gentle-exhale", "gratitude-moment", "ground-touch", "word-for-path"];
@@ -78,11 +79,21 @@ export default function Home() {
   };
 
   return (
-    <div dir="rtl" lang="he" className="min-h-screen overflow-x-hidden">
-      <div className="max-w-xl mx-auto px-6 pt-6 pb-28">
+    <div dir="rtl" lang="he" className="relative min-h-screen overflow-x-hidden">
+      {/* Delicate Watermark: "כנפי הרוח" / "עדשת הרוח" embedded gracefully into the background */}
+      <SpiritWingsWatermark
+        className="absolute -top-6 right-0 left-0 max-w-lg mx-auto h-[260px] sm:h-[300px] z-0 -translate-y-2 pointer-events-none"
+        color="#BFA88F"
+        opacity={0.13}
+      />
+
+      <div className="relative z-10 max-w-xl mx-auto px-6 pt-6 pb-28">
         {/* Top Header with Book & Saved Buttons */}
         <div className="flex items-start justify-between gap-3">
           <div>
+            <div className="flex items-center gap-2 mb-1.5">
+              <SpiritBrandMark size={30} color="#B08A3C" />
+            </div>
             <h1 className="leading-[1.1]">
               <span className="block text-[32px] sm:text-[36px] font-bold text-[#6B6A63]">
                 מרחב
@@ -144,13 +155,19 @@ export default function Home() {
               style={{ backgroundColor: "#B0654A", color: "#FBFAF7" }}
               className="press relative flex flex-col justify-between h-[165px] p-4 rounded-[28px] select-none overflow-hidden transition-transform"
             >
-              <div className="flex items-center justify-between w-full">
+              {/* Subtle corner wing branding watermark */}
+              <CornerWingMotif
+                className="bottom-0 left-0 w-24 h-24"
+                color="#FFFFFF"
+                opacity={0.16}
+              />
+              <div className="relative z-10 flex items-center justify-between w-full">
                 <div className="w-8 h-8 rounded-full bg-black/15 grid place-items-center text-[#FBFAF7] text-[14px] font-bold">
                   1
                 </div>
                 <PenLine className="w-5 h-5 text-[#FBFAF7]" strokeWidth={1.75} />
               </div>
-              <div className="text-right mt-auto">
+              <div className="relative z-10 text-right mt-auto">
                 <span className="block text-[22px] font-bold leading-tight text-[#FBFAF7] tracking-tight">
                   לכתוב ישר
                 </span>
@@ -170,13 +187,19 @@ export default function Home() {
               style={{ backgroundColor: "rgba(22, 22, 26, 0.06)" }}
               className="press relative flex flex-col justify-between h-[165px] p-4 rounded-[28px] text-[#16161A] select-none text-right overflow-hidden transition-transform"
             >
-              <div className="flex items-center justify-between w-full">
+              {/* Subtle corner wing branding watermark */}
+              <CornerWingMotif
+                className="bottom-0 left-0 w-24 h-24"
+                color="#16161A"
+                opacity={0.11}
+              />
+              <div className="relative z-10 flex items-center justify-between w-full">
                 <div className="w-8 h-8 rounded-full bg-white/70 grid place-items-center text-[#16161A] text-[14px] font-bold">
                   2
                 </div>
                 <ArrowDown className="w-5 h-5 text-[#16161A]" strokeWidth={1.75} />
               </div>
-              <div className="text-right mt-auto">
+              <div className="relative z-10 text-right mt-auto">
                 <span className="block text-[22px] font-bold leading-tight text-[#16161A] tracking-tight">
                   לפנות מקום
                 </span>
