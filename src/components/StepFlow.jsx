@@ -4,6 +4,7 @@ import FocusHeader from "@/components/FocusHeader";
 import BreathRing from "@/components/BreathRing";
 import ActionButton from "@/components/ActionButton";
 import ChoiceCard from "@/components/ChoiceCard";
+import PracticePlaylist from "@/components/PracticePlaylist";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { letterTone } from "@/lib/spiritContent";
@@ -353,6 +354,12 @@ export default function StepFlow({ tool, tone = "open", onComplete, storageKey }
             {step.options.map((opt) => (
               <ChoiceCard key={opt.value} label={opt.label} onClick={() => handleChoice(opt)} />
             ))}
+          </div>
+        )}
+
+        {tool.playlist && (
+          <div className="mt-6 mb-2">
+            <PracticePlaylist playlist={tool.playlist} />
           </div>
         )}
       </div>
