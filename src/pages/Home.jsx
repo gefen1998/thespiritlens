@@ -133,7 +133,7 @@ export default function Home() {
         </div>
 
         {/* שתי דרכים לבחור בהן — Two Paths Containers */}
-        <div className="mt-6 mb-3">
+        <div className="mt-6">
           <p className="text-[13px] font-medium text-[#6B6A63] text-right mb-2.5">
             שתי דרכים לבחור בהן
           </p>
@@ -191,13 +191,16 @@ export default function Home() {
         </div>
 
         {/* Emotion Check-in circles */}
-        <div id="check-in-section" className="mt-4 scroll-mt-6">
+        <div id="check-in-section" className="mt-6 scroll-mt-6">
+          <p className="text-[13px] font-medium text-[#6B6A63] text-right mb-2.5">
+            מה ההרגשה היום?
+          </p>
           <EmotionCheckIn selected={chosen} onSelect={setChosen} />
         </div>
 
         {/* Featured Card — Warm Cream & Sand Paper Elevation */}
-        <div className="mt-5 -mx-6">
-          <p className="px-6 text-[12px] font-medium text-[#6B6A63] mb-2 text-right">
+        <div className="mt-6 -mx-6">
+          <p className="px-6 text-[13px] font-medium text-[#6B6A63] mb-2.5 text-right">
             {chosen ? `מתאים ל${chosen.label}` : editorial.home.startHere}
           </p>
 
