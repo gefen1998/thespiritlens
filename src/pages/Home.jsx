@@ -147,7 +147,9 @@ export default function Home() {
                   לפנות מקום
                 </span>
                 <span className="block text-[12px] text-[#6B6A63] leading-tight mt-1 font-medium">
-                  היעזרו במסלול קצר מונחה כדי להיפתח לכתיבה
+                  מסלול קצר מונחה
+                  <br />
+                  כדי להיפתח לכתיבה
                 </span>
               </div>
             </button>
