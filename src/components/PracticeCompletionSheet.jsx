@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { PenLine } from "lucide-react";
+import { PenLine, Bookmark, Check } from "lucide-react";
+import { saveMoment } from "@/lib/savedMoments";
 import { TOOL_CARD_META, getToolIcon } from "@/components/EditorialCard";
 
 export default function PracticeCompletionSheet({ tool, values = {}, onDone, onRepeat }) {
@@ -52,6 +53,24 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
   if (tool?.id === "nesheama" && currentPhrase === "לקחתי איתי רגע אחד של נשימה.") {
     currentPhrase = "לקחתי איתי רגע אחד\nשל נשימה.";
   }
+
+  // Automatically save this moment to local storage
+  useEffect(() => {
+    if (tool && currentPhrase) {
+      const toolNameStr =
+        tool.id === "nesheama"
+          ? "נשמ״ה"
+          : meta.line1 + (meta.line2 ? ` ${meta.line2}` : "");
+
+      saveMoment({
+        toolId: tool.id,
+        toolName: toolNameStr,
+        type: "tool",
+        text: currentPhrase,
+        details: values,
+      });
+    }
+  }, [currentIndex, currentPhrase, tool, meta.line1, meta.line2, values]);
 
   const nextPhrase = () => {
     if (phrases.length > 1) {
@@ -135,12 +154,22 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
           })()}
         </div>
 
-        {/* Privacy Note */}
-        <p className="text-xs sm:text-[13px] text-[#6B6A63] text-right leading-relaxed mt-5 mb-8">
-          זה נשמר אצלך בלבד. אפשר גם לכתוב אותו בספר, בעמוד
-          <br />
-          של התרגול.
-        </p>
+        {/* Privacy Note & Saved link */}
+        <div className="flex items-center justify-between mt-5 mb-7 text-right">
+          <p className="text-xs sm:text-[12.5px] text-[#6B6A63] leading-relaxed">
+            נשמר אצלך במכשיר בלבד.
+          </p>
+          <button
+            onClick={() => {
+              if (onDone) onDone();
+              navigate("/saved");
+            }}
+            className="flex items-center gap-1.5 text-xs sm:text-[12.5px] font-medium text-[#16161A] hover:text-[#B0654A] underline underline-offset-4 transition-colors"
+          >
+            <Bookmark className="w-3.5 h-3.5" />
+            <span>לרגעים ששמרתי</span>
+          </button>
+        </div>
 
         {/* Action Buttons */}
         <div className="space-y-2.5 w-full">

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { X, ArrowRight, ArrowLeft, PenLine, Check } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
+import { X, ArrowRight, ArrowLeft, PenLine, Check, Bookmark } from "lucide-react";
+import { saveMoment } from "@/lib/savedMoments";
 
 const STEPS = [
   {
@@ -51,12 +52,28 @@ export default function WriteGuide() {
 
   const handleNext = () => {
     if (isLastStep) {
-      // Save locally
+      // Save locally to journal and moments
       try {
+        const dateIso = new Date().toISOString();
+        const mainText = formData.word || formData.remember || (formData.story ? formData.story.slice(0, 60) + "..." : "כתיבה בספר");
+
+        saveMoment({
+          toolId: "write-guide",
+          toolName: "הסיפור שלי",
+          type: "writing",
+          text: mainText,
+          date: dateIso,
+          details: {
+            word: formData.word,
+            remember: formData.remember,
+            story: formData.story,
+          },
+        });
+
         const saved = JSON.parse(localStorage.getItem("sl_journal_entries") || "[]");
         saved.unshift({
           ...formData,
-          date: new Date().toISOString(),
+          date: dateIso,
         });
         localStorage.setItem("sl_journal_entries", JSON.stringify(saved));
       } catch {}
@@ -120,10 +137,18 @@ export default function WriteGuide() {
           )}
         </div>
 
-        <div className="pt-8 pb-4">
+        <div className="pt-8 pb-4 space-y-2.5">
+          <button
+            onClick={() => navigate("/saved")}
+            className="w-full py-4 rounded-full bg-[#B0654A] text-white font-bold text-[15px] hover:bg-[#A0553A] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+          >
+            <Bookmark className="w-4 h-4" />
+            <span>לרגעים ששמרתי</span>
+          </button>
+
           <button
             onClick={() => navigate("/")}
-            className="w-full py-4 rounded-full bg-[#16161A] text-white font-bold text-[15px] hover:bg-[#2A2A33] active:scale-[0.98] transition-all"
+            className="w-full py-3.5 rounded-full bg-[#16161A] text-white font-bold text-[15px] hover:bg-[#2A2A33] active:scale-[0.98] transition-all"
           >
             חזרה למרחב
           </button>

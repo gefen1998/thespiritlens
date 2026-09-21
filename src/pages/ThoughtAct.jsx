@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import StepFlow from "@/components/StepFlow";
 import PersonalCard from "@/components/PersonalCard";
 import { actFlow } from "@/lib/spiritContent";
+import { saveMoment } from "@/lib/savedMoments";
 
 const whenLabels = { now: "עכשיו", today: "היום", tomorrow: "מחר", other: "זמן אחר" };
 
@@ -32,7 +33,20 @@ export default function ThoughtAct() {
     <StepFlow
       tool={{ name: "לפעול", steps: actFlow.steps, mode: "read", audioNote: actFlow.intro }}
       tone="thought"
-      onComplete={setValues}
+      onComplete={(val) => {
+        setValues(val);
+        if (val) {
+          const actionText = val[actFlow.card.titleKey] || "פעולה שנבחרה";
+          const whenText = whenLabels[val[actFlow.card.bodyKey]] || val[actFlow.card.bodyKey] || "";
+          saveMoment({
+            toolId: "thought-act",
+            toolName: "לפעול",
+            type: "thought",
+            text: actionText,
+            details: { when: whenText },
+          });
+        }
+      }}
       storageKey={storageKey}
     />
   );

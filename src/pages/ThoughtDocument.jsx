@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import StepFlow from "@/components/StepFlow";
 import PersonalCard from "@/components/PersonalCard";
 import { documentFlow } from "@/lib/spiritContent";
+import { saveMoment } from "@/lib/savedMoments";
 
 export default function ThoughtDocument() {
   const [values, setValues] = useState(null);
@@ -30,7 +31,20 @@ export default function ThoughtDocument() {
     <StepFlow
       tool={{ name: "לתעד", steps: documentFlow.steps, mode: "read", audioNote: documentFlow.intro }}
       tone="thought"
-      onComplete={setValues}
+      onComplete={(val) => {
+        setValues(val);
+        if (val) {
+          const title = val[documentFlow.card.titleKey] || "תיעוד מחשבה";
+          const body = val[documentFlow.card.bodyKey] || "";
+          saveMoment({
+            toolId: "thought-document",
+            toolName: "לתעד מחשבה",
+            type: "thought",
+            text: title,
+            details: { body },
+          });
+        }
+      }}
       storageKey={storageKey}
     />
   );

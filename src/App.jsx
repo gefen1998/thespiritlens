@@ -22,6 +22,7 @@ import MemoryFlow from '@/pages/MemoryFlow';
 import Safety from '@/pages/Safety';
 import Commits from '@/pages/Commits';
 import WriteGuide from '@/pages/WriteGuide';
+import SavedMoments from '@/pages/SavedMoments';
 import CreditLine from '@/components/CreditLine';
 // Add page imports here
 
@@ -68,6 +69,7 @@ const AuthenticatedApp = () => {
       <Route path="/safety" element={<Safety />} />
       <Route path="/commits" element={<Commits />} />
       <Route path="/write" element={<WriteGuide />} />
+      <Route path="/saved" element={<SavedMoments />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

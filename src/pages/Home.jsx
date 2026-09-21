@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { BookOpen, ArrowUpLeft, PenLine, ArrowDown } from "lucide-react";
+import { BookOpen, ArrowUpLeft, PenLine, ArrowDown, Bookmark } from "lucide-react";
+import { getSavedCount } from "@/lib/savedMoments";
 import BottomTabs from "@/components/BottomTabs";
 import WelcomeSheet from "@/components/WelcomeSheet";
 import EmotionCheckIn from "@/components/EmotionCheckIn";
@@ -33,6 +34,19 @@ export default function Home() {
     }
   });
   const [chosen, setChosen] = useState(null);
+  const [savedCount, setSavedCount] = useState(0);
+
+  useEffect(() => {
+    const updateCount = () => setSavedCount(getSavedCount());
+    updateCount();
+
+    window.addEventListener("focus", updateCount);
+    window.addEventListener("storage", updateCount);
+    return () => {
+      window.removeEventListener("focus", updateCount);
+      window.removeEventListener("storage", updateCount);
+    };
+  }, []);
 
   const enter = () => {
     try {
@@ -66,8 +80,8 @@ export default function Home() {
   return (
     <div dir="rtl" lang="he" className="min-h-screen overflow-x-hidden">
       <div className="max-w-xl mx-auto px-6 pt-6 pb-28">
-        {/* Top Header with Book Button */}
-        <div className="flex items-start justify-between gap-4">
+        {/* Top Header with Book & Saved Buttons */}
+        <div className="flex items-start justify-between gap-3">
           <div>
             <h1 className="leading-[1.1]">
               <span className="block text-[32px] sm:text-[36px] font-bold text-[#6B6A63]">
@@ -81,13 +95,32 @@ export default function Home() {
               מרחב של נשימה, התבוננות ובחירה
             </p>
           </div>
-          <Link
-            to="/book"
-            aria-label={editorial.tabs.book}
-            className="press grid place-items-center w-11 h-11 shrink-0 mt-0.5 rounded-full bg-[#E7E5DF] text-[#16161A] hover:bg-[#D8D5CC] transition-colors"
-          >
-            <BookOpen className="w-[19px] h-[19px]" strokeWidth={1.75} />
-          </Link>
+          <div className="flex items-center gap-2 mt-0.5 shrink-0">
+            {/* כפתור רגעים ששמרתי */}
+            <Link
+              to="/saved"
+              aria-label="רגעים ששמרתי"
+              title="רגעים ששמרתי"
+              className="press relative grid place-items-center w-11 h-11 rounded-full bg-[#E7E5DF] text-[#16161A] hover:bg-[#D8D5CC] transition-colors"
+            >
+              <Bookmark className="w-[19px] h-[19px]" strokeWidth={1.75} />
+              {savedCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#B0654A] text-white text-[10px] font-bold flex items-center justify-center">
+                  {savedCount > 9 ? "9+" : savedCount}
+                </span>
+              )}
+            </Link>
+
+            {/* כפתור הספר */}
+            <Link
+              to="/book"
+              aria-label={editorial.tabs.book}
+              title={editorial.tabs.book}
+              className="press grid place-items-center w-11 h-11 rounded-full bg-[#E7E5DF] text-[#16161A] hover:bg-[#D8D5CC] transition-colors"
+            >
+              <BookOpen className="w-[19px] h-[19px]" strokeWidth={1.75} />
+            </Link>
+          </div>
         </div>
 
         {/* Subtitle / note */}
