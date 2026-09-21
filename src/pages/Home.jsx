@@ -142,7 +142,7 @@ export default function Home() {
             <Link
               to="/write"
               style={{ backgroundColor: "#B0654A", color: "#FBFAF7" }}
-              className="press relative flex flex-col justify-between h-[165px] p-4 rounded-[28px] select-none shadow-[0_4px_16px_rgba(176,101,74,0.2)] overflow-hidden transition-transform"
+              className="press relative flex flex-col justify-between h-[165px] p-4 rounded-[28px] select-none overflow-hidden transition-transform"
             >
               <div className="flex items-center justify-between w-full">
                 <div className="w-8 h-8 rounded-full bg-black/15 grid place-items-center text-[#FBFAF7] text-[14px] font-bold">

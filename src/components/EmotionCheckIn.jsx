@@ -1,56 +1,56 @@
 import React from "react";
-import { toneIcons } from "@/lib/toneIcons";
 import { guidedChoices } from "@/lib/spiritContent";
 
 export default function EmotionCheckIn({ selected, onSelect }) {
   return (
     <div
-      className="scroll-x-quiet -mx-6 flex gap-3.5 overflow-x-auto px-6 py-1 select-none"
+      className="scroll-x-quiet -mx-6 flex gap-3.5 overflow-x-auto px-6 py-2 select-none"
       style={{ scrollSnapType: "x mandatory" }}
     >
       {guidedChoices.map((choice) => {
-        const pigment = `var(--pigment-${choice.tone})`;
-        const form = `var(--form-${choice.tone})`;
-        const Icon = toneIcons[choice.tone];
         const on = selected?.id === choice.id;
+        const rot = choice.rotation || "0deg";
+
         return (
           <button
             key={choice.id}
             onClick={() => onSelect(choice)}
-            className="press flex w-[6.2rem] shrink-0 flex-col items-center gap-2.5 select-none"
+            className="press flex w-[5.75rem] sm:w-[6rem] shrink-0 flex-col items-center gap-2 select-none text-center"
             style={{ scrollSnapAlign: "start" }}
+            aria-pressed={on}
           >
+            {/* Outer Circle with tint background */}
             <span
-              className="relative grid h-[6.2rem] w-[6.2rem] place-items-center rounded-full transition-all duration-200"
+              className="relative grid h-[5.75rem] w-[5.75rem] sm:h-[6rem] sm:w-[6rem] place-items-center rounded-full transition-transform duration-200"
               style={{
-                backgroundColor: on ? `hsl(${pigment} / 0.22)` : "#E7E5DF",
-                transform: on ? "scale(1.03)" : "scale(1)",
+                backgroundColor: choice.tint,
+                transform: on ? "scale(1.02)" : "scale(1)",
               }}
             >
+              {/* Inner Organic Blob with wash color - clean organic shape without icon */}
               <span
-                className="grid h-14 w-14 place-items-center transition-transform duration-200"
+                className="grid h-12 w-12 sm:h-13 sm:w-13 transition-transform duration-300"
                 style={{
-                  backgroundColor: `hsl(${pigment} / ${on ? 1 : 0.95})`,
-                  borderRadius: form,
+                  backgroundColor: choice.wash,
+                  borderRadius: choice.blob,
+                  transform: `rotate(${rot})`,
                 }}
-              >
-                {Icon && (
-                  <Icon
-                    className="w-[23px] h-[23px] text-white/95"
-                    strokeWidth={1.35}
-                  />
-                )}
-              </span>
+              />
+
+              {/* Selection Dot: var(--accent) / #B08A3C */}
               {on && (
                 <span
-                  className="absolute top-2 left-2 w-2.5 h-2.5 rounded-full ring-2 ring-background"
-                  style={{ backgroundColor: `hsl(${pigment})` }}
+                  className="absolute top-2 left-2 w-2.5 h-2.5 rounded-full ring-2 ring-white/80 shadow-xs"
+                  style={{ backgroundColor: "var(--accent, #B08A3C)" }}
+                  aria-hidden="true"
                 />
               )}
             </span>
+
+            {/* Label below the circle */}
             <span
-              className={`text-[15px] text-center leading-snug ${
-                on ? "font-bold text-foreground" : "text-foreground font-medium"
+              className={`text-[14.5px] leading-snug transition-colors ${
+                on ? "font-bold text-[#16161A]" : "font-medium text-[#46453F]"
               }`}
             >
               {choice.label}
