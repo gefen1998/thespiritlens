@@ -24,6 +24,8 @@ function recoToolId(choice) {
 export default function Home() {
   const navigate = useNavigate();
   const [showWelcome, setShowWelcome] = useState(() => {
+    // ?welcome=1 always re-opens the welcome sheet (useful for reviewing it).
+    if (new URLSearchParams(window.location.search).get("welcome") === "1") return true;
     try {
       return !localStorage.getItem(WELCOME_KEY);
     } catch {
