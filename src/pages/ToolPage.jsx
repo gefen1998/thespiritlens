@@ -76,13 +76,15 @@ export default function ToolPage() {
 
   return (
     <div className="relative min-h-screen">
-      <StepFlow
-        key={runKey}
-        tool={tool}
-        tone={tone}
-        onComplete={onComplete}
-        storageKey={storageKey}
-      />
+      <div className={tool.playlist ? "pb-28" : undefined}>
+        <StepFlow
+          key={runKey}
+          tool={tool}
+          tone={tone}
+          onComplete={onComplete}
+          storageKey={storageKey}
+        />
+      </div>
 
       {tool.playlist && <PracticePlaylist playlist={tool.playlist} />}
 
