@@ -88,20 +88,29 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
           </div>
 
           {/* Pebble circle with pattern/icon */}
-          <div
-            className="w-14 h-14 sm:w-16 sm:h-16 rounded-full shrink-0 flex items-center justify-center shadow-[inset_0_1px_3px_rgba(0,0,0,0.06)]"
-            style={{
-              backgroundColor: pebbleColor,
-              borderRadius: meta.pebbleRadius || "50%",
-            }}
-          >
-            {Icon && (
-              <Icon
-                className="w-6 h-6 sm:w-7 sm:h-7 text-white/95 drop-shadow-sm"
-                strokeWidth={1.5}
-              />
-            )}
-          </div>
+          {(() => {
+            const rot = meta.rotation || "-8deg";
+            const counterRot = rot.startsWith("-") ? rot.slice(1) : `-${rot}`;
+            return (
+              <div
+                className="w-14 h-14 sm:w-16 sm:h-16 shrink-0 flex items-center justify-center shadow-[inset_0_1px_3px_rgba(0,0,0,0.06)]"
+                style={{
+                  backgroundColor: pebbleColor,
+                  borderRadius: meta.pebbleRadius || "52% 48% 58% 42% / 46% 54% 46% 54%",
+                  transform: `rotate(${rot})`,
+                }}
+              >
+                {Icon && (
+                  <div style={{ transform: `rotate(${counterRot})` }}>
+                    <Icon
+                      className="w-6 h-6 sm:w-7 sm:h-7 text-white/95 drop-shadow-sm"
+                      strokeWidth={1.5}
+                    />
+                  </div>
+                )}
+              </div>
+            );
+          })()}
         </div>
 
         {/* Privacy Note */}

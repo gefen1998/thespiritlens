@@ -5,7 +5,8 @@ import { TOOL_CARD_META, getToolIcon } from "@/components/EditorialCard";
 const FALLBACK = {
   pebble: "#7C7263",
   textMuted: "#7C7263",
-  pebbleRadius: "50% 50% 50% 50%",
+  pebbleRadius: "52% 48% 60% 40% / 46% 54% 46% 54%",
+  rotation: "-10deg",
 };
 
 export default function ToolListRow({ tool, category }) {
@@ -13,6 +14,7 @@ export default function ToolListRow({ tool, category }) {
   const meta = TOOL_CARD_META[tool.id] || FALLBACK;
   const Icon = meta.icon || getToolIcon(tool.id);
   const time = meta.time || tool.duration || "01:00";
+  const rot = meta.rotation || FALLBACK.rotation || "0deg";
 
   return (
     <Link
@@ -25,9 +27,14 @@ export default function ToolListRow({ tool, category }) {
         style={{
           backgroundColor: meta.pebble || FALLBACK.pebble,
           borderRadius: meta.pebbleRadius || FALLBACK.pebbleRadius,
+          transform: `rotate(${rot})`,
         }}
       >
-        {Icon && <Icon className="w-[17px] h-[17px] text-white/90" strokeWidth={1.4} />}
+        {Icon && (
+          <span style={{ transform: `rotate(${rot.startsWith("-") ? rot.slice(1) : `-${rot}`})` }}>
+            <Icon className="w-[17px] h-[17px] text-white/90" strokeWidth={1.4} />
+          </span>
+        )}
       </span>
 
       {/* Title + description */}
