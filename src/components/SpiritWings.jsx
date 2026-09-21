@@ -60,21 +60,18 @@ export function CornerWingMotif({ className = "", color = "currentColor", opacit
       style={{ opacity }}
     >
       <svg
-        viewBox="0 0 280 280"
+        viewBox="70 30 155 220"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className="w-full h-full"
       >
-        <g fill={color}>
-          {/* Single Wing with 4 feathers swooping gracefully upwards */}
-          {/* Feather 1 - Main long feather */}
-          <path d="M 20,260 C 50,210 110,130 240,10 C 220,80 150,180 45,275 C 32,270 24,264 20,260 Z" />
-          {/* Feather 2 */}
-          <path d="M 28,272 C 65,235 130,165 248,95 C 222,145 152,230 52,282 C 40,278 32,274 28,272 Z" />
-          {/* Feather 3 */}
-          <path d="M 36,282 C 75,255 140,200 252,150 C 218,198 145,260 62,288 C 50,285 42,283 36,282 Z" />
-          {/* Feather 4 */}
-          <path d="M 46,288 C 88,272 150,230 245,195 C 200,238 128,285 70,292 C 58,290 50,289 46,288 Z" />
+        {/* Single wing — same 5 curved feathers as the brand watermark */}
+        <g stroke={color} strokeWidth="3" fill={color} fillOpacity="0.45" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M 175 190 C 150 160 120 110 80 40 C 90 90 110 145 155 195 Z" />
+          <path d="M 185 205 C 160 175 130 130 95 80 C 108 125 128 170 168 210 Z" />
+          <path d="M 195 218 C 172 190 145 150 115 115 C 128 150 145 190 180 222 Z" />
+          <path d="M 205 228 C 185 205 160 170 135 145 C 148 175 165 205 192 232 Z" />
+          <path d="M 215 238 C 198 218 175 190 155 175 C 168 198 185 222 208 240 Z" />
         </g>
       </svg>
     </div>
