@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { X, ArrowRight, ArrowLeft, PenLine, Check, Bookmark } from "lucide-react";
 import { saveMoment, getWriteDraft, saveWriteDraft, clearWriteDraft } from "@/lib/savedMoments";
 import AnonymityNote from "@/components/write/AnonymityNote";
+import WriteQuote from "@/components/write/WriteQuote";
 import DraftSaveButton from "@/components/write/DraftSaveButton";
 
 const STEPS = [
@@ -190,7 +191,12 @@ export default function WriteGuide() {
           {step.instruction}
         </p>
 
-        {step.type === "intro" && <AnonymityNote />}
+        {step.type === "intro" && (
+          <>
+            <WriteQuote />
+            <AnonymityNote />
+          </>
+        )}
 
         {/* Input area if step requires input */}
         {step.type !== "intro" && (
