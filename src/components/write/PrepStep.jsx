@@ -31,7 +31,7 @@ export default function PrepStep({ formData, setField }) {
             rows={2}
             value={formData.anchor || ""}
             onChange={(e) => setField("anchor", e.target.value)}
-            placeholder="כתוב כאן..."
+            placeholder="כתבו כאן או בחרו מלמטה..."
             className="mt-3 w-full bg-transparent border-none resize-none p-0 text-[26px] font-medium leading-snug text-[#5E4A1E] placeholder:text-[#9C8A63] focus:outline-none text-right"
           />
         </div>
