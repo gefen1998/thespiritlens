@@ -14,16 +14,17 @@ function wingsMask(position = "center", size = "contain") {
  */
 export function SpiritWingsWatermark({ className = "", color = "#BFA88F", opacity = 0.14 }) {
   return (
-    <div aria-hidden="true" className={`pointer-events-none select-none ${className}`} style={{ opacity }}>
+    <div aria-hidden="true" className={`pointer-events-none select-none ${className}`}>
       <div className="relative w-full h-full">
-        <div className="absolute inset-0" style={{ backgroundColor: color, ...wingsMask() }} />
+        <div className="absolute inset-0" style={{ backgroundColor: color, opacity, ...wingsMask() }} />
         <svg
           viewBox="0 0 100 60"
           fill="none"
-          className="absolute left-1/2 top-[58%] -translate-x-1/2 -translate-y-1/2 w-[14%]"
+          className="absolute left-1/2 top-[56%] -translate-x-1/2 -translate-y-1/2 w-[20%]"
+          style={{ opacity: Math.min(opacity * 2.4, 0.35) }}
         >
-          <path d="M 6 30 C 26 8 74 8 94 30 C 74 52 26 52 6 30 Z" stroke={color} strokeWidth="3" strokeLinejoin="round" />
-          <circle cx="50" cy="30" r="10" stroke={color} strokeWidth="2.5" />
+          <path d="M 6 30 C 26 8 74 8 94 30 C 74 52 26 52 6 30 Z" stroke={color} strokeWidth="4" strokeLinejoin="round" />
+          <circle cx="50" cy="30" r="10" stroke={color} strokeWidth="3.5" />
           <circle cx="50" cy="30" r="4" fill={color} />
         </svg>
       </div>
