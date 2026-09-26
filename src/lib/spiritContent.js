@@ -288,7 +288,7 @@ export const tools = {
     duration: "שלוש דקות",
     playlist: {
       listId: "PLKPbaa9gVqEVJK7fH-TO2wigjEOrQrZD3",
-      coverUrl: "https://i.ytimg.com/vi/Ieg5AvyikfA/hqdefault.jpg",
+      coverUrl: "https://base44.app/api/apps/6aa5ba6278746a9e6313ec62/files/mp/public/6aa5ba6278746a9e6313ec62/aa60bd778_playlist-cover.jpg",
       title: "ניגונים להאזנה",
       note: "אפשר להאזין במקביל לתרגול, בעוצמה נעימה לכם.",
     },
