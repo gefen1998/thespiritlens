@@ -53,7 +53,7 @@ export default function GuidedPause() {
   const [titleA, titleB] = pauseBeforeTool.title.split(/,\s*/);
 
   return (
-    <main dir="rtl" lang="he" className="rise-in min-h-[100dvh] max-w-[430px] mx-auto flex flex-col bg-[#E4E1D9]">
+    <main dir="rtl" lang="he" className="rise-in min-h-[100dvh] max-w-[430px] mx-auto flex flex-col bg-background">
       <div className="flex items-center justify-between px-6 pt-4">
         {choice ? (
           <div className="flex items-center gap-2 h-[38px] pr-3 pl-3.5 rounded-full" style={{ backgroundColor: choice.tint }}>

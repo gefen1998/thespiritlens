@@ -1,8 +1,6 @@
 import React from "react";
 import { Sparkles } from "lucide-react";
-
-const WINGS_URL =
-  "https://media.base44.com/images/public/6aa5ba6278746a9e6313ec62/b888de778_wings-mark.png";
+import { WINGS_URL } from "@/components/SpiritWings";
 
 // Wings mark tinted ochre (black → ochre, white → transparent via blend modes),
 // with the chosen emotion's breathing form and its inner pattern on top.

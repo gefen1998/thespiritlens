@@ -158,9 +158,9 @@ export default function Home() {
             >
               {/* Subtle corner wing branding watermark */}
               <CornerWingMotif
-                className="bottom-0 left-0 w-24 h-24"
+                className="-bottom-2 left-2 w-[84px] h-[118px]"
                 color="#FFFFFF"
-                opacity={0.16}
+                opacity={0.18}
               />
               <div className="relative z-10 flex items-center justify-between w-full">
                 <div className="w-8 h-8 rounded-full bg-black/15 grid place-items-center text-[#FBFAF7] text-[14px] font-bold">
@@ -190,9 +190,9 @@ export default function Home() {
             >
               {/* Subtle corner wing branding watermark */}
               <CornerWingMotif
-                className="bottom-0 left-0 w-24 h-24"
+                className="-bottom-2 left-2 w-[84px] h-[118px]"
                 color="#16161A"
-                opacity={0.11}
+                opacity={0.08}
               />
               <div className="relative z-10 flex items-center justify-between w-full">
                 <div className="w-8 h-8 rounded-full bg-white/70 grid place-items-center text-[#16161A] text-[14px] font-bold">
