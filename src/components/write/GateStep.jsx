@@ -1,10 +1,13 @@
 import React from "react";
 import { Quote } from "lucide-react";
-import { STORY_GATES } from "@/lib/storyGates";
+import { STORY_GATES, GATE_MOMENTS } from "@/lib/storyGates";
 import GateCard from "@/components/write/GateCard";
+import GateMoments from "@/components/write/GateMoments";
+import GatePersonalInput from "@/components/write/GatePersonalInput";
 
 export default function GateStep({ formData, setField }) {
   const gates = formData.gates || [];
+  const moments = formData.gateMoments || {};
   const toggle = (id) =>
     setField("gates", gates.includes(id) ? gates.filter((g) => g !== id) : [...gates, id]);
 
@@ -26,9 +29,24 @@ export default function GateStep({ formData, setField }) {
       </p>
 
       <div className="mt-5 space-y-2.5">
-        {STORY_GATES.map((gate) => (
-          <GateCard key={gate.id} gate={gate} selected={gates.includes(gate.id)} onToggle={() => toggle(gate.id)} />
-        ))}
+        {STORY_GATES.map((gate) => {
+          const selected = gates.includes(gate.id);
+          return (
+            <div key={gate.id}>
+              <GateCard gate={gate} selected={selected} onToggle={() => toggle(gate.id)} />
+              {selected && gate.personal && (
+                <GatePersonalInput value={formData.gatePersonal || ""} onChange={(v) => setField("gatePersonal", v)} />
+              )}
+              {selected && GATE_MOMENTS[gate.id] && (
+                <GateMoments
+                  moments={GATE_MOMENTS[gate.id]}
+                  selected={moments[gate.id] || []}
+                  onChange={(list) => setField("gateMoments", { ...moments, [gate.id]: list })}
+                />
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

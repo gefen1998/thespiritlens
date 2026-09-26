@@ -69,6 +69,8 @@ export default function WriteGuide() {
     lightSentence: "",
     anchor: "",
     gates: [],
+    gateMoments: {},
+    gatePersonal: "",
     ...(draft?.formData || {}),
   });
   const [isCompleted, setIsCompleted] = useState(false);
@@ -105,6 +107,8 @@ export default function WriteGuide() {
             lightSentence: formData.lightSentence,
             anchor: formData.anchor,
             gates: (formData.gates || []).map((id) => STORY_GATES.find((g) => g.id === id)?.title).filter(Boolean),
+            gateMoments: (formData.gates || []).flatMap((id) => formData.gateMoments?.[id] || []),
+            gatePersonal: (formData.gates || []).includes("ishi") ? formData.gatePersonal : "",
           },
         });
 
