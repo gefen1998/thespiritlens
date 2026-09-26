@@ -24,16 +24,24 @@ export default function WritePlaylistDock({ onClose }) {
     // Zero-height sticky rail: sits in line with the close button before scrolling,
     // then pins to the top edge alongside the sticky step header.
     <div className="sticky top-0 z-40 h-0">
+    <div
+      dir="ltr"
+      className={
+        onClose
+          ? "absolute top-1.5 -left-1.5 p-1.5 flex items-center gap-2 rounded-full bg-[#FBFAF7] border border-[#E3DFD6]"
+          : "absolute top-3 left-[52px]"
+      }
+    >
     {onClose && (
       <button
         onClick={onClose}
         aria-label="סגירה"
-        className="absolute top-3 left-0 w-11 h-11 rounded-full bg-[#E5E1D8] hover:bg-[#DDD9CE] text-[#4A4943] grid place-items-center transition-colors"
+        className="w-11 h-11 rounded-full bg-[#E5E1D8] hover:bg-[#DDD9CE] text-[#4A4943] grid place-items-center transition-colors"
       >
         <X className="w-5 h-5" strokeWidth={2} />
       </button>
     )}
-    <div dir="rtl" className="absolute top-3 left-[52px]">
+    <div dir="rtl" className="relative">
       <WritePlaylistPanel open={open} playlist={playlist} player={player} onClose={() => setOpen(false)} />
       <div className="flex items-center h-11 rounded-full bg-[#16161A] text-[#F1F0EC] shadow-[0_4px_14px_rgba(0,0,0,0.18)]">
         <button
@@ -59,6 +67,7 @@ export default function WritePlaylistDock({ onClose }) {
           </button>
         )}
       </div>
+    </div>
     </div>
     </div>
   );
