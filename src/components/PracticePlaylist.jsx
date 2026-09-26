@@ -45,7 +45,7 @@ export default function PracticePlaylist({ playlist, className = "" }) {
                 <img
                   src={playlist.coverUrl}
                   alt={playlist.title}
-                  className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                  className="absolute inset-0 w-full h-full object-cover object-right pointer-events-none"
                 />
               )}
             </div>
