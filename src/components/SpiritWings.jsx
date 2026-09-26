@@ -17,15 +17,22 @@ export function SpiritWingsWatermark({ className = "", color = "#BFA88F", opacit
     <div aria-hidden="true" className={`pointer-events-none select-none ${className}`}>
       <div className="relative w-full h-full">
         <div className="absolute inset-0" style={{ backgroundColor: color, opacity, ...wingsMask() }} />
+        {/* Original "עדשת הרוח" eye */}
         <svg
-          viewBox="0 0 100 60"
+          viewBox="195 175 210 210"
           fill="none"
-          className="absolute left-1/2 top-[56%] -translate-x-1/2 -translate-y-1/2 w-[20%]"
-          style={{ opacity: Math.min(opacity * 2.4, 0.35) }}
+          className="absolute left-1/2 top-[64%] -translate-x-1/2 -translate-y-1/2 w-[35%] aspect-square"
+          style={{ opacity: Math.min(opacity * 2, 0.3) }}
         >
-          <path d="M 6 30 C 26 8 74 8 94 30 C 74 52 26 52 6 30 Z" stroke={color} strokeWidth="4" strokeLinejoin="round" />
-          <circle cx="50" cy="30" r="10" stroke={color} strokeWidth="3.5" />
-          <circle cx="50" cy="30" r="4" fill={color} />
+          <g fill={color}>
+            <path d="M 212,235 C 240,185 360,185 388,235 C 345,200 255,200 212,235 Z" />
+            <path d="M 212,235 C 240,285 360,285 388,235 C 345,270 255,270 212,235 Z" />
+            <path d="M 205,245 C 240,305 360,305 395,245 C 362,322 238,322 205,245 Z" />
+            <path d="M 270,308 C 265,340 255,360 248,375 C 255,362 268,338 274,310 Z" />
+            <path d="M 330,308 C 335,340 345,360 352,375 C 345,362 332,338 326,310 Z" />
+            <circle cx="300" cy="235" r="32" stroke={color} strokeWidth="6" fill="none" />
+            <circle cx="300" cy="235" r="20" />
+          </g>
         </svg>
       </div>
     </div>
