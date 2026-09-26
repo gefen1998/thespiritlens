@@ -93,6 +93,43 @@ export function clearAllMoments() {
   }
 }
 
+// ---- Writing-guide draft (kept on this device only) ----
+const DRAFT_KEY = "sl_write_draft";
+const DRAFT_ID = "write_draft";
+
+export function getWriteDraft() {
+  try {
+    return JSON.parse(localStorage.getItem(DRAFT_KEY) || "null");
+  } catch {
+    return null;
+  }
+}
+
+export function saveWriteDraft(formData, stepIndex) {
+  try {
+    const date = new Date().toISOString();
+    localStorage.setItem(DRAFT_KEY, JSON.stringify({ formData, stepIndex, date }));
+    const others = getSavedMoments().filter((m) => m.id !== DRAFT_ID);
+    const draft = {
+      id: DRAFT_ID,
+      date,
+      toolId: "write-guide",
+      toolName: "טיוטה · הסיפור שלי",
+      type: "writing",
+      text: formData.word || formData.remember || (formData.story ? formData.story.slice(0, 60) + "..." : "טיוטה"),
+      details: { ...formData },
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([draft, ...others]));
+  } catch {}
+}
+
+export function clearWriteDraft() {
+  try {
+    localStorage.removeItem(DRAFT_KEY);
+    deleteMoment(DRAFT_ID);
+  } catch {}
+}
+
 export function getSavedCount() {
   try {
     return getSavedMoments().length;

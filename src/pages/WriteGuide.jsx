@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { useNavigate, Link } from "react-router-dom";
 import { X, ArrowRight, ArrowLeft, PenLine, Check, Bookmark } from "lucide-react";
-import { saveMoment } from "@/lib/savedMoments";
+import { saveMoment, getWriteDraft, saveWriteDraft, clearWriteDraft } from "@/lib/savedMoments";
+import AnonymityNote from "@/components/write/AnonymityNote";
+import DraftSaveButton from "@/components/write/DraftSaveButton";
 
 const STEPS = [
   {
     stepNumber: "שלב ראשון",
     title: "הסיפור שלי",
-    instruction: "אין צורך לכתוב יפה או מסודר. רק לכתוב את מה שנכון עכשיו. אפשר לדלג על כל שלב.",
+    instruction: "אין צורך לכתוב יפה או מסודר. רק לכתוב את מה שנכון עכשיו. דווקא הכנות, הפשטות והאמת האישית - הן שהופכות סיפור לעדות. אפשר לדלג על כל שלב.",
     type: "intro",
   },
   {
@@ -40,11 +42,13 @@ const STEPS = [
 
 export default function WriteGuide() {
   const navigate = useNavigate();
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [draft] = useState(() => getWriteDraft());
+  const [currentStepIndex, setCurrentStepIndex] = useState(draft?.stepIndex || 0);
   const [formData, setFormData] = useState({
     story: "",
     remember: "",
     word: "",
+    ...(draft?.formData || {}),
   });
   const [isCompleted, setIsCompleted] = useState(false);
 
@@ -82,6 +86,7 @@ export default function WriteGuide() {
         });
         localStorage.setItem("sl_journal_entries", JSON.stringify(saved));
       } catch {}
+      clearWriteDraft();
       setIsCompleted(true);
     } else {
       setCurrentStepIndex((prev) => prev + 1);
@@ -185,6 +190,8 @@ export default function WriteGuide() {
           {step.instruction}
         </p>
 
+        {step.type === "intro" && <AnonymityNote />}
+
         {/* Input area if step requires input */}
         {step.type !== "intro" && (
           <div className="mt-6">
@@ -221,6 +228,9 @@ export default function WriteGuide() {
 
       {/* Bottom Floating Navigation Bar */}
       <div className="pt-8 pb-4">
+        {step.type !== "intro" && (
+          <DraftSaveButton onSave={() => saveWriteDraft(formData, currentStepIndex)} />
+        )}
         <div className="flex items-center gap-3">
           {/* Main Action Bar */}
           <button
