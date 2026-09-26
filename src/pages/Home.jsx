@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BookOpen, ArrowUpLeft, PenLine, ArrowDown, Bookmark } from "lucide-react";
-import { getSavedCount } from "@/lib/savedMoments";
+import { getSavedCount, getWriteDraft } from "@/lib/savedMoments";
 import BottomTabs from "@/components/BottomTabs";
 import WelcomeSheet from "@/components/WelcomeSheet";
 import EmotionCheckIn from "@/components/EmotionCheckIn";
@@ -36,6 +36,7 @@ export default function Home() {
   });
   const [chosen, setChosen] = useState(null);
   const [savedCount, setSavedCount] = useState(0);
+  const [hasDraft] = useState(() => !!getWriteDraft());
 
   useEffect(() => {
     const updateCount = () => setSavedCount(getSavedCount());
@@ -170,10 +171,10 @@ export default function Home() {
               </div>
               <div className="relative z-10 text-right mt-auto">
                 <span className="block text-[22px] font-bold leading-tight text-[#FBFAF7] tracking-tight">
-                  לכתוב ישר
+                  {hasDraft ? "להמשיך לכתוב" : "לכתוב ישר"}
                 </span>
                 <span className="block text-[12.5px] text-[#FBFAF7]/90 leading-snug mt-1.5 font-normal">
-                  לפתוח את מדריך הכתיבה עכשיו
+                  {hasDraft ? "ההתקדמות שלך נשמרה - ממשיכים מהנקודה שבה עצרת" : "לפתוח את מדריך הכתיבה עכשיו"}
                 </span>
               </div>
             </Link>
