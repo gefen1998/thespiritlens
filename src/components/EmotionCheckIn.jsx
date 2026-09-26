@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { guidedChoices } from "@/lib/spiritContent";
 
-const EMOTION_ICONS = {
+export const EMOTION_ICONS = {
   calm: Wind,
   tired: Moon,
   stressed: Waves,

@@ -74,8 +74,9 @@ export default function Home() {
     const target = { type: "tool", toolId: recoId };
     try {
       sessionStorage.setItem("sl_guided_target", JSON.stringify(target));
+      sessionStorage.setItem("sl_guided_emotion", chosen?.id || "");
     } catch {}
-    navigate("/guided/pause", { state: { target } });
+    navigate("/guided/pause", { state: { target, emotionId: chosen?.id || null } });
   };
 
   return (
