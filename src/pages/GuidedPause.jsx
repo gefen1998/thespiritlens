@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
 import PauseHero from "@/components/PauseHero";
+import CreditLine from "@/components/CreditLine";
 import { EMOTION_ICONS } from "@/components/EmotionCheckIn";
 import { TOOL_CARD_META } from "@/components/EditorialCard";
 import { pauseBeforeTool, gates, guidedChoices, tools } from "@/lib/spiritContent";
@@ -91,7 +92,7 @@ export default function GuidedPause() {
         ))}
       </div>
 
-      <div className="px-6 pt-4 pb-10">
+      <div className="px-6 pt-4 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         {next && (
           <div className="flex items-center gap-3 py-3.5 mb-3.5 border-t border-[#16161A]/[0.14]">
             <small className="text-[12px] text-[#6B6A63]">אחר כך</small>
@@ -113,6 +114,7 @@ export default function GuidedPause() {
         >
           לבחור תרגול אחר
         </button>
+        <CreditLine className="pt-1 !px-0" />
       </div>
     </main>
   );

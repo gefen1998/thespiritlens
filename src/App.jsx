@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
@@ -76,6 +76,15 @@ const AuthenticatedApp = () => {
 };
 
 
+// Pages that render the credit inside their own single-screen layout.
+const OWN_CREDIT_ROUTES = ["/guided/pause"];
+
+function GlobalCreditLine() {
+  const { pathname } = useLocation();
+  if (OWN_CREDIT_ROUTES.includes(pathname)) return null;
+  return <CreditLine className="pb-28 pt-2" />;
+}
+
 function App() {
 
   return (
@@ -84,7 +93,7 @@ function App() {
         <Router>
           <ScrollToTop />
           <AuthenticatedApp />
-          <CreditLine className="pb-28 pt-2" />
+          <GlobalCreditLine />
         </Router>
         <Toaster />
       </QueryClientProvider>
