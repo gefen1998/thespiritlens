@@ -244,7 +244,7 @@ export default function WriteGuide() {
     <div dir="rtl" lang="he" className="min-h-screen bg-[#F4F1EA] text-[#16161A] flex flex-col justify-between p-6 max-w-md mx-auto">
       {/* Top Header */}
       <div>
-        <WritePlaylistDock />
+        <WritePlaylistDock pinned={!!step.compact} />
         {step.compact ? (
           <CompactStepHeader title={step.title} stepNumber={step.stepNumber} onClose={() => navigate("/")} />
         ) : (
