@@ -13,6 +13,7 @@ function wingsMask(position = "center", size = "contain") {
  * Full "כנפי הרוח" mark — both wings from the brand artwork, with the lens/eye centered between them.
  */
 export function SpiritWingsWatermark({ className = "", color = "#BFA88F", opacity = 0.14 }) {
+  const uid = React.useId().replace(/:/g, "");
   return (
     <div aria-hidden="true" className={`pointer-events-none select-none ${className}`}>
       <div className="relative w-full h-full">
@@ -24,16 +25,26 @@ export function SpiritWingsWatermark({ className = "", color = "#BFA88F", opacit
           className="absolute left-1/2 top-[66%] -translate-x-1/2 -translate-y-1/2 w-[36%]"
           style={{ opacity: Math.min(opacity * 1.8, 0.3) }}
         >
-          {/* Almond outline with pointed corners */}
+          <defs>
+            <radialGradient id={`${uid}-pupil`} cx="38%" cy="35%" r="70%">
+              <stop offset="0%" stopColor={color} stopOpacity="0.35" />
+              <stop offset="60%" stopColor={color} stopOpacity="0.85" />
+              <stop offset="100%" stopColor={color} stopOpacity="1" />
+            </radialGradient>
+          </defs>
+          {/* Soft almond with a gentle inner wash for depth */}
           <path
             d="M 6 65 Q 100 -25 194 65 Q 100 155 6 65 Z"
+            fill={color}
+            fillOpacity="0.18"
             stroke={color}
-            strokeWidth="4.5"
-            strokeLinejoin="miter"
+            strokeWidth="4"
+            strokeLinejoin="round"
           />
-          {/* Iris: thin outer ring + full pupil */}
-          <circle cx="100" cy="65" r="36" stroke={color} strokeWidth="3" />
-          <circle cx="100" cy="65" r="28" fill={color} />
+          {/* Iris: soft ring + shaded pupil + small highlight */}
+          <circle cx="100" cy="65" r="36" stroke={color} strokeWidth="2.5" strokeOpacity="0.8" />
+          <circle cx="100" cy="65" r="29" fill={`url(#${uid}-pupil)`} />
+          <circle cx="90" cy="54" r="6" fill="#FFFFFF" fillOpacity="0.7" />
         </svg>
       </div>
     </div>
