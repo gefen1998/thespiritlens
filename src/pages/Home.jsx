@@ -235,9 +235,7 @@ export default function Home() {
               />
             )}
             {chosen ? (
-              <span>
-                התרגול שהתאמנו לתחושה <span className="font-bold text-[#16161A]">{chosen.label}</span>
-              </span>
+              <span>תרגול מונחה לתחושה שבחרת</span>
             ) : (
               editorial.home.startHere
             )}
