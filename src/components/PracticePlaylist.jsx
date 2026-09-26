@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Music, ChevronDown, ExternalLink } from "lucide-react";
+import useYouTubePlaylist from "@/hooks/useYouTubePlaylist";
+import PlaylistControls from "@/components/PlaylistControls";
 
 /**
  * A quiet listening bar for a practice: a YouTube playlist that can play
@@ -8,9 +10,9 @@ import { Music, ChevronDown, ExternalLink } from "lucide-react";
  */
 export default function PracticePlaylist({ playlist, className = "" }) {
   const [open, setOpen] = useState(false);
+  const player = useYouTubePlaylist(playlist?.listId, open);
   if (!playlist?.listId) return null;
 
-  const src = `https://www.youtube.com/embed/videoseries?list=${playlist.listId}&rel=0&modestbranding=1&playsinline=1`;
   const watchUrl = `https://www.youtube.com/playlist?list=${playlist.listId}`;
 
   return (
@@ -37,23 +39,23 @@ export default function PracticePlaylist({ playlist, className = "" }) {
         {open && (
           <div className="px-3 pb-3">
             <div className="relative rounded-[14px] overflow-hidden bg-black h-[170px]">
-              <iframe
-                src={src}
-                title={playlist.title}
-                className="absolute inset-0 w-full h-full border-0 block"
-                allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              />
+              <div ref={player.containerRef} className="absolute inset-0 [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:border-0" />
               {/* Keep one steady playlist cover instead of a changing per-track frame */}
               {playlist.coverUrl && (
                 <img
                   src={playlist.coverUrl}
                   alt={playlist.title}
-                  className="absolute top-0 right-0 left-0 bottom-[38px] w-full h-[132px] object-cover pointer-events-none"
+                  className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                 />
               )}
             </div>
+            <PlaylistControls
+              title={player.title}
+              playing={player.playing}
+              onPrev={player.prev}
+              onToggle={player.toggle}
+              onNext={player.next}
+            />
             <a
               href={watchUrl}
               target="_blank"
