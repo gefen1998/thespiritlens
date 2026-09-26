@@ -1,7 +1,6 @@
 import React from "react";
 import { CornerWingMotif } from "@/components/SpiritWings";
 import AttuneIntro from "@/components/write/AttuneIntro";
-import GuidingQuestions from "@/components/write/GuidingQuestions";
 
 const MOMENT_EXAMPLES = [
   "רגע של אומץ",
@@ -24,12 +23,11 @@ export default function AttuneStep() {
       <AttuneIntro />
       <span className="block mt-6 text-[13px] font-semibold text-[#8C7440]">התכווננות</span>
       <h1 className="mt-1 text-[28px] font-bold leading-[1.25] text-[#16161A]">בחר רגע אחד משמעותי.</h1>
-      <p className="mt-3 text-[18px] leading-[1.6] text-[#4A4943]">
-        לא את כל התקופה - רגע אחד חי, אחד שנשאר איתך.
-      </p>
-
-      <div className="relative overflow-hidden mt-6 p-5 rounded-[26px] bg-[#FBFAF7]">
+      <div className="relative overflow-hidden mt-5 p-5 rounded-[26px] bg-[#FBFAF7]">
         <CornerWingMotif className="left-0 bottom-4 w-16 h-32" color="#C9A868" opacity={0.25} />
+        <p className="relative mb-4 text-[17px] leading-[1.6] text-[#4A4943]">
+          לא את כל התקופה - רגע אחד חי, שנשאר איתך.
+        </p>
         <p className="relative text-[14px] font-semibold text-[#6B6A63]">זה יכול להיות:</p>
         <ul className="relative mt-3 grid grid-cols-2 gap-x-4 gap-y-3">
           {MOMENT_EXAMPLES.map((m) => (
@@ -40,7 +38,6 @@ export default function AttuneStep() {
           ))}
         </ul>
       </div>
-      <GuidingQuestions />
     </div>
   );
 }

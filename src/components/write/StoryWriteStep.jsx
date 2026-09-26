@@ -1,6 +1,7 @@
 import React from "react";
 import DictationButton from "@/components/write/DictationButton";
 import PersonalBackup from "@/components/write/PersonalBackup";
+import GuidingQuestions from "@/components/write/GuidingQuestions";
 
 const TARGET_CHARS = 1500;
 
@@ -15,13 +16,14 @@ export default function StoryWriteStep({ formData, setField }) {
 
   return (
     <div className="mt-6 text-right">
+      <GuidingQuestions />
       <textarea
         rows={9}
         style={{ minHeight: 240 }}
         value={story}
         onChange={(e) => setField("story", e.target.value)}
         placeholder="מה עובר עליי..."
-        className="w-full rounded-[22px] bg-[#FBFAF7] border border-[#E3D6B8] p-5 text-[17px] text-[#16161A] placeholder:text-[#8E8B83] focus:outline-none focus:ring-2 focus:ring-[#B35C44]/40 resize-none leading-relaxed"
+        className="mt-4 w-full rounded-[22px] bg-[#FBFAF7] border border-[#E3D6B8] p-5 text-[17px] text-[#16161A] placeholder:text-[#8E8B83] focus:outline-none focus:ring-2 focus:ring-[#B35C44]/40 resize-none leading-relaxed"
       />
 
       <div className="mt-3">
