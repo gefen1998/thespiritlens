@@ -26,7 +26,7 @@ export default function AttuneStep() {
       <div className="relative overflow-hidden mt-5 p-5 rounded-[26px] bg-[#FBFAF7]">
         <CornerWingMotif className="left-0 bottom-4 w-16 h-32" color="#C9A868" opacity={0.25} />
         <p className="relative mb-4 text-[17px] leading-[1.6] text-[#4A4943]">
-          לא את כל התקופה - רגע אחד חי, שנשאר איתך.
+          רגע אחד חי, שנשאר איתך.
         </p>
         <p className="relative text-[14px] font-semibold text-[#6B6A63]">זה יכול להיות:</p>
         <ul className="relative mt-3 grid grid-cols-2 gap-x-4 gap-y-3">
