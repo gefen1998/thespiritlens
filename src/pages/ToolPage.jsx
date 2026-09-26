@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { base44 } from "@/api/base44Client";
 import { useParams, useNavigate } from "react-router-dom";
 import FocusHeader from "@/components/FocusHeader";
 import StepFlow from "@/components/StepFlow";
@@ -14,6 +15,14 @@ export default function ToolPage() {
   const [phase, setPhase] = useState("steps"); // steps | completed | branches
   const [values, setValues] = useState({});
   const [runKey, setRunKey] = useState(0);
+
+  useEffect(() => {
+    if (!tools[toolId]) return;
+    base44.analytics.track({
+      eventName: `tool_opened_${toolId.replace(/-/g, "_")}`,
+      properties: { tool_id: toolId, tool_name: tools[toolId].name },
+    });
+  }, [toolId]);
 
   if (!tool) {
     return (

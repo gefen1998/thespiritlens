@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { base44 } from "@/api/base44Client";
 import { useNavigate, Link } from "react-router-dom";
 import { X, ArrowRight, ArrowLeft, PenLine, Check, Bookmark } from "lucide-react";
 import { saveMoment } from "@/lib/savedMoments";
@@ -46,6 +47,10 @@ export default function WriteGuide() {
     word: "",
   });
   const [isCompleted, setIsCompleted] = useState(false);
+
+  useEffect(() => {
+    base44.analytics.track({ eventName: "tool_opened_write_guide" });
+  }, []);
 
   const step = STEPS[currentStepIndex];
   const isLastStep = currentStepIndex === STEPS.length - 1;
