@@ -19,21 +19,21 @@ export function SpiritWingsWatermark({ className = "", color = "#BFA88F", opacit
         <div className="absolute inset-0" style={{ backgroundColor: color, opacity, ...wingsMask() }} />
         {/* Original "עדשת הרוח" eye */}
         <svg
-          viewBox="0 0 200 110"
+          viewBox="0 0 200 130"
           fill="none"
           className="absolute left-1/2 top-[66%] -translate-x-1/2 -translate-y-1/2 w-[36%]"
           style={{ opacity: Math.min(opacity * 1.8, 0.3) }}
         >
           {/* Almond outline with pointed corners */}
           <path
-            d="M 6 55 Q 100 -8 194 55 Q 100 118 6 55 Z"
+            d="M 6 65 Q 100 -25 194 65 Q 100 155 6 65 Z"
             stroke={color}
             strokeWidth="4.5"
             strokeLinejoin="miter"
           />
           {/* Iris: thin outer ring + full pupil */}
-          <circle cx="100" cy="55" r="33" stroke={color} strokeWidth="3" />
-          <circle cx="100" cy="55" r="26" fill={color} />
+          <circle cx="100" cy="65" r="36" stroke={color} strokeWidth="3" />
+          <circle cx="100" cy="65" r="28" fill={color} />
         </svg>
       </div>
     </div>
