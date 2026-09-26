@@ -91,11 +91,6 @@ export default function WriteGuide() {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, [currentStepIndex, isCompleted]);
 
-  // Autosave progress on this device so nothing is lost if the app closes.
-  useEffect(() => {
-    if (!isCompleted && currentStepIndex > 0) saveWriteDraft(formData, currentStepIndex);
-  }, [formData, currentStepIndex, isCompleted]);
-
   const step = STEPS[currentStepIndex];
   const isLastStep = currentStepIndex === STEPS.length - 1;
 
