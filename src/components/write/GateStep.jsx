@@ -25,7 +25,7 @@ export default function GateStep({ formData, setField }) {
         כל שער הוא דלת אל עולם אחר של זיכרון ומשמעות. אפשר לבחור יותר מאחד.
       </p>
 
-      <div className="mt-6 space-y-3">
+      <div className="mt-5 space-y-2.5">
         {STORY_GATES.map((gate) => (
           <GateCard key={gate.id} gate={gate} selected={gates.includes(gate.id)} onToggle={() => toggle(gate.id)} />
         ))}
