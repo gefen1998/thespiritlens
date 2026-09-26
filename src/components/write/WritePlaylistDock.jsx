@@ -10,7 +10,7 @@ const playlist = tools.anchoring.playlist;
  * A quiet floating music button that stays with the writer through every step.
  * Tap = play / pause the niggunim. Once started, a small handle opens the mini player.
  */
-export default function WritePlaylistDock({ topClass = "top-3" }) {
+export default function WritePlaylistDock() {
   const player = useYouTubePlaylist(playlist.listId, true);
   const [started, setStarted] = useState(false);
   const [open, setOpen] = useState(false);
@@ -21,7 +21,10 @@ export default function WritePlaylistDock({ topClass = "top-3" }) {
   };
 
   return (
-    <div dir="rtl" className={`fixed z-40 ${topClass} left-[calc(max(0px,50%-14rem)+4.75rem)] transition-[top] duration-200`}>
+    // Zero-height sticky rail: sits in line with the close button before scrolling,
+    // then pins to the top edge alongside the sticky step header.
+    <div className="sticky top-0 z-40 h-0">
+    <div dir="rtl" className="absolute top-3 left-[52px]">
       <WritePlaylistPanel open={open} playlist={playlist} player={player} onClose={() => setOpen(false)} />
       <div className="flex items-center h-11 rounded-full bg-[#16161A] text-[#F1F0EC] shadow-[0_4px_14px_rgba(0,0,0,0.18)]">
         <button
@@ -47,6 +50,7 @@ export default function WritePlaylistDock({ topClass = "top-3" }) {
           </button>
         )}
       </div>
+    </div>
     </div>
   );
 }
