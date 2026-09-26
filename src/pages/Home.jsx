@@ -174,7 +174,7 @@ export default function Home() {
                   {hasDraft ? "להמשיך לכתוב" : "לכתוב ישר"}
                 </span>
                 <span className="block text-[12.5px] text-[#FBFAF7]/90 leading-snug mt-1.5 font-normal">
-                  {hasDraft ? "ההתקדמות שלך נשמרה - ממשיכים מהנקודה שבה עצרת" : "לפתוח את מדריך הכתיבה עכשיו"}
+                  {hasDraft ? "הכתיבה שלך נשמרה, ממשיכים מאיפה שעצרת" : "לפתוח את מדריך הכתיבה עכשיו"}
                 </span>
               </div>
             </Link>
