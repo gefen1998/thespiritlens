@@ -9,6 +9,7 @@ import PrepStep from "@/components/write/PrepStep";
 import DraftSaveButton from "@/components/write/DraftSaveButton";
 import GateStep from "@/components/write/GateStep";
 import AttuneStep from "@/components/write/AttuneStep";
+import StoryWriteStep from "@/components/write/StoryWriteStep";
 import BackTextButton from "@/components/BackTextButton";
 import CompactStepHeader from "@/components/write/CompactStepHeader";
 import { STORY_GATES } from "@/lib/storyGates";
@@ -43,9 +44,7 @@ const STEPS = [
     stepNumber: "שלב חמישי",
     title: "הסיפור שלי",
     instruction: "מה קרה, מה עובר עליך עכשיו? אפשר לכתוב בחופשיות.",
-    placeholder: "מה עובר עליי...",
-    type: "input",
-    field: "story",
+    type: "story",
   },
   {
     stepNumber: "שלב שישי",
@@ -262,6 +261,10 @@ export default function WriteGuide() {
 
         {step.type === "attune" && <AttuneStep />}
 
+        {step.type === "story" && (
+          <StoryWriteStep formData={formData} setField={(f, v) => setFormData((prev) => ({ ...prev, [f]: v }))} />
+        )}
+
         {step.type === "gates" && (
           <GateStep formData={formData} setField={(f, v) => setFormData((prev) => ({ ...prev, [f]: v }))} />
         )}
@@ -313,7 +316,8 @@ export default function WriteGuide() {
             className="flex-1 h-[60px] rounded-full bg-[#16161A] text-white px-7 flex items-center justify-between active:scale-[0.98] transition-all select-none"
           >
             <span className="text-[17px] font-bold text-white flex items-center gap-2">
-              {isLastStep ? "לסיים" : step.type === "prep" || step.type === "gates" ? "המשך" : "הבא"}
+              {step.type === "attune" && <PenLine className="w-[18px] h-[18px]" strokeWidth={2} />}
+              {isLastStep ? "לסיים" : step.type === "attune" ? "התחל לכתוב" : step.type === "prep" || step.type === "gates" ? "המשך" : "הבא"}
               {step.type === "prep" && <ArrowLeft className="w-[18px] h-[18px]" strokeWidth={2} />}
             </span>
             <span className="text-[14px] font-medium text-[#9C9A91] tabular-nums">

@@ -1,5 +1,7 @@
 import React from "react";
 import { CornerWingMotif } from "@/components/SpiritWings";
+import AttuneIntro from "@/components/write/AttuneIntro";
+import GuidingQuestions from "@/components/write/GuidingQuestions";
 
 const MOMENT_EXAMPLES = [
   "רגע של אומץ",
@@ -19,7 +21,8 @@ const MOMENT_EXAMPLES = [
 export default function AttuneStep() {
   return (
     <div className="mt-6 text-right">
-      <span className="text-[13px] font-semibold text-[#8C7440]">התכווננות</span>
+      <AttuneIntro />
+      <span className="block mt-6 text-[13px] font-semibold text-[#8C7440]">התכווננות</span>
       <h1 className="mt-1 text-[28px] font-bold leading-[1.25] text-[#16161A]">בחר רגע אחד משמעותי.</h1>
       <p className="mt-3 text-[18px] leading-[1.6] text-[#4A4943]">
         לא את כל התקופה — רגע אחד חי, אחד שנשאר איתך.
@@ -37,6 +40,7 @@ export default function AttuneStep() {
           ))}
         </ul>
       </div>
+      <GuidingQuestions />
     </div>
   );
 }
