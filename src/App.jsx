@@ -78,7 +78,7 @@ const AuthenticatedApp = () => {
 
 
 // Pages that render the credit inside their own single-screen layout.
-const OWN_CREDIT_ROUTES = ["/guided/pause"];
+const OWN_CREDIT_ROUTES = ["/guided/pause", "/write"];
 
 function GlobalCreditLine() {
   const { pathname } = useLocation();

@@ -7,6 +7,7 @@ import AnonymityNote from "@/components/write/AnonymityNote";
 import WriteQuote from "@/components/write/WriteQuote";
 import PrepStep from "@/components/write/PrepStep";
 import DraftSaveButton from "@/components/write/DraftSaveButton";
+import CreditLine from "@/components/CreditLine";
 
 const STEPS = [
   {
@@ -64,6 +65,11 @@ export default function WriteGuide() {
   useEffect(() => {
     base44.analytics.track({ eventName: "tool_opened_write_guide" });
   }, []);
+
+  // Scroll-to-top on step change: every step opens from its top.
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, [currentStepIndex, isCompleted]);
 
   const step = STEPS[currentStepIndex];
   const isLastStep = currentStepIndex === STEPS.length - 1;
@@ -185,6 +191,7 @@ export default function WriteGuide() {
           >
             חזרה למרחב
           </button>
+          <CreditLine className="pt-3" />
         </div>
       </div>
     );
@@ -299,6 +306,7 @@ export default function WriteGuide() {
             </button>
           )}
         </div>
+        <CreditLine className="pt-5" />
       </div>
     </div>
   );
