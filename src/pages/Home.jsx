@@ -215,22 +215,45 @@ export default function Home() {
 
         {/* Emotion Check-in circles */}
         <div id="check-in-section" className="mt-6 scroll-mt-6">
-          <p className="text-[13px] font-medium text-[#6B6A63] text-right mb-2.5">
-            מה ההרגשה היום?
-          </p>
+          <div className="flex items-baseline justify-between gap-3 mb-2.5">
+            <p className="text-[13px] font-medium text-[#6B6A63] text-right">
+              מה ההרגשה היום?
+            </p>
+            <p className="text-[12px] text-[#8C8B84]">בחירה תתאים לך תרגול</p>
+          </div>
           <EmotionCheckIn selected={chosen} onSelect={setChosen} />
         </div>
 
         {/* Featured Card — Warm Cream & Sand Paper Elevation */}
         <div className="mt-6 -mx-6">
-          <p className="px-6 text-[13px] font-medium text-[#6B6A63] mb-2.5 text-right">
-            {chosen ? `מתאים ל${chosen.label}` : editorial.home.startHere}
+          <p className="px-6 text-[13px] font-medium text-[#6B6A63] mb-2.5 text-right flex items-center gap-2">
+            {chosen && (
+              <span
+                className="w-2.5 h-2.5 rounded-full shrink-0"
+                style={{ backgroundColor: chosen.wash }}
+                aria-hidden="true"
+              />
+            )}
+            {chosen ? (
+              <span>
+                התרגול שהתאמנו לתחושה <span className="font-bold text-[#16161A]">{chosen.label}</span>
+              </span>
+            ) : (
+              editorial.home.startHere
+            )}
           </p>
 
           <button
             onClick={goReco}
-            className="group relative block w-full bg-[#16161A] px-6 py-7 text-right transition-colors duration-150 select-none hover:bg-[#22222A] active:bg-[#2A2A33] shadow-[0_2px_10px_rgba(0,0,0,0.08)]"
+            className="group relative block w-full bg-[#16161A] px-6 py-7 text-right transition-colors duration-150 select-none hover:bg-[#22222A] active:bg-[#2A2A33] shadow-[0_2px_10px_rgba(0,0,0,0.08)] overflow-hidden"
           >
+            {/* Emotion accent stripe — ties the card to the chosen feeling */}
+            <span
+              className="absolute top-0 inset-x-0 h-1 transition-colors duration-500"
+              style={{ backgroundColor: chosen ? chosen.wash : "transparent" }}
+              aria-hidden="true"
+            />
+            <div key={recoId + (chosen?.id || "")} className="rise-in">
             {/* Top row: Description on right, Arrow on left */}
             <div className="flex items-start justify-between gap-4">
               <span className="text-[13.5px] sm:text-[14.5px] font-medium text-[#E7E5DF] leading-snug text-right flex-1">
@@ -249,6 +272,12 @@ export default function Home() {
               <span className="text-[22px] sm:text-[25px] font-bold text-[#8C8B84] tabular-nums leading-none shrink-0">
                 {displayDuration}
               </span>
+            </div>
+            {!chosen && (
+              <p className="mt-4 text-[12px] text-[#8C8B84]">
+                בחרו תחושה למעלה, והתרגול כאן יתאים את עצמו
+              </p>
+            )}
             </div>
           </button>
         </div>
