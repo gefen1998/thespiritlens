@@ -304,7 +304,7 @@ export default function WriteGuide() {
         )}
       </div>
 
-      <WritePlaylistDock />
+      <WritePlaylistDock topClass={step.compact ? "top-3" : "top-9"} />
 
       {/* Bottom Floating Navigation Bar */}
       <div className="pt-8 pb-4">

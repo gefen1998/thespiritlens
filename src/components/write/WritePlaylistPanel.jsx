@@ -9,7 +9,7 @@ export default function WritePlaylistPanel({ open, playlist, player, onClose }) 
       role="dialog"
       aria-label={playlist.title}
       aria-hidden={!open}
-      className={`absolute bottom-[56px] left-0 w-[264px] rounded-[20px] bg-[#16161A] text-[#F1F0EC] p-3 shadow-[0_8px_28px_rgba(0,0,0,0.22)] transition-all duration-200 origin-bottom-left ${
+      className={`absolute top-[56px] left-0 w-[264px] rounded-[20px] bg-[#16161A] text-[#F1F0EC] p-3 shadow-[0_8px_28px_rgba(0,0,0,0.22)] transition-all duration-200 origin-top-left ${
         open ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
       }`}
     >
