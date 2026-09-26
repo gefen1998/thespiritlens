@@ -83,9 +83,8 @@ export default function Home() {
     <div dir="rtl" lang="he" className="relative min-h-screen overflow-x-hidden">
       {/* Delicate Watermark: "כנפי הרוח" / "עדשת הרוח" embedded gracefully into the background */}
       <SpiritWingsWatermark
-        className="absolute top-10 right-0 left-0 w-[78%] max-w-[340px] mx-auto h-[190px] z-0 pointer-events-none"
-        color="#BFA88F"
-        opacity={0.09}
+        className="absolute top-10 right-0 left-0 w-[78%] max-w-[340px] mx-auto h-[230px] z-0 pointer-events-none"
+        opacity={0.16}
       />
 
       <div className="relative z-10 max-w-xl mx-auto px-6 pt-6 pb-28">
