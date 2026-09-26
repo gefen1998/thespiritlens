@@ -47,7 +47,6 @@ const STEPS = [
     title: "הסיפור שלי",
     instruction: "מה קרה, מה עובר עליך עכשיו? אפשר לכתוב בחופשיות.",
     type: "story",
-    compact: true,
   },
   {
     stepNumber: "שלב שישי",
