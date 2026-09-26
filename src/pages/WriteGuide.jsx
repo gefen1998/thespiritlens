@@ -8,6 +8,7 @@ import WriteQuote from "@/components/write/WriteQuote";
 import PrepStep from "@/components/write/PrepStep";
 import DraftSaveButton from "@/components/write/DraftSaveButton";
 import GateStep from "@/components/write/GateStep";
+import AttuneStep from "@/components/write/AttuneStep";
 import CompactStepHeader from "@/components/write/CompactStepHeader";
 import { STORY_GATES } from "@/lib/storyGates";
 import CreditLine from "@/components/CreditLine";
@@ -34,13 +35,19 @@ const STEPS = [
   {
     stepNumber: "שלב רביעי",
     title: "הסיפור שלי",
+    type: "attune",
+    compact: true,
+  },
+  {
+    stepNumber: "שלב חמישי",
+    title: "הסיפור שלי",
     instruction: "מה קרה, מה עובר עליך עכשיו? אפשר לכתוב בחופשיות.",
     placeholder: "מה עובר עליי...",
     type: "input",
     field: "story",
   },
   {
-    stepNumber: "שלב חמישי",
+    stepNumber: "שלב שישי",
     title: "הסיפור שלי",
     instruction: "מתוך מה שכתבת, מה היית רוצה לזכור?",
     placeholder: "מה חשוב שלא יאבד...",
@@ -49,7 +56,7 @@ const STEPS = [
     chips: ["הכוח שהיה בי", "מי שעמד לצידי", "מה שלמדתי על עצמי"],
   },
   {
-    stepNumber: "שלב שישי",
+    stepNumber: "שלב שביעי",
     title: "הסיפור שלי",
     instruction: "מילה אחת יכולה להכיל הרבה.",
     placeholder: "מילה או כותרת...",
@@ -252,6 +259,8 @@ export default function WriteGuide() {
           <PrepStep formData={formData} setField={(f, v) => setFormData((prev) => ({ ...prev, [f]: v }))} />
         )}
 
+        {step.type === "attune" && <AttuneStep />}
+
         {step.type === "gates" && (
           <GateStep formData={formData} setField={(f, v) => setFormData((prev) => ({ ...prev, [f]: v }))} />
         )}
@@ -302,8 +311,8 @@ export default function WriteGuide() {
             className="flex-1 h-[60px] rounded-full bg-[#16161A] text-white px-7 flex items-center justify-between active:scale-[0.98] transition-all select-none"
           >
             <span className="text-[17px] font-bold text-white flex items-center gap-2">
-              {step.type === "prep" && <PenLine className="w-[18px] h-[18px]" strokeWidth={1.75} />}
-              {isLastStep ? "לסיים" : step.type === "prep" ? "התחל לכתוב" : step.type === "gates" ? "המשך" : "הבא"}
+              {isLastStep ? "לסיים" : step.type === "prep" || step.type === "gates" ? "המשך" : "הבא"}
+              {step.type === "prep" && <ArrowLeft className="w-[18px] h-[18px]" strokeWidth={2} />}
             </span>
             <span className="text-[14px] font-medium text-[#9C9A91] tabular-nums">
               {currentStepIndex + 1}/{STEPS.length}
