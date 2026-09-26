@@ -24,6 +24,7 @@ import Commits from '@/pages/Commits';
 import WriteGuide from '@/pages/WriteGuide';
 import SavedMoments from '@/pages/SavedMoments';
 import CreditLine from '@/components/CreditLine';
+import RealVisitTracker from '@/components/RealVisitTracker';
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -92,6 +93,7 @@ function App() {
       <QueryClientProvider client={queryClientInstance}>
         <Router>
           <ScrollToTop />
+          <RealVisitTracker />
           <AuthenticatedApp />
           <GlobalCreditLine />
         </Router>
