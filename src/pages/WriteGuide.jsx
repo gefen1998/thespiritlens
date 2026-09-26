@@ -14,6 +14,7 @@ import BackTextButton from "@/components/BackTextButton";
 import CompactStepHeader from "@/components/write/CompactStepHeader";
 import { STORY_GATES } from "@/lib/storyGates";
 import CreditLine from "@/components/CreditLine";
+import WritePlaylistDock from "@/components/write/WritePlaylistDock";
 
 const STEPS = [
   {
@@ -302,6 +303,8 @@ export default function WriteGuide() {
           </div>
         )}
       </div>
+
+      <WritePlaylistDock />
 
       {/* Bottom Floating Navigation Bar */}
       <div className="pt-8 pb-4">
