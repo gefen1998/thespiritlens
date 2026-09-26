@@ -161,41 +161,37 @@ export default function WriteGuide() {
     <div dir="rtl" lang="he" className="min-h-screen bg-[#F4F1EA] text-[#16161A] flex flex-col justify-between p-6 max-w-md mx-auto">
       {/* Top Header */}
       <div>
-        <div className="flex items-center justify-between mb-8 pt-2">
+        {/* Step Kicker and Title, with close button on the same row */}
+        <div className="flex items-start justify-between gap-3 pt-2 text-right">
+          <h1 className="text-[34px] font-bold leading-[1.12]">
+            <span className="block text-[#9C9A91]">{step.stepNumber}</span>
+            <span className="block text-[#16161A]">{step.title}</span>
+          </h1>
           <button
             onClick={() => navigate("/")}
             aria-label="סגירה"
-            className="w-10 h-10 rounded-full bg-[#E5E1D8] hover:bg-[#DDD9CE] text-[#4A4943] grid place-items-center transition-colors"
+            className="w-11 h-11 mt-1 shrink-0 rounded-full bg-[#E5E1D8] hover:bg-[#DDD9CE] text-[#4A4943] grid place-items-center transition-colors"
           >
             <X className="w-5 h-5" strokeWidth={2} />
           </button>
         </div>
 
-        {/* Step Kicker and Title */}
-        <div className="text-right">
-          <span className="block text-[22px] font-bold text-[#9C9A91] leading-none mb-1">
-            {step.stepNumber}
-          </span>
-          <h1 className="text-[32px] sm:text-[36px] font-bold text-[#16161A] leading-tight">
-            {step.title}
-          </h1>
-
-          <p className="mt-6 text-[16px] sm:text-[17px] text-[#2C2B26] leading-relaxed font-normal">
-            {step.instruction}
-          </p>
-        </div>
+        <p className="mt-6 text-[19px] text-[#2C2B26] leading-[1.55] font-normal text-right">
+          {step.instruction}
+        </p>
 
         {/* Input area if step requires input */}
         {step.type !== "intro" && (
-          <div className="mt-8">
+          <div className="mt-6">
             <textarea
               rows={step.field === "word" ? 3 : 5}
+              style={{ minHeight: step.field === "word" ? 110 : 150 }}
               value={formData[step.field] || ""}
               onChange={(e) => setFormData({ ...formData, [step.field]: e.target.value })}
               placeholder={step.placeholder}
-              className="w-full rounded-[22px] bg-[#E3DFD6] border-none p-4 text-[16px] text-[#16161A] placeholder:text-[#8E8B83] focus:outline-none focus:ring-2 focus:ring-[#B35C44]/40 transition-all resize-none text-right font-body leading-relaxed"
+              className="w-full rounded-[22px] bg-[#E3DFD6] border-none p-5 text-[17px] text-[#16161A] placeholder:text-[#8E8B83] focus:outline-none focus:ring-2 focus:ring-[#B35C44]/40 transition-all resize-none text-right font-body leading-relaxed"
             />
-            <p className="mt-2 text-[13px] text-[#7E7B73] text-right font-normal">
+            <p className="mt-3 text-[13px] text-[#7E7B73] text-right font-normal">
               אפשר גם לדלג ולא לכתוב.
             </p>
 
@@ -207,7 +203,7 @@ export default function WriteGuide() {
                     key={chip}
                     type="button"
                     onClick={() => handleChipClick(chip)}
-                    className="px-4 py-2 rounded-full bg-[#E3DFD6] hover:bg-[#D9D5CC] active:scale-95 text-[#4A4943] text-[13px] font-medium transition-all"
+                    className="h-10 px-4 rounded-full whitespace-nowrap bg-[#E3DFD6] hover:bg-[#D9D5CC] active:scale-95 text-[#4A4943] text-[14px] font-medium transition-all"
                   >
                     {chip}
                   </button>
@@ -224,15 +220,14 @@ export default function WriteGuide() {
           {/* Main Action Bar */}
           <button
             onClick={handleNext}
-            className="flex-1 h-14 rounded-full bg-[#16161A] text-white px-6 flex items-center justify-between active:scale-[0.98] transition-all shadow-md select-none"
+            className="flex-1 h-[60px] rounded-full bg-[#16161A] text-white px-7 flex items-center justify-between active:scale-[0.98] transition-all select-none"
           >
+            <span className="text-[17px] font-bold text-white">
+              {isLastStep ? "לסיים" : "הבא"}
+            </span>
             <span className="text-[14px] font-medium text-[#9C9A91] tabular-nums">
               {currentStepIndex + 1}/{STEPS.length}
             </span>
-            <span className="text-[16px] font-bold text-white">
-              {isLastStep ? "לסיים" : "הבא"}
-            </span>
-            <div className="w-4" /> {/* spacer for balance */}
           </button>
 
           {/* Back Button (Circle) */}
@@ -240,17 +235,17 @@ export default function WriteGuide() {
             <button
               onClick={handlePrev}
               aria-label="שלב קודם"
-              className="w-14 h-14 rounded-full bg-[#E3DFD6] hover:bg-[#D8D4CB] text-[#16161A] grid place-items-center active:scale-95 transition-all shrink-0"
+              className="w-[60px] h-[60px] rounded-full bg-[#E3DFD6] hover:bg-[#D8D4CB] text-[#16161A] grid place-items-center active:scale-95 transition-all shrink-0"
             >
-              <ArrowLeft className="w-5 h-5" strokeWidth={2} />
+              <ArrowRight className="w-5 h-5" strokeWidth={2} />
             </button>
           ) : (
             <button
               onClick={handleNext}
               aria-label="הבא"
-              className="w-14 h-14 rounded-full bg-[#E3DFD6] hover:bg-[#D8D4CB] text-[#16161A] grid place-items-center active:scale-95 transition-all shrink-0"
+              className="w-[60px] h-[60px] rounded-full bg-[#E3DFD6] hover:bg-[#D8D4CB] text-[#16161A] grid place-items-center active:scale-95 transition-all shrink-0"
             >
-              <ArrowRight className="w-5 h-5" strokeWidth={2} />
+              <ArrowLeft className="w-5 h-5" strokeWidth={2} />
             </button>
           )}
         </div>
