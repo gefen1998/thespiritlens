@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { base44 } from "@/api/base44Client";
 import { useNavigate } from "react-router-dom";
 import FocusHeader from "@/components/FocusHeader";
 import StepFlow from "@/components/StepFlow";
@@ -10,6 +11,13 @@ export default function ThoughtMeeting() {
   const navigate = useNavigate();
   const [phase, setPhase] = useState("steps");
   const [values, setValues] = useState({});
+
+  useEffect(() => {
+    base44.analytics.track({
+      eventName: "tool_opened_thought_meeting",
+      properties: { tool_id: "thought-meeting", tool_name: tool.name },
+    });
+  }, []);
 
   const onComplete = (collected) => {
     setValues(collected);
