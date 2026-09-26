@@ -1,0 +1,45 @@
+{
+  "description": "\u05e9\u05d5\u05dc\u05d7 \u05dc\u05de\u05d9\u05d9\u05dc \u05d3\u05d5\u05d7 \u05db\u05e0\u05d9\u05e1\u05d5\u05ea \u05d0\u05de\u05d9\u05ea\u05d9\u05d5\u05ea, \u05db\u05dc\u05d9\u05dd \u05e9\u05e0\u05e4\u05ea\u05d7\u05d5 \u05d5\u05e9\u05d9\u05de\u05d5\u05e9 \u05d1\u05de\u05d3\u05e8\u05d9\u05da \u05d4\u05db\u05ea\u05d9\u05d1\u05d4 \u05db\u05dc 5 \u05d9\u05de\u05d9\u05dd",
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "analytics_report",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "send_report": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "sendAnalyticsReport",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "\u05e9\u05dc\u05d9\u05d7\u05ea \u05d3\u05d5\u05d7 \u05dc\u05de\u05d9\u05d9\u05dc",
+            "description": "5 \u05d9\u05de\u05d9\u05dd \u05d0\u05d7\u05e8\u05d5\u05e0\u05d9\u05dd"
+          }
+        }
+      }
+    ]
+  },
+  "name": "\u05d3\u05d5\u05d7 \u05d0\u05e0\u05dc\u05d9\u05d8\u05d9\u05e7\u05d5\u05ea \u05db\u05dc 5 \u05d9\u05de\u05d9\u05dd",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "interval",
+      "cron_expression": null,
+      "one_time_date": null,
+      "timezone": "UTC",
+      "interval_value": 5,
+      "interval_unit": "days",
+      "interval_anchor": "2026-10-01T17:45:00Z",
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  }
+}
