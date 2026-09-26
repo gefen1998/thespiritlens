@@ -218,8 +218,20 @@ export default function SavedMoments() {
                   )}
 
                   {/* Extra details if writing guide */}
-                  {item.details && (item.details.remember || item.details.story) && (
+                  {item.details && (item.details.remember || item.details.story || item.details.lightSentence || item.details.anchor) && (
                     <div className="mt-3.5 pt-3 border-t border-[#EAE6DD] space-y-2 text-right">
+                      {item.details.lightSentence && (
+                        <div>
+                          <span className="text-[11.5px] font-medium text-[#7C776D] block">המשפט שלי:</span>
+                          <p className="text-[13.5px] text-[#3A3935] mt-0.5">{item.details.lightSentence}</p>
+                        </div>
+                      )}
+                      {item.details.anchor && (
+                        <div>
+                          <span className="text-[11.5px] font-medium text-[#7C776D] block">מה שמחזק אותי:</span>
+                          <p className="text-[13.5px] text-[#3A3935] mt-0.5">{item.details.anchor}</p>
+                        </div>
+                      )}
                       {item.details.remember && (
                         <div>
                           <span className="text-[11.5px] font-medium text-[#7C776D] block">

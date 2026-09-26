@@ -5,6 +5,7 @@ import { X, ArrowRight, ArrowLeft, PenLine, Check, Bookmark } from "lucide-react
 import { saveMoment, getWriteDraft, saveWriteDraft, clearWriteDraft } from "@/lib/savedMoments";
 import AnonymityNote from "@/components/write/AnonymityNote";
 import WriteQuote from "@/components/write/WriteQuote";
+import PrepStep from "@/components/write/PrepStep";
 import DraftSaveButton from "@/components/write/DraftSaveButton";
 
 const STEPS = [
@@ -16,6 +17,12 @@ const STEPS = [
   },
   {
     stepNumber: "שלב שני",
+    title: "הכנה לכתיבה",
+    instruction: "לפני שכותבים, אוספים את מה שמחזיק. המשפטים האלה יהיו חומר הגלם של הכתיבה.",
+    type: "prep",
+  },
+  {
+    stepNumber: "שלב שלישי",
     title: "הסיפור שלי",
     instruction: "מה קרה, מה עובר עליך עכשיו? אפשר לכתוב בחופשיות.",
     placeholder: "מה עובר עליי...",
@@ -23,7 +30,7 @@ const STEPS = [
     field: "story",
   },
   {
-    stepNumber: "שלב שלישי",
+    stepNumber: "שלב רביעי",
     title: "הסיפור שלי",
     instruction: "מתוך מה שכתבת, מה היית רוצה לזכור?",
     placeholder: "מה חשוב שלא יאבד...",
@@ -32,7 +39,7 @@ const STEPS = [
     chips: ["הכוח שהיה בי", "מי שעמד לצידי", "מה שלמדתי על עצמי"],
   },
   {
-    stepNumber: "שלב רביעי",
+    stepNumber: "שלב חמישי",
     title: "הסיפור שלי",
     instruction: "מילה אחת יכולה להכיל הרבה.",
     placeholder: "מילה או כותרת...",
@@ -49,6 +56,8 @@ export default function WriteGuide() {
     story: "",
     remember: "",
     word: "",
+    lightSentence: "",
+    anchor: "",
     ...(draft?.formData || {}),
   });
   const [isCompleted, setIsCompleted] = useState(false);
@@ -77,6 +86,8 @@ export default function WriteGuide() {
             word: formData.word,
             remember: formData.remember,
             story: formData.story,
+            lightSentence: formData.lightSentence,
+            anchor: formData.anchor,
           },
         });
 
@@ -124,8 +135,20 @@ export default function WriteGuide() {
             הכתיבה נשמרת באופן פרטי במכשירך בלבד, כחלק ממדריך הכתיבה ״כתב זאת זכרון בספר״.
           </p>
 
-          {(formData.word || formData.remember || formData.story) && (
+          {(formData.word || formData.remember || formData.story || formData.lightSentence || formData.anchor) && (
             <div className="p-5 rounded-[22px] bg-[#E9E5DC] border border-[#DDD9CE] space-y-3 text-right">
+              {formData.lightSentence && (
+                <div>
+                  <span className="text-xs font-medium text-[#7C776D] block">המשפט שלי</span>
+                  <p className="text-[14px] text-[#33322E] mt-0.5">{formData.lightSentence}</p>
+                </div>
+              )}
+              {formData.anchor && (
+                <div>
+                  <span className="text-xs font-medium text-[#7C776D] block">מה שמחזק אותי</span>
+                  <p className="text-[14px] text-[#33322E] mt-0.5">{formData.anchor}</p>
+                </div>
+              )}
               {formData.word && (
                 <div>
                   <span className="text-xs font-medium text-[#7C776D] block">מילה או כותרת</span>
@@ -198,8 +221,12 @@ export default function WriteGuide() {
           </>
         )}
 
+        {step.type === "prep" && (
+          <PrepStep formData={formData} setField={(f, v) => setFormData((prev) => ({ ...prev, [f]: v }))} />
+        )}
+
         {/* Input area if step requires input */}
-        {step.type !== "intro" && (
+        {step.field && (
           <div className="mt-6">
             <textarea
               rows={step.field === "word" ? 3 : 5}
