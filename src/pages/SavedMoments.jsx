@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, Bookmark, Trash2, Copy, Check, Sparkles, PenLine, Heart, Compass } from "lucide-react";
 import { getSavedMoments, deleteMoment, clearAllMoments } from "@/lib/savedMoments";
 import { TOOL_CARD_META, getToolIcon } from "@/components/EditorialCard";
+import CreditLine from "@/components/CreditLine";
 
 const FILTER_TABS = [
   { id: "all", label: "הכל" },
@@ -101,7 +102,7 @@ export default function SavedMoments() {
 
   return (
     <div dir="rtl" lang="he" className="min-h-screen bg-[#F4F1EA] text-[#16161A] flex flex-col">
-      <div className="max-w-md w-full mx-auto px-6 pt-6 pb-20 flex-1 flex flex-col">
+      <div className="max-w-md w-full mx-auto px-6 pt-6 pb-6 flex-1 flex flex-col">
         {/* Top Header */}
         <div className="flex items-center justify-between mb-6">
           <button
@@ -319,6 +320,7 @@ export default function SavedMoments() {
             </div>
           </div>
         )}
+        <CreditLine className="pt-10" />
       </div>
     </div>
   );
