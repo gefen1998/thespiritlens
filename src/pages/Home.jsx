@@ -83,9 +83,9 @@ export default function Home() {
     <div dir="rtl" lang="he" className="relative min-h-screen overflow-x-hidden">
       {/* Delicate Watermark: "כנפי הרוח" / "עדשת הרוח" embedded gracefully into the background */}
       <SpiritWingsWatermark
-        className="absolute -top-6 right-0 left-0 max-w-lg mx-auto h-[260px] sm:h-[300px] z-0 -translate-y-2 pointer-events-none"
+        className="absolute top-10 right-0 left-0 w-[78%] max-w-[340px] mx-auto h-[190px] z-0 pointer-events-none"
         color="#BFA88F"
-        opacity={0.13}
+        opacity={0.09}
       />
 
       <div className="relative z-10 max-w-xl mx-auto px-6 pt-6 pb-28">
@@ -158,9 +158,9 @@ export default function Home() {
             >
               {/* Subtle corner wing branding watermark */}
               <CornerWingMotif
-                className="-bottom-2 left-2 w-[84px] h-[118px]"
+                className="-bottom-3 -left-1 w-[58px] h-[82px] -rotate-6"
                 color="#FFFFFF"
-                opacity={0.18}
+                opacity={0.14}
               />
               <div className="relative z-10 flex items-center justify-between w-full">
                 <div className="w-8 h-8 rounded-full bg-black/15 grid place-items-center text-[#FBFAF7] text-[14px] font-bold">
@@ -190,9 +190,9 @@ export default function Home() {
             >
               {/* Subtle corner wing branding watermark */}
               <CornerWingMotif
-                className="-bottom-2 left-2 w-[84px] h-[118px]"
+                className="-bottom-3 -left-1 w-[58px] h-[82px] -rotate-6"
                 color="#16161A"
-                opacity={0.08}
+                opacity={0.06}
               />
               <div className="relative z-10 flex items-center justify-between w-full">
                 <div className="w-8 h-8 rounded-full bg-white/70 grid place-items-center text-[#16161A] text-[14px] font-bold">

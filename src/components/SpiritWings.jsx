@@ -20,11 +20,11 @@ export function SpiritWingsWatermark({ className = "", color = "#BFA88F", opacit
         <svg
           viewBox="0 0 100 60"
           fill="none"
-          className="absolute left-1/2 top-[58%] -translate-x-1/2 -translate-y-1/2 w-[18%]"
+          className="absolute left-1/2 top-[58%] -translate-x-1/2 -translate-y-1/2 w-[14%]"
         >
-          <path d="M 6 30 C 26 6 74 6 94 30 C 74 54 26 54 6 30 Z" stroke={color} strokeWidth="5" strokeLinejoin="round" />
-          <circle cx="50" cy="30" r="12" stroke={color} strokeWidth="4" />
-          <circle cx="50" cy="30" r="5" fill={color} />
+          <path d="M 6 30 C 26 8 74 8 94 30 C 74 52 26 52 6 30 Z" stroke={color} strokeWidth="3" strokeLinejoin="round" />
+          <circle cx="50" cy="30" r="10" stroke={color} strokeWidth="2.5" />
+          <circle cx="50" cy="30" r="4" fill={color} />
         </svg>
       </div>
     </div>
