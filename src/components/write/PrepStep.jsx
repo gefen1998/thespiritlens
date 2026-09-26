@@ -1,4 +1,5 @@
 import React from "react";
+import { CornerWingMotif } from "@/components/SpiritWings";
 
 const ANCHOR_CHIPS = [
   "אדוני עוז לעמו ייתן",
@@ -11,42 +12,46 @@ const ANCHOR_CHIPS = [
 
 export default function PrepStep({ formData, setField }) {
   return (
-    <div className="mt-6 space-y-4">
-      <div className="p-5 rounded-[26px] bg-[#2B3149] text-right">
-        <p className="text-[18px] font-bold text-[#F8F7F4] leading-[1.45]">
-          מה המשפט שעלה לך בתרגול כוח המדמה של קרן אור מונחית?
-        </p>
-        <p className="mt-2 text-[14px] text-[#F8F7F4]/70 leading-relaxed">
-          אותו משפט שצף מתוכך. אפשר לכתוב אותו כאן, והוא ילווה אותך לאורך הדרך.
-        </p>
-        <input
-          value={formData.lightSentence || ""}
-          onChange={(e) => setField("lightSentence", e.target.value)}
-          placeholder="המשפט שלי..."
-          className="mt-4 w-full h-14 rounded-[18px] bg-white/10 border border-white/15 px-4 text-[16px] text-[#F8F7F4] placeholder:text-[#F8F7F4]/45 focus:outline-none focus:ring-2 focus:ring-white/30 text-right"
-        />
+    <div className="mt-6">
+      <div className="relative overflow-hidden p-6 rounded-[26px] bg-[#B0654A] text-right">
+        <CornerWingMotif className="left-0 top-2 w-24 h-40" color="#FBFAF7" opacity={0.16} />
+        <div className="relative">
+          <span className="text-[12px] font-semibold text-[#FBFAF7]/75">מתוך התרגול</span>
+          <p className="mt-2 text-[20px] font-bold text-[#FBFAF7] leading-[1.45]">
+            מה המשפט שעלה לך בתרגול כוח המדמה של קרן אור מונחית?
+          </p>
+          <p className="mt-2 text-[15px] text-[#FBFAF7]/80 leading-[1.7]">
+            אותו משפט שצף מתוכך — כתוב אותו כאן. הוא ילווה אותך לאורך הדרך.
+          </p>
+          <input
+            value={formData.lightSentence || ""}
+            onChange={(e) => setField("lightSentence", e.target.value)}
+            placeholder="המשפט שלי..."
+            className="mt-5 w-full h-14 rounded-[18px] bg-[#FBFAF7]/15 border-none px-5 text-[16px] text-[#FBFAF7] placeholder:text-[#FBFAF7]/55 focus:outline-none focus:ring-2 focus:ring-[#FBFAF7]/35 text-right"
+          />
+        </div>
       </div>
 
-      <div className="p-5 rounded-[26px] bg-[#FBFAF7] text-right">
-        <p className="text-[18px] font-bold text-[#16161A] leading-[1.45]">
+      <div className="mt-8 text-right">
+        <p className="text-[22px] font-bold text-[#16161A] leading-[1.4]">
           יש פסוק, מילה או משפט שמחזקים אותך?
         </p>
-        <p className="mt-1.5 text-[14px] text-[#6B6A63]">משהו שחוזרים אליו בזמנים קשים.</p>
+        <p className="mt-2 text-[15px] text-[#6B6A63]">משהו שאתה חוזר אליו בזמנים קשים.</p>
         <input
           value={formData.anchor || ""}
           onChange={(e) => setField("anchor", e.target.value)}
-          placeholder="לכתוב כאן..."
-          className="mt-4 w-full h-14 rounded-[18px] bg-[#FBFAF7] border border-[#DDD9CE] px-4 text-[16px] text-[#16161A] placeholder:text-[#8E8B83] focus:outline-none focus:ring-2 focus:ring-[#B35C44]/40 text-right"
+          placeholder="כתוב כאן..."
+          className="mt-4 w-full h-14 rounded-[18px] bg-[#E3DFD6] border-none px-5 text-[16px] text-[#16161A] placeholder:text-[#8E8B83] focus:outline-none focus:ring-2 focus:ring-[#B35C44]/40 text-right"
         />
-        <p className="mt-3 text-[12.5px] text-[#7E7B73]">למשל:</p>
-        <div className="mt-2 flex flex-wrap gap-2">
+        <p className="mt-5 text-[12.5px] font-medium text-[#6B6A63]">למשל:</p>
+        <div className="mt-3 flex flex-wrap gap-2.5">
           {ANCHOR_CHIPS.map((chip) => (
             <button
               key={chip}
               type="button"
               onClick={() => setField("anchor", chip)}
-              className={`h-10 px-4 rounded-full text-[14px] font-medium transition-all active:scale-95 ${
-                formData.anchor === chip ? "bg-[#B0654A] text-[#FBFAF7]" : "bg-[#ECE7DE] text-[#4A4943] hover:bg-[#E3DDD2]"
+              className={`h-12 px-5 rounded-full text-[15px] transition-all active:scale-95 ${
+                formData.anchor === chip ? "bg-[#B0654A] text-[#FBFAF7]" : "bg-[#DAD6CD] text-[#4A4943] hover:bg-[#D2CEC4]"
               }`}
             >
               {chip}

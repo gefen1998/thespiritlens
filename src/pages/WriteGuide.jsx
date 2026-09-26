@@ -17,8 +17,7 @@ const STEPS = [
   },
   {
     stepNumber: "שלב שני",
-    title: "הכנה לכתיבה",
-    instruction: "לפני שכותבים, אוספים את מה שמחזיק. המשפטים האלה יהיו חומר הגלם של הכתיבה.",
+    title: "הסיפור שלי",
     type: "prep",
   },
   {
@@ -210,9 +209,11 @@ export default function WriteGuide() {
           </button>
         </div>
 
-        <p className="mt-6 text-[19px] text-[#2C2B26] leading-[1.55] font-normal text-right">
-          {step.instruction}
-        </p>
+        {step.instruction && (
+          <p className="mt-6 text-[19px] text-[#2C2B26] leading-[1.55] font-normal text-right">
+            {step.instruction}
+          </p>
+        )}
 
         {step.type === "intro" && (
           <>
@@ -270,8 +271,9 @@ export default function WriteGuide() {
             onClick={handleNext}
             className="flex-1 h-[60px] rounded-full bg-[#16161A] text-white px-7 flex items-center justify-between active:scale-[0.98] transition-all select-none"
           >
-            <span className="text-[17px] font-bold text-white">
-              {isLastStep ? "לסיים" : "הבא"}
+            <span className="text-[17px] font-bold text-white flex items-center gap-2">
+              {step.type === "prep" && <PenLine className="w-[18px] h-[18px]" strokeWidth={1.75} />}
+              {isLastStep ? "לסיים" : step.type === "prep" ? "התחל לכתוב" : "הבא"}
             </span>
             <span className="text-[14px] font-medium text-[#9C9A91] tabular-nums">
               {currentStepIndex + 1}/{STEPS.length}
