@@ -25,7 +25,7 @@ export default function AttuneStep() {
       <span className="block mt-6 text-[13px] font-semibold text-[#8C7440]">התכווננות</span>
       <h1 className="mt-1 text-[28px] font-bold leading-[1.25] text-[#16161A]">בחר רגע אחד משמעותי.</h1>
       <p className="mt-3 text-[18px] leading-[1.6] text-[#4A4943]">
-        לא את כל התקופה — רגע אחד חי, אחד שנשאר איתך.
+        לא את כל התקופה - רגע אחד חי, אחד שנשאר איתך.
       </p>
 
       <div className="relative overflow-hidden mt-6 p-5 rounded-[26px] bg-[#FBFAF7]">
