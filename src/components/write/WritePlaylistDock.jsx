@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Music, Pause, ChevronDown } from "lucide-react";
+import { Music, Pause, ChevronDown, X } from "lucide-react";
 import { tools } from "@/lib/spiritContent";
 import useYouTubePlaylist from "@/hooks/useYouTubePlaylist";
 import WritePlaylistPanel from "@/components/write/WritePlaylistPanel";
@@ -10,7 +10,7 @@ const playlist = tools.anchoring.playlist;
  * A quiet floating music button that stays with the writer through every step.
  * Tap = play / pause the niggunim. Once started, a small handle opens the mini player.
  */
-export default function WritePlaylistDock({ pinned = true }) {
+export default function WritePlaylistDock({ onClose }) {
   const player = useYouTubePlaylist(playlist.listId, true);
   const [started, setStarted] = useState(false);
   const [open, setOpen] = useState(false);
@@ -23,7 +23,16 @@ export default function WritePlaylistDock({ pinned = true }) {
   return (
     // Zero-height sticky rail: sits in line with the close button before scrolling,
     // then pins to the top edge alongside the sticky step header.
-    <div className={`${pinned ? "sticky" : "relative"} top-0 z-40 h-0`}>
+    <div className="sticky top-0 z-40 h-0">
+    {onClose && (
+      <button
+        onClick={onClose}
+        aria-label="סגירה"
+        className="absolute top-3 left-0 w-11 h-11 rounded-full bg-[#E5E1D8] hover:bg-[#DDD9CE] text-[#4A4943] grid place-items-center transition-colors"
+      >
+        <X className="w-5 h-5" strokeWidth={2} />
+      </button>
+    )}
     <div dir="rtl" className="absolute top-3 left-[52px]">
       <WritePlaylistPanel open={open} playlist={playlist} player={player} onClose={() => setOpen(false)} />
       <div className="flex items-center h-11 rounded-full bg-[#16161A] text-[#F1F0EC] shadow-[0_4px_14px_rgba(0,0,0,0.18)]">

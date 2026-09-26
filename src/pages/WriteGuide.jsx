@@ -244,7 +244,8 @@ export default function WriteGuide() {
     <div dir="rtl" lang="he" className="min-h-screen bg-[#F4F1EA] text-[#16161A] flex flex-col justify-between p-6 max-w-md mx-auto">
       {/* Top Header */}
       <div>
-        <WritePlaylistDock pinned={!!step.compact} />
+        {/* On full-title steps the close button lives in the sticky rail with the music, so both stay reachable. */}
+        <WritePlaylistDock onClose={step.compact ? undefined : () => navigate("/")} />
         {step.compact ? (
           <CompactStepHeader title={step.title} stepNumber={step.stepNumber} onClose={() => navigate("/")} />
         ) : (
@@ -253,13 +254,7 @@ export default function WriteGuide() {
             <span className="block text-[#9C9A91]">{step.stepNumber}</span>
             <span className="block text-[#16161A]">{step.title}</span>
           </h1>
-          <button
-            onClick={() => navigate("/")}
-            aria-label="סגירה"
-            className="w-11 h-11 mt-1 shrink-0 rounded-full bg-[#E5E1D8] hover:bg-[#DDD9CE] text-[#4A4943] grid place-items-center transition-colors"
-          >
-            <X className="w-5 h-5" strokeWidth={2} />
-          </button>
+          <span aria-hidden="true" className="w-11 h-11 mt-1 shrink-0" />
         </div>
         )}
 
