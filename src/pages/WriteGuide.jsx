@@ -7,6 +7,9 @@ import AnonymityNote from "@/components/write/AnonymityNote";
 import WriteQuote from "@/components/write/WriteQuote";
 import PrepStep from "@/components/write/PrepStep";
 import DraftSaveButton from "@/components/write/DraftSaveButton";
+import GateStep from "@/components/write/GateStep";
+import CompactStepHeader from "@/components/write/CompactStepHeader";
+import { STORY_GATES } from "@/lib/storyGates";
 import CreditLine from "@/components/CreditLine";
 
 const STEPS = [
@@ -20,9 +23,16 @@ const STEPS = [
     stepNumber: "שלב שני",
     title: "הסיפור שלי",
     type: "prep",
+    compact: true,
   },
   {
     stepNumber: "שלב שלישי",
+    title: "הסיפור שלי",
+    type: "gates",
+    compact: true,
+  },
+  {
+    stepNumber: "שלב רביעי",
     title: "הסיפור שלי",
     instruction: "מה קרה, מה עובר עליך עכשיו? אפשר לכתוב בחופשיות.",
     placeholder: "מה עובר עליי...",
@@ -30,7 +40,7 @@ const STEPS = [
     field: "story",
   },
   {
-    stepNumber: "שלב רביעי",
+    stepNumber: "שלב חמישי",
     title: "הסיפור שלי",
     instruction: "מתוך מה שכתבת, מה היית רוצה לזכור?",
     placeholder: "מה חשוב שלא יאבד...",
@@ -39,7 +49,7 @@ const STEPS = [
     chips: ["הכוח שהיה בי", "מי שעמד לצידי", "מה שלמדתי על עצמי"],
   },
   {
-    stepNumber: "שלב חמישי",
+    stepNumber: "שלב שישי",
     title: "הסיפור שלי",
     instruction: "מילה אחת יכולה להכיל הרבה.",
     placeholder: "מילה או כותרת...",
@@ -58,6 +68,7 @@ export default function WriteGuide() {
     word: "",
     lightSentence: "",
     anchor: "",
+    gates: [],
     ...(draft?.formData || {}),
   });
   const [isCompleted, setIsCompleted] = useState(false);
@@ -93,6 +104,7 @@ export default function WriteGuide() {
             story: formData.story,
             lightSentence: formData.lightSentence,
             anchor: formData.anchor,
+            gates: (formData.gates || []).map((id) => STORY_GATES.find((g) => g.id === id)?.title).filter(Boolean),
           },
         });
 
@@ -201,7 +213,9 @@ export default function WriteGuide() {
     <div dir="rtl" lang="he" className="min-h-screen bg-[#F4F1EA] text-[#16161A] flex flex-col justify-between p-6 max-w-md mx-auto">
       {/* Top Header */}
       <div>
-        {/* Step Kicker and Title, with close button on the same row */}
+        {step.compact ? (
+          <CompactStepHeader title={step.title} stepNumber={step.stepNumber} onClose={() => navigate("/")} />
+        ) : (
         <div className="flex items-start justify-between gap-3 pt-2 text-right">
           <h1 className="text-[34px] font-bold leading-[1.12]">
             <span className="block text-[#9C9A91]">{step.stepNumber}</span>
@@ -215,6 +229,7 @@ export default function WriteGuide() {
             <X className="w-5 h-5" strokeWidth={2} />
           </button>
         </div>
+        )}
 
         {step.instruction && (
           <p className="mt-6 text-[19px] text-[#2C2B26] leading-[1.55] font-normal text-right">
@@ -231,6 +246,10 @@ export default function WriteGuide() {
 
         {step.type === "prep" && (
           <PrepStep formData={formData} setField={(f, v) => setFormData((prev) => ({ ...prev, [f]: v }))} />
+        )}
+
+        {step.type === "gates" && (
+          <GateStep formData={formData} setField={(f, v) => setFormData((prev) => ({ ...prev, [f]: v }))} />
         )}
 
         {/* Input area if step requires input */}
@@ -280,7 +299,7 @@ export default function WriteGuide() {
           >
             <span className="text-[17px] font-bold text-white flex items-center gap-2">
               {step.type === "prep" && <PenLine className="w-[18px] h-[18px]" strokeWidth={1.75} />}
-              {isLastStep ? "לסיים" : step.type === "prep" ? "התחל לכתוב" : "הבא"}
+              {isLastStep ? "לסיים" : step.type === "prep" ? "התחל לכתוב" : step.type === "gates" ? "המשך" : "הבא"}
             </span>
             <span className="text-[14px] font-medium text-[#9C9A91] tabular-nums">
               {currentStepIndex + 1}/{STEPS.length}
