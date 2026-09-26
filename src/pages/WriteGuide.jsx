@@ -9,6 +9,7 @@ import PrepStep from "@/components/write/PrepStep";
 import DraftSaveButton from "@/components/write/DraftSaveButton";
 import GateStep from "@/components/write/GateStep";
 import AttuneStep from "@/components/write/AttuneStep";
+import BackTextButton from "@/components/BackTextButton";
 import CompactStepHeader from "@/components/write/CompactStepHeader";
 import { STORY_GATES } from "@/lib/storyGates";
 import CreditLine from "@/components/CreditLine";
@@ -305,6 +306,7 @@ export default function WriteGuide() {
           <DraftSaveButton onSave={() => saveWriteDraft(formData, currentStepIndex)} />
         )}
         <div className="flex items-center gap-3">
+          {currentStepIndex > 0 && <BackTextButton onClick={handlePrev} />}
           {/* Main Action Bar */}
           <button
             onClick={handleNext}
@@ -319,24 +321,6 @@ export default function WriteGuide() {
             </span>
           </button>
 
-          {/* Back Button (Circle) */}
-          {currentStepIndex > 0 ? (
-            <button
-              onClick={handlePrev}
-              aria-label="שלב קודם"
-              className="w-[60px] h-[60px] rounded-full bg-[#E3DFD6] hover:bg-[#D8D4CB] text-[#16161A] grid place-items-center active:scale-95 transition-all shrink-0"
-            >
-              <ArrowRight className="w-5 h-5" strokeWidth={2} />
-            </button>
-          ) : (
-            <button
-              onClick={handleNext}
-              aria-label="הבא"
-              className="w-[60px] h-[60px] rounded-full bg-[#E3DFD6] hover:bg-[#D8D4CB] text-[#16161A] grid place-items-center active:scale-95 transition-all shrink-0"
-            >
-              <ArrowLeft className="w-5 h-5" strokeWidth={2} />
-            </button>
-          )}
         </div>
         <CreditLine className="pt-5" />
       </div>

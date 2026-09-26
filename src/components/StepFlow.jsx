@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { ArrowRight, Pause, Play, Volume2, VolumeX } from "lucide-react";
+import { Pause, Play, Volume2, VolumeX } from "lucide-react";
+import BackTextButton from "@/components/BackTextButton";
 import FocusHeader from "@/components/FocusHeader";
 import BreathRing from "@/components/BreathRing";
 import ActionButton from "@/components/ActionButton";
@@ -261,14 +262,7 @@ export default function StepFlow({ tool, tone = "open", onComplete, storageKey }
 
         {/* Breath Mode Navigation Bar */}
         <div className="flex items-center gap-2.5 px-6">
-          <button
-            onClick={goBack}
-            disabled={index === 0}
-            aria-label="הקודם"
-            className="press grid place-items-center w-[3.5rem] h-[3.5rem] shrink-0 rounded-full bg-secondary text-foreground disabled:opacity-30 disabled:pointer-events-none"
-          >
-            <ArrowRight className="w-[18px] h-[18px]" strokeWidth={1.75} />
-          </button>
+          <BackTextButton onClick={goBack} disabled={index === 0} />
 
           <button
             onClick={() => setRunning((r) => !r)}
@@ -367,14 +361,7 @@ export default function StepFlow({ tool, tone = "open", onComplete, storageKey }
       {/* Navigation Controls for Non-Choice Steps */}
       {step.kind !== "choice" && (
         <div className="flex items-center gap-2.5 px-6 mt-6">
-          <button
-            onClick={goBack}
-            disabled={index === 0}
-            aria-label="הקודם"
-            className="press grid place-items-center w-[3.5rem] h-[3.5rem] shrink-0 rounded-full bg-secondary text-foreground disabled:opacity-30 disabled:pointer-events-none"
-          >
-            <ArrowRight className="w-[18px] h-[18px]" strokeWidth={1.75} />
-          </button>
+          <BackTextButton onClick={goBack} disabled={index === 0} />
 
           {canAutoAdvance && (
             <button
