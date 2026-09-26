@@ -15,6 +15,7 @@ import CompactStepHeader from "@/components/write/CompactStepHeader";
 import { STORY_GATES } from "@/lib/storyGates";
 import CreditLine from "@/components/CreditLine";
 import WritePlaylistDock from "@/components/write/WritePlaylistDock";
+import ShortStoryNudge from "@/components/write/ShortStoryNudge";
 
 const STEPS = [
   {
@@ -82,6 +83,7 @@ export default function WriteGuide() {
     ...(draft?.formData || {}),
   });
   const [isCompleted, setIsCompleted] = useState(false);
+  const [showShortNudge, setShowShortNudge] = useState(false);
 
   useEffect(() => {
     base44.analytics.track({ eventName: "tool_opened_write_guide" });
@@ -95,7 +97,23 @@ export default function WriteGuide() {
   const step = STEPS[currentStepIndex];
   const isLastStep = currentStepIndex === STEPS.length - 1;
 
+  const goForward = () => {
+    setShowShortNudge(false);
+    setCurrentStepIndex((prev) => prev + 1);
+  };
+
+  const handleAddMore = () => {
+    setShowShortNudge(false);
+    const textarea = document.querySelector("textarea");
+    textarea?.focus();
+    textarea?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
   const handleNext = () => {
+    if (step.type === "story" && !showShortNudge && (formData.story || "").length < 500) {
+      setShowShortNudge(true);
+      return;
+    }
     if (isLastStep) {
       // Save locally to journal and moments
       try {
@@ -130,11 +148,12 @@ export default function WriteGuide() {
       clearWriteDraft();
       setIsCompleted(true);
     } else {
-      setCurrentStepIndex((prev) => prev + 1);
+      goForward();
     }
   };
 
   const handlePrev = () => {
+    setShowShortNudge(false);
     if (currentStepIndex > 0) {
       setCurrentStepIndex((prev) => prev - 1);
     }
@@ -265,6 +284,10 @@ export default function WriteGuide() {
 
         {step.type === "story" && (
           <StoryWriteStep formData={formData} setField={(f, v) => setFormData((prev) => ({ ...prev, [f]: v }))} />
+        )}
+
+        {step.type === "story" && showShortNudge && (
+          <ShortStoryNudge onAddMore={handleAddMore} onContinue={goForward} />
         )}
 
         {step.type === "gates" && (
