@@ -24,22 +24,16 @@ export function SpiritWingsWatermark({ className = "", color = "#BFA88F", opacit
           className="absolute left-1/2 top-[66%] -translate-x-1/2 -translate-y-1/2 w-[36%]"
           style={{ opacity: Math.min(opacity * 1.8, 0.3) }}
         >
-          <defs>
-            <mask id="sw-eye-glint">
-              <rect width="200" height="130" fill="#fff" />
-              <circle cx="90" cy="56" r="7" fill="#000" />
-            </mask>
-          </defs>
-          {/* Soft, rounded lids — gentle and friendly rather than sharp */}
+          {/* Almond outline with pointed corners */}
           <path
-            d="M 14 68 C 48 16 152 16 186 68 C 152 114 48 114 14 68 Z"
+            d="M 6 65 Q 100 -25 194 65 Q 100 155 6 65 Z"
             stroke={color}
-            strokeWidth="4"
-            strokeLinejoin="round"
+            strokeWidth="4.5"
+            strokeLinejoin="miter"
           />
-          {/* Iris: soft ring + pupil with a warm glint */}
-          <circle cx="100" cy="66" r="33" stroke={color} strokeWidth="2.5" opacity="0.6" />
-          <circle cx="100" cy="66" r="24" fill={color} mask="url(#sw-eye-glint)" />
+          {/* Iris: thin outer ring + full pupil */}
+          <circle cx="100" cy="65" r="36" stroke={color} strokeWidth="3" />
+          <circle cx="100" cy="65" r="28" fill={color} />
         </svg>
       </div>
     </div>
