@@ -31,13 +31,13 @@ export default function PrepStep({ formData, setField }) {
             rows={2}
             value={formData.anchor || ""}
             onChange={(e) => setField("anchor", e.target.value)}
-            placeholder="כתבו כאן או בחרו מלמטה..."
+            placeholder="כתבו כאן..."
             className="mt-3 w-full bg-transparent border-none resize-none p-0 text-[26px] font-medium leading-snug text-[#5E4A1E] placeholder:text-[#9C8A63] focus:outline-none text-right"
           />
         </div>
       </div>
 
-      <p className="mt-7 pb-2 text-[13px] text-[#6B6A63] border-b border-[#D6D2C8]">למשל:</p>
+      <p className="mt-7 pb-2 text-[13px] text-[#6B6A63] border-b border-[#D6D2C8]">או בחרו מבין אלו:</p>
       <div>
         {ANCHOR_CHIPS.map((chip) => {
           const on = formData.anchor === chip;
