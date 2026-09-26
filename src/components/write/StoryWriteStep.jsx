@@ -28,7 +28,10 @@ export default function StoryWriteStep({ formData, setField }) {
 
       <div className="mt-3">
         <div className="flex items-center justify-between text-[13px] text-[#6B6A63] tabular-nums">
-          <span>{story.length.toLocaleString("he-IL")} תווים</span>
+          <span>
+            {story.length.toLocaleString("he-IL")} תווים
+            <span className="text-[#8E8B83]"> · מומלץ כ־1,500, בלי לחץ</span>
+          </span>
           <span>{percent}%</span>
         </div>
         <div className="mt-1.5 h-1.5 rounded-full bg-[#E3DFD6] overflow-hidden">
