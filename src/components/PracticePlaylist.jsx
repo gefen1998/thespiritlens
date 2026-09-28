@@ -17,18 +17,18 @@ export default function PracticePlaylist({ playlist, className = "", preview = f
 
   return (
     <div dir="rtl" className={className || "w-full"}>
-      <div className="w-full rounded-[20px] bg-[#16161A] text-[#F1F0EC] shadow-[0_4px_20px_rgba(0,0,0,0.18)] overflow-hidden">
+      <div className={`w-full rounded-[20px] overflow-hidden ${preview ? "bg-[#EFEBE2] text-[#16161A] border border-[#DDD6C6]" : "bg-[#16161A] text-[#F1F0EC] shadow-[0_4px_20px_rgba(0,0,0,0.18)]"}`}>
         <button
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           className="press w-full flex items-center gap-3 px-4 py-3.5 text-right"
         >
-          <span className="grid place-items-center w-9 h-9 rounded-full bg-white/10 shrink-0">
+          <span className={`grid place-items-center w-9 h-9 rounded-full shrink-0 ${preview ? "bg-[#16161A] text-[#F8F7F4]" : "bg-white/10"}`}>
             <Music className="w-[17px] h-[17px]" strokeWidth={1.7} />
           </span>
           <span className="flex-1 min-w-0">
             <span className="block text-[14px] font-semibold leading-tight">{playlist.title}</span>
-            <span className="block text-[12px] text-[#A8A69D] leading-snug mt-0.5">{playlist.note}</span>
+            <span className={`block text-[12px] leading-snug mt-0.5 ${preview ? "text-[#6B6A63]" : "text-[#A8A69D]"}`}>{playlist.note}</span>
           </span>
           <ChevronDown
             className={`w-4 h-4 text-[#A8A69D] shrink-0 transition-transform ${open ? "rotate-180" : ""}`}
@@ -43,7 +43,7 @@ export default function PracticePlaylist({ playlist, className = "", preview = f
             className="press relative block w-full px-3 pb-3"
           >
             <img src={playlist.coverUrl} alt={playlist.title} className="w-full aspect-[1024/566] object-cover object-right rounded-[14px]" />
-            <span className="absolute bottom-6 left-6 grid place-items-center w-12 h-12 rounded-full bg-[#F1F0EC] text-[#16161A] shadow-md">
+            <span className="absolute bottom-6 left-6 grid place-items-center w-12 h-12 rounded-full bg-[#16161A] text-[#F8F7F4] shadow-md">
               <Play className="w-5 h-5 fill-current" strokeWidth={1.5} />
             </span>
           </button>
@@ -68,6 +68,7 @@ export default function PracticePlaylist({ playlist, className = "", preview = f
               onPrev={player.prev}
               onToggle={player.toggle}
               onNext={player.next}
+              light={preview}
             />
             <a
               href={watchUrl}
