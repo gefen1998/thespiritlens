@@ -6,6 +6,7 @@ import BreathRing from "@/components/BreathRing";
 import ActionButton from "@/components/ActionButton";
 import ChoiceCard from "@/components/ChoiceCard";
 import PracticePlaylist from "@/components/PracticePlaylist";
+import PracticeAudio from "@/components/PracticeAudio";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { letterTone } from "@/lib/spiritContent";
@@ -354,6 +355,12 @@ export default function StepFlow({ tool, tone = "open", onComplete, storageKey }
         {tool.playlist && (
           <div className="mt-6 mb-2">
             <PracticePlaylist playlist={tool.playlist} />
+          </div>
+        )}
+
+        {tool.audio && (
+          <div className="mt-6 mb-2">
+            <PracticeAudio audio={tool.audio} />
           </div>
         )}
       </div>

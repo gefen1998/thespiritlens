@@ -267,8 +267,11 @@ export const tools = {
     description: "תרגול דמיון עדין לחיבור למשאב פנימי",
     duration: "חמש דקות",
     mode: "breath",
-    audioReady: false,
-    audioNote: "בקרוב יתאפשר להאזין להקלטה מונחית. בינתיים, נלווה אתכם בכתב.",
+    audio: {
+      url: "https://media.base44.com/files/public/6aa5ba6278746a9e6313ec62/01f93d75e_BandLabSong.wav",
+      title: "קרן אור - הקלטה מונחית",
+      note: "אפשר להאזין במקביל לתרגול, בעוצמה נעימה לכם.",
+    },
     steps: [
       { kind: "text", text: "שבו בנוחות, או שכבו אם נעים לכם יותר." },
       { kind: "text", text: "דמיינו, בעדינות, קרן אור חמה היורדת מלמעלה." },
