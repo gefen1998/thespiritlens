@@ -1,3 +1,4 @@
+import CreditLine from "@/components/CreditLine";
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Globe, ArrowUpLeft, ArrowUpRight, PenLine, ArrowDown, Bookmark } from "lucide-react";
@@ -308,6 +309,7 @@ export default function Home() {
             <EditorialCard key={id} tool={localizeTool(tools[id], lang)} showTime={false} />
           ))}
         </div>
+        <CreditLine className="pt-8 !px-0" />
       </div>
 
       <BottomTabs />
