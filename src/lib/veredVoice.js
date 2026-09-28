@@ -42,14 +42,40 @@ if (audio && typeof window !== "undefined") {
   window.addEventListener("pointerdown", unlock, true);
 }
 
+// Soft fade-in/out so clips never end with an abrupt digital "click".
+const FADE = 0.35;
+let raf = 0;
+function tick() {
+  if (!audio || audio.paused) return;
+  const d = audio.duration || 0;
+  const t = audio.currentTime;
+  const v = Math.min(1, t / 0.08, d ? (d - t) / FADE : 1);
+  audio.volume = Math.max(0, v);
+  if (d && d - t < 0.03) { audio.pause(); return; }
+  raf = requestAnimationFrame(tick);
+}
+audio?.addEventListener("play", () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); });
+
 export function stopVered() {
-  audio?.pause();
+  if (!audio || audio.paused) return;
+  cancelAnimationFrame(raf);
+  const start = audio.volume;
+  const t0 = performance.now();
+  const fade = (now) => {
+    const k = 1 - (now - t0) / 200;
+    if (k <= 0 || audio.paused) { audio.pause(); return; }
+    audio.volume = start * k;
+    raf = requestAnimationFrame(fade);
+  };
+  raf = requestAnimationFrame(fade);
 }
 
 /** Plays a recorded clip by file name or full url. */
 export function playClip(url) {
   if (!audio) return;
+  cancelAnimationFrame(raf);
   audio.pause();
+  audio.volume = 0;
   audio.src = url.startsWith("http") ? url : BASE + url;
   audio.currentTime = 0;
   audio.play().catch(() => {});

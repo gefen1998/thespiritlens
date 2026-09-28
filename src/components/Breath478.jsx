@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Pause, Play } from "lucide-react";
 import FocusHeader from "@/components/FocusHeader";
+import BreathVisual from "@/components/BreathVisual";
 import { useLang } from "@/lib/i18n";
 import { playClip, stopVered } from "@/lib/veredVoice";
 
@@ -75,23 +76,15 @@ export default function Breath478({ tool, tone = "open", onComplete }) {
     <div className="min-h-screen flex flex-col pb-10">
       <FocusHeader kicker={s.cycle ? t(`סבב ${s.cycle} מתוך ${CYCLES}`, `Round ${s.cycle} of ${CYCLES}`) : ""} title={tool.name} to="/" />
       <div className="flex-1 flex flex-col items-center justify-center gap-8 px-6">
-        <div className="relative grid place-items-center w-[15.5rem] h-[15.5rem]">
-          <motion.span
-            className="absolute inset-0 rounded-full"
-            style={{ backgroundColor: `hsl(var(--pigment-${tone}) / 0.16)` }}
-            animate={{ scale: running ? s.scale : undefined }}
-            transition={{ duration: s.dur, ease: "easeInOut" }}
-          />
-          <div className="relative text-center">
-            {s.label ? (
-              <>
-                <p className="t-title text-foreground">{s.label}</p>
-                <p className="text-[40px] font-bold tabular-nums text-foreground leading-none mt-1">{Math.max(left, 1)}</p>
-                <p className="t-small text-muted-foreground mt-1">{s.hint}</p>
-              </>
-            ) : null}
-          </div>
-        </div>
+        <BreathVisual phase={s.label ? s.key : "exhale"} dur={s.dur} left={s.label ? left : null} running={running} tone={tone}>
+          {s.label ? (
+            <>
+              <p className="t-row">{s.label}</p>
+              <p className="text-[34px] font-bold tabular-nums leading-none mt-0.5">{Math.max(left, 1)}</p>
+            </>
+          ) : null}
+        </BreathVisual>
+        {s.label && <p className="t-small text-muted-foreground -mt-4">{s.hint}</p>}
         {s.text && <p className="t-practice text-foreground text-center max-w-md text-balance">{s.text}</p>}
       </div>
       <div className="flex items-center justify-center gap-4 px-6">

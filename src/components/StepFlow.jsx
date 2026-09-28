@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Pause, Play, Volume2, VolumeX } from "lucide-react";
 import BackTextButton from "@/components/BackTextButton";
 import FocusHeader from "@/components/FocusHeader";
-import BreathRing from "@/components/BreathRing";
+import BreathVisual from "@/components/BreathVisual";
 import ActionButton from "@/components/ActionButton";
 import ChoiceCard from "@/components/ChoiceCard";
 import PracticePlaylist from "@/components/PracticePlaylist";
@@ -22,9 +22,9 @@ const ORDINALS_EN = ["one", "two", "three", "four", "five", "six", "seven", "eig
 
 function phaseOf(elapsed, en) {
   const p = elapsed % BREATH_CYCLE;
-  if (p < INHALE) return en ? { label: "Inhale", hint: "Slowly, through the nose" } : { label: "שאיפה", hint: "לאט, דרך האף" };
-  if (p < INHALE + HOLD) return en ? { label: "Hold", hint: "One moment" } : { label: "החזקה", hint: "רגע אחד" };
-  return en ? { label: "Exhale", hint: "Longer than the inhale" } : { label: "נשיפה", hint: "ארוכה מן השאיפה" };
+  if (p < INHALE) return { key: "inhale", dur: INHALE, ...(en ? { label: "Inhale", hint: "Slowly, through the nose" } : { label: "שאיפה", hint: "לאט, דרך האף" }) };
+  if (p < INHALE + HOLD) return { key: "hold", dur: HOLD, ...(en ? { label: "Hold", hint: "One moment" } : { label: "החזקה", hint: "רגע אחד" }) };
+  return { key: "exhale", dur: BREATH_CYCLE - INHALE - HOLD, ...(en ? { label: "Exhale", hint: "Longer than the inhale" } : { label: "נשיפה", hint: "ארוכה מן השאיפה" }) };
 }
 
 function calculateStepDuration(text, isBreath) {
@@ -41,7 +41,8 @@ function speakHebrew(text) {
     window.speechSynthesis.cancel();
     stopVered();
     if (!text) return;
-    if (document.documentElement.lang !== "en" && playVered(text)) return;
+    // Hebrew uses only Vered's recordings — never the robotic browser voice.
+    if (document.documentElement.lang !== "en") { playVered(text); return; }
     const cleanText = text.replace(/[\n\r]+/g, " ").trim();
     const utterance = new SpeechSynthesisUtterance(cleanText);
     if (document.documentElement.lang === "en") {
@@ -274,7 +275,10 @@ export default function StepFlow({ tool, tone = "open", onComplete, storageKey }
       <div className="min-h-screen flex flex-col pb-10">
         <FocusHeader kicker={phase.label} title={tool.name} to="/" actions={headerActions} />
         <div className="flex-1 flex flex-col items-center justify-center gap-8 px-6">
-          <BreathRing tone={tone} running={running} hint={phase.hint} />
+          <BreathVisual phase={phase.key} dur={phase.dur} running={running} tone={tone}>
+            <p className="t-row">{phase.label}</p>
+          </BreathVisual>
+          <p className="t-small text-muted-foreground -mt-4">{phase.hint}</p>
           <p className="t-practice text-foreground text-center max-w-md text-balance">{step.text}</p>
         </div>
 
