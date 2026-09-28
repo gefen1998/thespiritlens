@@ -180,7 +180,7 @@ export default function Home() {
                   {hasDraft ? t("להמשיך לכתוב", "Keep writing") : t("לכתוב ישר", "Write now")}
                 </span>
                 <span className="block text-[12.5px] text-[#FBFAF7]/90 leading-snug mt-1.5 font-normal">
-                  {hasDraft ? t("הכתיבה שלך נשמרה, ממשיכים מאיפה שעצרת", "Your writing was saved, pick up where you left off") : t("לפתוח את מדריך הכתיבה עכשיו", "Open the writing guide now")}
+                  {hasDraft ? t("הכתיבה שלך נשמרה, ממשיכים מאיפה שעצרת", "Your draft is saved, just keep going") : t("לפתוח את מדריך הכתיבה עכשיו", "Open the writing guide now")}
                 </span>
               </div>
             </Link>
