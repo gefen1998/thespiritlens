@@ -45,6 +45,7 @@ if (audio && typeof window !== "undefined") {
 // Soft fade-in/out so clips never end with an abrupt digital "click".
 const FADE = 0.15;
 let raf = 0;
+let lastStart = -Infinity;
 function tick() {
   if (!audio || audio.paused) return;
   const d = audio.duration || 0;
@@ -73,10 +74,18 @@ export function stopVered() {
 /** Plays a recorded clip by file name or full url. */
 export function playClip(url) {
   if (!audio) return;
+  const src = url.startsWith("http") ? url : BASE + url;
   cancelAnimationFrame(raf);
+  // Same clip requested again right away (effect re-run) — keep the one already playing.
+  if (audio.src === src && performance.now() - lastStart < 1500 && !audio.ended) {
+    if (audio.paused) audio.play().catch(() => {});
+    else raf = requestAnimationFrame(tick);
+    return;
+  }
+  lastStart = performance.now();
   audio.pause();
   audio.volume = 0;
-  audio.src = url.startsWith("http") ? url : BASE + url;
+  audio.src = src;
   audio.currentTime = 0;
   audio.play().catch(() => {});
 }
