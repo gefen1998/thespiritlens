@@ -3,36 +3,27 @@ import { motion } from "framer-motion";
 import { Pause, Play } from "lucide-react";
 import FocusHeader from "@/components/FocusHeader";
 import { useLang } from "@/lib/i18n";
+import { playClip, stopVered } from "@/lib/veredVoice";
 
 const CYCLES = 4;
 
 const BASE = "https://base44.app/api/apps/6aa5ba6278746a9e6313ec62/files/mp/public/6aa5ba6278746a9e6313ec62/";
 const VERED = {
-  intro: BASE + "2da25bbec_vered-478-intro-v2.mp3",
+  intro: BASE + "3403e3880_vered-intro-v3.mp3",
   outro: BASE + "ded5f1515_vered-478-outro-v2.mp3",
   inhale: BASE + "dc8281fe7_vered-478-inhale.mp3",
-  hold: BASE + "a031451a5_vered-478-hold.mp3",
+  hold: BASE + "c2a93adc2_vered-hold-v3.mp3",
   exhale: BASE + "11e7aaf37_vered-478-exhale.mp3",
 };
-// Every clip ever started, so stopping silences all of them — no orphan voice
-// can keep playing after a restart, a re-mount or pause.
-const playing = new Set();
-const current = { pause: () => stopAll() };
-
-function stopAll() {
-  playing.forEach((a) => { a.pause(); a.src = ""; });
-  playing.clear();
-}
+const current = { pause: () => stopVered() };
+const stopAll = stopVered;
 
 function speak(text, en, key) {
   stopAll();
   window.speechSynthesis?.cancel();
   if (localStorage.getItem("sl_voice_muted") === "1") return;
   if (!en && VERED[key]) {
-    const a = new Audio(VERED[key]);
-    playing.add(a);
-    a.onended = () => playing.delete(a);
-    a.play().catch(() => {});
+    playClip(VERED[key]);
     return;
   }
   if (!("speechSynthesis" in window)) return;

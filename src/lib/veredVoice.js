@@ -26,21 +26,40 @@ const FILES = {
   "אפשר לכתוב את המחשבה כאן. אפשר גם לדלג ולא לכתוב.": "f6858cfa1_vered-step-21.mp3",
 };
 
-const playing = new Set();
+FILES["נחזור בעדינות אל הגוף, אל הנשימה ואל הרגע הזה. אין צורך לשנות דבר."] = "6685bd447_vered-n0-v3.mp3";
+FILES["נשים לב למה שמתרחש בנו, בלי למהר לשנות אותו. רק נכיר במה שנוכח."] = "ef376c258_vered-n1-v3.mp3";
+FILES["נשאל: מה נמצא בידי, ומה נכון לי לבחור עכשיו, ולו במעט?"] = "d55cdc0f3_vered-n2-v3.mp3";
+FILES["נזהה דבר אחד שתומך בנו, ושאותו אנו מבקשים לקחת הלאה."] = "f4da7657c_vered-n3-v3.mp3";
+
+// One shared element for the whole app: only one voice can ever play, and
+// once unlocked by a tap, mobile browsers let it keep auto-playing later clips.
+const audio = typeof Audio !== "undefined" ? new Audio() : null;
+if (audio && typeof window !== "undefined") {
+  const unlock = () => {
+    if (!audio.src) { audio.muted = true; audio.play().catch(() => {}); audio.pause(); audio.muted = false; }
+    window.removeEventListener("pointerdown", unlock, true);
+  };
+  window.addEventListener("pointerdown", unlock, true);
+}
 
 export function stopVered() {
-  playing.forEach((a) => { a.pause(); a.src = ""; });
-  playing.clear();
+  audio?.pause();
+}
+
+/** Plays a recorded clip by file name or full url. */
+export function playClip(url) {
+  if (!audio) return;
+  audio.pause();
+  audio.src = url.startsWith("http") ? url : BASE + url;
+  audio.currentTime = 0;
+  audio.play().catch(() => {});
 }
 
 /** Plays Vered's recording for this text; returns false if none exists. */
 export function playVered(text) {
   stopVered();
-  const file = FILES[text];
-  if (!file) return false;
-  const a = new Audio(BASE + file);
-  playing.add(a);
-  a.onended = () => playing.delete(a);
-  a.play().catch(() => {});
+  const key = FILES[text] ? text : Object.keys(FILES).find((k) => text?.endsWith(k));
+  if (!key) return false;
+  playClip(FILES[key]);
   return true;
 }
