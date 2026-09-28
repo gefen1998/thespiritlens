@@ -1,12 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import BottomTabs from "@/components/BottomTabs";
+import { useLang } from "@/lib/i18n";
 
 const CHAPTERS = [
   {
     letter: "נ",
     title: "נשימה ונוכחות",
     note: "חזרה עדינה אל הגוף ואל הרגע הזה.",
+    titleEn: "Breath and presence",
+    noteEn: "A gentle return to the body and to this moment.",
     page: 237,
     bg: "#CFD8C6", // sage tint
     ink: "#3A4A33",
@@ -16,6 +19,8 @@ const CHAPTERS = [
     letter: "ש",
     title: "שקט פנימי והתבוננות",
     note: "לשים לב למה שנוכח, בלי למהר לשנות.",
+    titleEn: "Inner stillness and reflection",
+    noteEn: "Noticing what is present, without rushing to change it.",
     page: 237,
     bg: "#C7D2DC", // dusk tint
     ink: "#2F404B",
@@ -25,6 +30,8 @@ const CHAPTERS = [
     letter: "מ",
     title: "משמעות ובחירה",
     note: "מה נמצא בידי, ומה נכון לבחור עכשיו.",
+    titleEn: "Meaning and choice",
+    noteEn: "What is in my hands, and what feels right to choose now.",
     page: 237,
     bg: "#C9CBDA", // indigo tint
     ink: "#2B3049",
@@ -34,6 +41,8 @@ const CHAPTERS = [
     letter: "ה",
     title: "הכרת תודה",
     note: "להכיר בדבר אחד קטן שתומך בנו.",
+    titleEn: "Gratitude",
+    noteEn: "Acknowledging one small thing that supports us.",
     page: 238,
     bg: "#E6D8B8", // ochre tint
     ink: "#5F4A1C",
@@ -43,24 +52,26 @@ const CHAPTERS = [
 
 export default function Book() {
   const navigate = useNavigate();
+  const { lang, dir, t } = useLang();
+  const en = lang === "en";
 
   return (
-    <div dir="rtl" lang="he" className="min-h-screen bg-background text-foreground flex flex-col justify-between overflow-x-hidden">
+    <div dir={dir} lang={lang} className="min-h-screen bg-background text-foreground flex flex-col justify-between overflow-x-hidden">
       <div className="max-w-md mx-auto w-full px-6 pt-6 pb-28">
         {/* Title */}
-        <div className="text-right">
+        <div className="text-start">
           <h1 className="leading-[1.1]">
             <span className="block text-[32px] sm:text-[36px] font-bold text-[#6B6A63]">
-              ארבעה
+              {t("ארבעה", "Four")}
             </span>
             <span className="block text-[34px] sm:text-[38px] font-bold text-[#16161A] mt-0.5">
-              שערים
+              {t("שערים", "gates")}
             </span>
           </h1>
 
           <div className="mt-2.5 text-[13px] text-[#6B6A63] leading-relaxed">
-            <p>תרגול קצר בארבעה שלבים, על פי מודל עדשת הרוח.</p>
-            <p>כל שלב נמצא גם בספר, בעמוד של האות.</p>
+            <p>{t("תרגול קצר בארבעה שלבים, על פי מודל עדשת הרוח.", "A short four-step practice, based on the Spirit Lens model.")}</p>
+            <p>{t("כל שלב נמצא גם בספר, בעמוד של האות.", "Each step also appears in the book, on the page of its letter.")}</p>
           </div>
         </div>
 
@@ -73,7 +84,7 @@ export default function Book() {
             <button
               key={c.letter}
               onClick={() => navigate("/tool/nesheama")}
-              className="press w-full flex items-center gap-4 py-3 sm:py-3.5 text-right transition-colors group"
+              className="press w-full flex items-center gap-4 py-3 sm:py-3.5 text-start transition-colors group"
             >
               {/* Circular badge */}
               <span
@@ -86,13 +97,13 @@ export default function Book() {
               {/* Title & Page */}
               <div className="flex-1 min-w-0">
                 <span className="block text-[16px] sm:text-[17px] font-bold text-[#16161A] leading-tight">
-                  {c.title}
+                  {en ? c.titleEn : c.title}
                 </span>
                 <span className="block text-[12.5px] text-[#6B6A63] mt-0.5 leading-snug">
-                  {c.note}
+                  {en ? c.noteEn : c.note}
                 </span>
                 <span className="block text-[11.5px] text-[#8C8B84] mt-0.5 tabular-nums">
-                  עמוד {c.page}
+                  {t("עמוד", "Page")} {c.page}
                 </span>
               </div>
             </button>

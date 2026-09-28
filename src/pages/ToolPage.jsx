@@ -7,11 +7,21 @@ import GuidedAudioPlayer from "@/components/audio/GuidedAudioPlayer";
 import ChoiceCard from "@/components/ChoiceCard";
 import PracticeCompletionSheet from "@/components/PracticeCompletionSheet";
 import { tools, thoughtBranches, emotionNeedMap, toolTone } from "@/lib/spiritContent";
+import { localizeTool } from "@/lib/spiritContentEn";
+import { useLang } from "@/lib/i18n";
+
+const BRANCHES_EN = {
+  document: ["Record", "There is something here I want to keep"],
+  act: ["Act", "There is something real I can do"],
+  release: ["Let go", "There is no possible action right now, and I want to set it aside for a while"],
+  unclear: ["I'm not sure - help me choose"],
+};
 
 export default function ToolPage() {
   const { toolId } = useParams();
   const navigate = useNavigate();
-  const tool = tools[toolId];
+  const { lang, t } = useLang();
+  const tool = localizeTool(tools[toolId], lang);
   const tone = toolTone(toolId);
   const [phase, setPhase] = useState("steps"); // steps | completed | branches
   const [values, setValues] = useState({});
@@ -29,8 +39,8 @@ export default function ToolPage() {
   if (!tool) {
     return (
       <div className="min-h-screen flex flex-col">
-        <FocusHeader title="הכלי לא נמצא" />
-        <p className="px-6 pt-8 t-lead text-muted-foreground">אולי הקישור השתנה. אפשר לחזור לרשימת הכלים.</p>
+        <FocusHeader title={t("הכלי לא נמצא", "Tool not found")} />
+        <p className="px-6 pt-8 t-lead text-muted-foreground">{t("אולי הקישור השתנה. אפשר לחזור לרשימת הכלים.", "The link may have changed. You can go back to the tools list.")}</p>
       </div>
     );
   }
@@ -68,14 +78,14 @@ export default function ToolPage() {
   if (phase === "branches") {
     return (
       <div className="min-h-screen flex flex-col">
-        <FocusHeader kicker="תרגול" title="מה המחשבה מבקשת עכשיו?" />
+        <FocusHeader kicker={t("תרגול", "Practice")} title={t("מה המחשבה מבקשת עכשיו?", "What is the thought asking for now?")} />
         <div className="px-6 pt-8">
-          <p className="t-lead text-muted-foreground mb-6">בחרו את הכיוון שנכון לכם. אין בחירה נכונה יותר מרעה.</p>
+          <p className="t-lead text-muted-foreground mb-6">{t("בחרו את הכיוון שנכון לכם. אין בחירה נכונה יותר מרעה.", "Choose the direction that feels right. No choice is better than another.")}</p>
           {thoughtBranches.map((b) => (
             <ChoiceCard
               key={b.id}
-              label={b.label}
-              sub={b.sub}
+              label={lang === "en" ? BRANCHES_EN[b.id][0] : b.label}
+              sub={lang === "en" ? BRANCHES_EN[b.id][1] : b.sub}
               subtle={b.subtle}
               onClick={() => navigate(`/thought/${b.id}`)}
             />

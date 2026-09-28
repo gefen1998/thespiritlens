@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { PenLine, Bookmark, Check } from "lucide-react";
 import { saveMoment } from "@/lib/savedMoments";
-import { TOOL_CARD_META, getToolIcon } from "@/components/EditorialCard";
+import { TOOL_CARD_META, getToolIcon, cardName } from "@/components/EditorialCard";
+import { useLang } from "@/lib/i18n";
 
 export default function PracticeCompletionSheet({ tool, values = {}, onDone, onRepeat }) {
   const navigate = useNavigate();
+  const { lang, dir, t } = useLang();
+  const en = lang === "en";
   const meta = (tool && TOOL_CARD_META[tool.id]) || {
     line1: tool?.name || "תרגול",
     line2: "",
@@ -26,9 +29,9 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
 
   if (phrases.length === 0) {
     if (tool?.id === "nesheama") {
-      phrases = ["לקחתי איתי רגע אחד\nשל נשימה."];
+      phrases = [t("לקחתי איתי רגע אחד\nשל נשימה.", "I took one moment\nof breath with me.")];
     } else {
-      phrases = ["לקחתי איתי רגע אחד\nשל שקט."];
+      phrases = [t("לקחתי איתי רגע אחד\nשל שקט.", "I took one moment\nof quiet with me.")];
     }
   }
 
@@ -78,8 +81,9 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
     }
   };
 
-  const kickerName =
-    tool?.id === "nesheama"
+  const kickerName = en
+    ? tool?.id === "nesheama" ? "N.S.M.H." : cardName(tool?.id, lang, tool?.name || "Practice")
+    : tool?.id === "nesheama"
       ? "נשמ״ה"
       : meta.line1 + (meta.line2 ? ` ${meta.line2}` : "");
 
@@ -101,8 +105,8 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
 
       {/* Bottom Sheet Card */}
       <div
-        dir="rtl"
-        lang="he"
+        dir={dir}
+        lang={lang}
         className="w-full max-w-md mx-auto rounded-t-[32px] px-6 pt-3 pb-8 sm:pb-10 shadow-[0_-12px_45px_rgba(0,0,0,0.25)] select-none animate-in fade-in slide-in-from-bottom-6 duration-250 touch-auto"
         style={{ backgroundColor: "#F8F7F4" }}
       >
@@ -110,7 +114,7 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
         <div className="w-11 h-1 rounded-full bg-[#16161A]/20 mx-auto mt-1 mb-5" />
 
         {/* Kicker */}
-        <div className="text-right">
+        <div className="text-start">
           <span className="text-xs font-medium text-[#6B6A63] block mb-2">
             {kickerName}
           </span>
@@ -121,7 +125,7 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
           {/* Main Phrase text */}
           <div
             onClick={nextPhrase}
-            className={`text-right flex-1 ${phrases.length > 1 ? "cursor-pointer active:opacity-85" : ""}`}
+            className={`text-start flex-1 ${phrases.length > 1 ? "cursor-pointer active:opacity-85" : ""}`}
           >
             <p className="text-[25px] sm:text-[27px] font-bold text-[#16161A] leading-[1.3] whitespace-pre-line">
               {currentPhrase}
@@ -155,9 +159,9 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
         </div>
 
         {/* Privacy Note & Saved link */}
-        <div className="flex items-center justify-between mt-5 mb-7 text-right">
+        <div className="flex items-center justify-between mt-5 mb-7 text-start">
           <p className="text-xs sm:text-[12.5px] text-[#6B6A63] leading-relaxed">
-            נשמר אצלך במכשיר בלבד.
+            {t("נשמר אצלך במכשיר בלבד.", "Saved on your device only.")}
           </p>
           <button
             onClick={() => {
@@ -167,7 +171,7 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
             className="flex items-center gap-1.5 text-xs sm:text-[12.5px] font-medium text-[#16161A] hover:text-[#B0654A] underline underline-offset-4 transition-colors"
           >
             <Bookmark className="w-3.5 h-3.5" />
-            <span>לרגעים ששמרתי</span>
+            <span>{t("לרגעים ששמרתי", "Saved moments")}</span>
           </button>
         </div>
 
@@ -181,7 +185,7 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
             }}
             className="w-full py-4 px-6 rounded-full bg-[#B35C44] hover:bg-[#A3513B] active:scale-[0.98] text-white text-[16px] font-bold transition-all flex items-center justify-center gap-2.5 shadow-[0_3px_12px_rgba(179,92,68,0.22)] select-none"
           >
-            <span>לכתוב על זה</span>
+            <span>{t("לכתוב על זה", "Write about it")}</span>
             <PenLine className="w-5 h-5 text-white/95" strokeWidth={1.8} />
           </button>
 
@@ -191,14 +195,14 @@ export default function PracticeCompletionSheet({ tool, values = {}, onDone, onR
               onClick={onDone}
               className="flex-1 py-3.5 px-6 rounded-full bg-[#16161A] hover:bg-[#2A2A33] active:scale-95 text-white text-[15px] font-bold transition-all text-center"
             >
-              סיימתי
+              {t("סיימתי", "Done")}
             </button>
 
             <button
               onClick={onRepeat}
               className="py-3.5 px-6 rounded-full bg-[#DDD9D0] hover:bg-[#D5D0C6] active:scale-95 text-[#16161A] text-[15px] font-bold transition-all text-center shrink-0"
             >
-              תרגול נוסף
+              {t("תרגול נוסף", "Practice again")}
             </button>
           </div>
         </div>

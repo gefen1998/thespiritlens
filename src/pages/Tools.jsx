@@ -4,7 +4,9 @@ import BottomTabs from "@/components/BottomTabs";
 import EditorialCard, { TOOL_CARD_META } from "@/components/EditorialCard";
 import ToolListRow from "@/components/ToolListRow";
 import ViewToggle from "@/components/ViewToggle";
-import { tools } from "@/lib/spiritContent";
+import { tools as heTools } from "@/lib/spiritContent";
+import { localizeTools } from "@/lib/spiritContentEn";
+import { useLang } from "@/lib/i18n";
 
 const VIEW_KEY = "sl_tools_view";
 
@@ -12,6 +14,7 @@ const SECTIONS = [
   {
     id: "body",
     title: "הרגעת הגוף",
+    titleEn: "Calming the body",
     tools: [
       "gentle-exhale",
       "return-to-senses",
@@ -22,16 +25,19 @@ const SECTIONS = [
   {
     id: "thought",
     title: "מחשבה",
+    titleEn: "Thought",
     tools: ["thought-meeting"],
   },
   {
     id: "emotion",
     title: "מתן מקום לרגש",
+    titleEn: "Making room for feeling",
     tools: ["emotion-space"],
   },
   {
     id: "spirit",
     title: "חיזוק הרוח",
+    titleEn: "Strengthening the spirit",
     tools: [
       "light-beam",
       "gratitude-moment",
@@ -44,6 +50,9 @@ const SECTIONS = [
 ];
 
 export default function Tools() {
+  const { lang, dir, t: tx } = useLang();
+  const tools = localizeTools(heTools, lang);
+  const secTitle = (sec) => (lang === "en" ? sec.titleEn : sec.title);
   const [query, setQuery] = useState("");
   const [view, setView] = useState(() => {
     try {
@@ -83,22 +92,22 @@ export default function Tools() {
   })).filter((sec) => sec.toolIds.length > 0);
 
   return (
-    <div dir="rtl" lang="he" className="min-h-screen bg-background text-foreground flex flex-col justify-between overflow-x-hidden">
+    <div dir={dir} lang={lang} className="min-h-screen bg-background text-foreground flex flex-col justify-between overflow-x-hidden">
       <div className="max-w-md mx-auto w-full px-6 pt-6 pb-28">
         {/* Title */}
-        <div className="text-right">
+        <div className="text-start">
           <h1 className="leading-[1.1]">
             <span className="block text-[32px] sm:text-[36px] font-bold text-[#6B6A63]">
-              אוסף
+              {tx("אוסף", "The collection")}
             </span>
             <span className="block text-[34px] sm:text-[38px] font-bold text-[#16161A] mt-0.5">
-              הכלים
+              {tx("הכלים", "of tools")}
             </span>
           </h1>
 
           <div className="mt-2.5 text-[13px] text-[#6B6A63] leading-relaxed">
-            <p>הכלים מאורגנים לפי ארבעה שערים.</p>
-            <p>בחרו את מה שנכון לכם עכשיו.</p>
+            <p>{tx("הכלים מאורגנים לפי ארבעה שערים.", "The tools are organized by four gates.")}</p>
+            <p>{tx("בחרו את מה שנכון לכם עכשיו.", "Choose what feels right for you now.")}</p>
           </div>
         </div>
 
@@ -108,10 +117,10 @@ export default function Tools() {
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="חיפוש"
-              className="w-full bg-transparent border-0 outline-none text-sm font-medium text-[#16161A] placeholder:text-[#6B6A63] pr-7 text-right"
+              placeholder={tx("חיפוש", "Search")}
+              className="w-full bg-transparent border-0 outline-none text-sm font-medium text-[#16161A] placeholder:text-[#6B6A63] pe-7 text-start"
             />
-            <Search className="absolute right-4 w-4 h-4 text-[#6B6A63] pointer-events-none" strokeWidth={1.8} />
+            <Search className="absolute end-4 w-4 h-4 text-[#6B6A63] pointer-events-none" strokeWidth={1.8} />
           </div>
           <ViewToggle value={view} onChange={changeView} />
         </div>
@@ -123,7 +132,7 @@ export default function Tools() {
               {/* Section Header */}
               <div className="flex items-center gap-2 mb-2.5">
                 <h2 className="text-[17px] font-bold text-[#16161A]">
-                  {sec.title}
+                  {secTitle(sec)}
                 </h2>
                 <span className="text-[17px] font-normal text-[#6B6A63] tabular-nums">
                   {sec.toolIds.length}
@@ -139,7 +148,7 @@ export default function Tools() {
               ) : (
                 <div className="divide-y divide-[#D8D5CC] border-y border-[#D8D5CC]">
                   {sec.toolIds.map((id) => (
-                    <ToolListRow key={id} tool={tools[id]} category={sec.title} />
+                    <ToolListRow key={id} tool={tools[id]} category={secTitle(sec)} />
                   ))}
                 </div>
               )}
@@ -148,7 +157,7 @@ export default function Tools() {
 
           {visibleSections.length === 0 && (
             <p className="mt-8 text-sm text-muted-foreground text-center">
-              אין תרגול בשם הזה. אפשר לנקות את החיפוש ולעיין באוסף.
+              {tx("אין תרגול בשם הזה. אפשר לנקות את החיפוש ולעיין באוסף.", "No practice by that name. Clear the search to browse the collection.")}
             </p>
           )}
         </div>

@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 import { toneIcons } from "@/lib/toneIcons";
 import { toolTone } from "@/lib/spiritContent";
+import { cardLinesEn } from "@/lib/spiritContentEn";
+import { useLang } from "@/lib/i18n";
 
 export const TOOL_CARD_META = {
   "gentle-exhale": {
@@ -194,8 +196,15 @@ export function getToolIcon(toolId) {
   return toneIcons[tone] || Sparkles;
 }
 
+export function cardName(toolId, lang, fallback) {
+  const lines = lang === "en" ? cardLinesEn[toolId] : TOOL_CARD_META[toolId] && [TOOL_CARD_META[toolId].line1, TOOL_CARD_META[toolId].line2];
+  return lines ? lines.filter(Boolean).join(" ") : fallback;
+}
+
 export default function EditorialCard({ tool, showTime = true }) {
+  const { lang } = useLang();
   if (!tool) return null;
+  const enLines = lang === "en" && cardLinesEn[tool.id];
   const meta = TOOL_CARD_META[tool.id] || {
     line1: tool.name,
     line2: "",
@@ -218,25 +227,25 @@ export default function EditorialCard({ tool, showTime = true }) {
       style={{ backgroundColor: meta.bg }}
     >
       {/* Top right: Title and Subtitle */}
-      <div className="text-right z-10">
+      <div className="text-start z-10">
         <span
           className="block font-bold text-[16px] sm:text-[17px] leading-tight"
           style={{ color: meta.textDark }}
         >
-          {meta.line1}
+          {enLines ? enLines[0] : meta.line1}
         </span>
         {meta.line2 && (
           <span
             className="block font-medium text-[13px] sm:text-[14px] leading-tight mt-0.5"
             style={{ color: meta.textMuted }}
           >
-            {meta.line2}
+            {enLines ? enLines[1] : meta.line2}
           </span>
         )}
       </div>
 
       {/* The organic pebble texture on the left side of the card with pattern icon */}
-      <div className="absolute left-2.5 bottom-2.5 w-[62px] h-[62px] flex items-center justify-center pointer-events-none z-0">
+      <div className="absolute end-2.5 bottom-2.5 w-[62px] h-[62px] flex items-center justify-center pointer-events-none z-0">
         <div
           className="w-full h-full flex items-center justify-center transition-transform duration-300 group-hover:scale-105"
           style={{
@@ -258,7 +267,7 @@ export default function EditorialCard({ tool, showTime = true }) {
 
       {/* Bottom right: Duration aligned under the text */}
       {showTime && (
-        <div className="text-right z-10 mt-auto">
+        <div className="text-start z-10 mt-auto">
           <span
             className="text-[11.5px] sm:text-xs font-normal tabular-nums"
             style={{ color: meta.textMuted }}

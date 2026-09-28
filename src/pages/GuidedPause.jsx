@@ -4,7 +4,17 @@ import { X } from "lucide-react";
 import PauseHero from "@/components/PauseHero";
 import CreditLine from "@/components/CreditLine";
 import { EMOTION_ICONS } from "@/components/EmotionCheckIn";
-import { TOOL_CARD_META } from "@/components/EditorialCard";
+import { TOOL_CARD_META, cardName } from "@/components/EditorialCard";
+import { localizeTool } from "@/lib/spiritContentEn";
+import { useLang } from "@/lib/i18n";
+
+const EMOTION_EN = { calm: "calm", tired: "tired", stressed: "stressed", sad: "sad", restless: "restless", heavy: "heavy", grateful: "grateful" };
+const PAUSE_EN = {
+  titleA: "Before we choose what to do",
+  titleB: "let's pause for a moment.",
+  lines: ["If it feels comfortable, place your feet on the ground.", "Nothing needs to change. Just notice what is happening in you right now."],
+  button: "I'm here, let's continue",
+};
 import { pauseBeforeTool, gates, guidedChoices, tools } from "@/lib/spiritContent";
 
 const NEUTRAL = { tint: "#D6D1C6", wash: "#7C7263", blob: "54% 46% 52% 48% / 40% 62% 38% 60%" };
@@ -24,10 +34,11 @@ function resolveTarget(target) {
   return "/";
 }
 
-function nextInfo(path) {
+function nextInfo(path, lang) {
   const id = path.startsWith("/tool/") ? path.slice(6) : null;
   if (!id || !tools[id]) return null;
-  if (id === "nesheama") return { name: "כלי נשמ״ה", time: "04:00" };
+  if (id === "nesheama") return { name: lang === "en" ? "N.S.M.H. practice" : "כלי נשמ״ה", time: "04:00" };
+  if (lang === "en") return { name: cardName(id, lang, localizeTool(tools[id], lang).name), time: TOOL_CARD_META[id]?.time || localizeTool(tools[id], lang).duration };
   const meta = TOOL_CARD_META[id];
   const name = meta ? meta.line1 + (meta.line2 ? " " + meta.line2 : "") : tools[id].name;
   return { name, time: meta?.time || tools[id].duration };
@@ -50,16 +61,19 @@ export default function GuidedPause() {
   const choice = guidedChoices.find((c) => c.id === emotionId);
   const look = choice ? { tint: choice.tint, wash: choice.wash, blob: choice.blob } : NEUTRAL;
   const path = resolveTarget(target);
-  const next = nextInfo(path);
-  const [titleA, titleB] = pauseBeforeTool.title.split(/,\s*/);
+  const { lang, dir, t } = useLang();
+  const en = lang === "en";
+  const next = nextInfo(path, lang);
+  const [titleA, titleB] = en ? [PAUSE_EN.titleA, PAUSE_EN.titleB] : pauseBeforeTool.title.split(/,\s*/);
+  const pauseLines = en ? PAUSE_EN.lines : pauseBeforeTool.lines;
 
   return (
-    <main dir="rtl" lang="he" className="rise-in min-h-[100dvh] max-w-[430px] mx-auto flex flex-col bg-background">
+    <main dir={dir} lang={lang} className="rise-in min-h-[100dvh] max-w-[430px] mx-auto flex flex-col bg-background">
       <div className="flex items-center justify-between px-6 pt-4">
         {choice ? (
           <div className="flex items-center gap-2 h-[38px] pr-3 pl-3.5 rounded-full" style={{ backgroundColor: choice.tint }}>
             <i className="block w-3 h-3" style={{ backgroundColor: choice.wash, borderRadius: choice.blob }} />
-            <span className="text-[13px] font-semibold text-[#16161A]/80 whitespace-nowrap">הרגשת {choice.label}</span>
+            <span className="text-[13px] font-semibold text-[#16161A]/80 whitespace-nowrap">{en ? `Feeling ${EMOTION_EN[choice.id]}` : `הרגשת ${choice.label}`}</span>
           </div>
         ) : (
           <span />
@@ -67,7 +81,7 @@ export default function GuidedPause() {
         <button
           type="button"
           onClick={() => navigate("/")}
-          aria-label="סגירה"
+          aria-label={t("סגירה", "Close")}
           className="press grid place-items-center w-[38px] h-[38px] rounded-full bg-[#16161A]/[0.06] text-[#16161A]"
         >
           <X className="w-4 h-4" strokeWidth={1.75} />
@@ -76,7 +90,7 @@ export default function GuidedPause() {
 
       <PauseHero {...look} rotation={choice?.rotation} Icon={choice ? EMOTION_ICONS[choice.id] : undefined} />
 
-      <div className="flex-1 px-6 pt-1.5 text-right">
+      <div className="flex-1 px-6 pt-1.5 text-start">
         <h1 className="mb-5 text-[34px] font-bold leading-[1.15] text-[#16161A]">
           {titleB ? (
             <>
@@ -87,7 +101,7 @@ export default function GuidedPause() {
             pauseBeforeTool.title
           )}
         </h1>
-        {pauseBeforeTool.lines.map((line, i) => (
+        {pauseLines.map((line, i) => (
           <p key={i} className="mb-2.5 text-[17px] leading-[1.7] text-[#55554F]">{line}</p>
         ))}
       </div>
@@ -95,7 +109,7 @@ export default function GuidedPause() {
       <div className="px-6 pt-4 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         {next && (
           <div className="flex items-center gap-3 py-3.5 mb-3.5 border-t border-[#16161A]/[0.14]">
-            <small className="text-[12px] text-[#6B6A63]">אחר כך</small>
+            <small className="text-[12px] text-[#6B6A63]">{t("אחר כך", "Next")}</small>
             <b className="flex-1 min-w-0 text-[15px] font-semibold text-[#16161A]">{next.name}</b>
             <span className="text-[13px] text-[#6B6A63] tabular-nums">{next.time}</span>
           </div>
@@ -105,14 +119,14 @@ export default function GuidedPause() {
           onClick={() => navigate(path)}
           className="press flex items-center justify-center w-full min-h-[58px] rounded-full bg-[#16161A] text-[#F8F7F4] text-[16px] font-semibold"
         >
-          {pauseBeforeTool.button}
+          {en ? PAUSE_EN.button : pauseBeforeTool.button}
         </button>
         <button
           type="button"
           onClick={() => navigate("/tools")}
           className="block w-full mt-1.5 min-h-[48px] text-[14px] text-[#55554F] underline underline-offset-4"
         >
-          לבחור תרגול אחר
+          {t("לבחור תרגול אחר", "Choose another practice")}
         </button>
         <CreditLine className="pt-1 !px-0" />
       </div>

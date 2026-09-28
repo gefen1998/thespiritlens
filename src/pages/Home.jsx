@@ -6,7 +6,8 @@ import { getSavedCount, getWriteDraft } from "@/lib/savedMoments";
 import BottomTabs from "@/components/BottomTabs";
 import WelcomeSheet from "@/components/WelcomeSheet";
 import EmotionCheckIn from "@/components/EmotionCheckIn";
-import EditorialCard, { TOOL_CARD_META } from "@/components/EditorialCard";
+import EditorialCard, { TOOL_CARD_META, cardName } from "@/components/EditorialCard";
+import { localizeTool } from "@/lib/spiritContentEn";
 import { editorial, gates, tools, fatigueOptions, memoryFlow } from "@/lib/spiritContent";
 import { SpiritWingsWatermark, CornerWingMotif, SpiritBrandMark } from "@/components/SpiritWings";
 
@@ -60,17 +61,17 @@ export default function Home() {
   };
 
   const recoId = recoToolId(chosen);
-  const reco = tools[recoId] || tools["nesheama"];
+  const reco = localizeTool(tools[recoId] || tools["nesheama"], lang);
   const meta = TOOL_CARD_META[recoId];
 
-  let displayName = meta ? (meta.line1 + (meta.line2 ? " " + meta.line2 : "")) : reco.name;
+  let displayName = cardName(recoId, lang, reco.name);
   let displayDuration = meta?.time || reco.duration;
   let displayDescription = reco.description;
 
   if (recoId === "nesheama") {
-    displayName = "כלי נשמ״ה";
+    displayName = t("כלי נשמ״ה", "N.S.M.H. practice");
     displayDuration = "04:00";
-    displayDescription = "תרגול קצר בארבעה שלבים, על פי מודל עדשת הרוח";
+    displayDescription = t("תרגול קצר בארבעה שלבים, על פי מודל עדשת הרוח", "A short four-step practice, based on the Spirit Lens model");
   }
 
   const goReco = () => {
@@ -301,7 +302,7 @@ export default function Home() {
 
         <div className="grid grid-cols-2 gap-2.5">
           {QUICK_IDS.map((id) => (
-            <EditorialCard key={id} tool={tools[id]} showTime={false} />
+            <EditorialCard key={id} tool={localizeTool(tools[id], lang)} showTime={false} />
           ))}
         </div>
       </div>

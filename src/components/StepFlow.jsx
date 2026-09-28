@@ -10,17 +10,20 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { letterTone } from "@/lib/spiritContent";
 import { cn } from "@/lib/utils";
+import { useLang } from "@/lib/i18n";
 
 const ORDINALS = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שביעי", "שמיני"];
 const BREATH_CYCLE = 11;
 const INHALE = 4.5;
 const HOLD = 1;
 
-function phaseOf(elapsed) {
+const ORDINALS_EN = ["one", "two", "three", "four", "five", "six", "seven", "eight"];
+
+function phaseOf(elapsed, en) {
   const p = elapsed % BREATH_CYCLE;
-  if (p < INHALE) return { label: "שאיפה", hint: "לאט, דרך האף" };
-  if (p < INHALE + HOLD) return { label: "החזקה", hint: "רגע אחד" };
-  return { label: "נשיפה", hint: "ארוכה מן השאיפה" };
+  if (p < INHALE) return en ? { label: "Inhale", hint: "Slowly, through the nose" } : { label: "שאיפה", hint: "לאט, דרך האף" };
+  if (p < INHALE + HOLD) return en ? { label: "Hold", hint: "One moment" } : { label: "החזקה", hint: "רגע אחד" };
+  return en ? { label: "Exhale", hint: "Longer than the inhale" } : { label: "נשיפה", hint: "ארוכה מן השאיפה" };
 }
 
 function calculateStepDuration(text, isBreath) {
@@ -38,6 +41,12 @@ function speakHebrew(text) {
     if (!text) return;
     const cleanText = text.replace(/[\n\r]+/g, " ").trim();
     const utterance = new SpeechSynthesisUtterance(cleanText);
+    if (document.documentElement.lang === "en") {
+      utterance.lang = "en-US";
+      utterance.rate = 0.86;
+      window.speechSynthesis.speak(utterance);
+      return;
+    }
     utterance.lang = "he-IL";
     utterance.rate = 0.86; // Meditative, calm cadence
     utterance.pitch = 1.0;
@@ -60,6 +69,8 @@ function stopSpeaking() {
 
 export default function StepFlow({ tool, tone = "open", onComplete, storageKey }) {
   const { steps } = tool;
+  const { lang, t } = useLang();
+  const en = lang === "en";
   const isBreath = tool.mode === "breath";
   const [index, setIndex] = useState(0);
   const [values, setValues] = useState(() => {
@@ -226,9 +237,12 @@ export default function StepFlow({ tool, tone = "open", onComplete, storageKey }
   };
 
   const inputClasses =
-    "h-auto w-full rounded-lg border-2 border-transparent bg-secondary/70 px-5 py-4 t-practice text-foreground text-right shadow-none placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:border-flame/50 transition-colors";
+    "h-auto w-full rounded-lg border-2 border-transparent bg-secondary/70 px-5 py-4 t-practice text-foreground text-start shadow-none placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:border-flame/50 transition-colors";
 
-  const nextLabel = isLast ? "לסיים" : "הבא";
+  const nextLabel = isLast ? t("לסיים", "Finish") : t("הבא", "Next");
+  const pausedLabel = t("(מושהה)", "(paused)");
+  const muteLabel = isMuted ? t("הפעלת קריינות", "Turn narration on") : t("השתקת קריינות", "Mute narration");
+  const playLabel = running ? t("עצור", "Pause") : t("המשך", "Resume");
   const stepCount = `${index + 1}/${steps.length}`;
   const progressPercent = canAutoAdvance
     ? Math.min(100, Math.max(0, (stepElapsed / currentDuration) * 100))
@@ -238,8 +252,8 @@ export default function StepFlow({ tool, tone = "open", onComplete, storageKey }
   const headerActions = (
     <button
       onClick={toggleMute}
-      aria-label={isMuted ? "הפעלת קריינות" : "השתקת קריינות"}
-      title={isMuted ? "הפעלת קריינות" : "השתקת קריינות"}
+      aria-label={muteLabel}
+      title={muteLabel}
       className="press grid place-items-center w-10 h-10 rounded-full bg-secondary text-foreground"
     >
       {isMuted ? (
@@ -251,7 +265,7 @@ export default function StepFlow({ tool, tone = "open", onComplete, storageKey }
   );
 
   if (isBreath) {
-    const phase = phaseOf(stepElapsed);
+    const phase = phaseOf(stepElapsed, en);
     return (
       <div className="min-h-screen flex flex-col pb-10">
         <FocusHeader kicker={phase.label} title={tool.name} to="/" actions={headerActions} />
@@ -266,7 +280,7 @@ export default function StepFlow({ tool, tone = "open", onComplete, storageKey }
 
           <button
             onClick={() => setRunning((r) => !r)}
-            aria-label={running ? "עצור" : "המשך"}
+            aria-label={playLabel}
             className="press grid place-items-center w-[3.5rem] h-[3.5rem] shrink-0 rounded-full text-primary-foreground shadow-sm"
             style={{ backgroundColor: "hsl(var(--primary))" }}
           >
@@ -279,14 +293,14 @@ export default function StepFlow({ tool, tone = "open", onComplete, storageKey }
           >
             {/* Subtle animated progress bar filling up automatically */}
             <div
-              className="absolute inset-y-0 right-0 bg-primary/12 transition-[width] ease-linear pointer-events-none"
+              className="absolute inset-y-0 start-0 bg-primary/12 transition-[width] ease-linear pointer-events-none"
               style={{
                 width: `${progressPercent}%`,
                 transitionDuration: running ? "150ms" : "0ms",
               }}
             />
             <span className="relative z-10 t-row font-semibold">
-              {nextLabel} {!running && <span className="text-xs font-normal opacity-60">(מושהה)</span>}
+              {nextLabel} {!running && <span className="text-xs font-normal opacity-60">{pausedLabel}</span>}
             </span>
             <span className="relative z-10 t-small text-muted-foreground tabular-nums">{stepCount}</span>
           </button>
@@ -295,7 +309,9 @@ export default function StepFlow({ tool, tone = "open", onComplete, storageKey }
     );
   }
 
-  const ordinal = steps.length > 1 ? `שלב ${ORDINALS[index] || index + 1}` : "תרגול";
+  const ordinal = en
+    ? steps.length > 1 ? `Step ${ORDINALS_EN[index] || index + 1}` : "Practice"
+    : steps.length > 1 ? `שלב ${ORDINALS[index] || index + 1}` : "תרגול";
 
   return (
     <div className="min-h-screen flex flex-col pb-10">
@@ -339,7 +355,7 @@ export default function StepFlow({ tool, tone = "open", onComplete, storageKey }
                 className={inputClasses}
               />
             )}
-            {step.optional && <p className="mt-3 t-micro text-muted-foreground">אפשר גם להמשיך בלי לכתוב</p>}
+            {step.optional && <p className="mt-3 t-micro text-muted-foreground">{t("אפשר גם להמשיך בלי לכתוב", "You can also continue without writing")}</p>}
           </div>
         )}
 
@@ -366,7 +382,7 @@ export default function StepFlow({ tool, tone = "open", onComplete, storageKey }
           {canAutoAdvance && (
             <button
               onClick={() => setRunning((r) => !r)}
-              aria-label={running ? "עצור" : "המשך"}
+              aria-label={playLabel}
               className="press grid place-items-center w-[3.5rem] h-[3.5rem] shrink-0 rounded-full text-primary-foreground shadow-sm"
               style={{ backgroundColor: "hsl(var(--primary))" }}
             >
@@ -380,7 +396,7 @@ export default function StepFlow({ tool, tone = "open", onComplete, storageKey }
           >
             {canAutoAdvance && (
               <div
-                className="absolute inset-y-0 right-0 bg-primary/12 transition-[width] ease-linear pointer-events-none"
+                className="absolute inset-y-0 start-0 bg-primary/12 transition-[width] ease-linear pointer-events-none"
                 style={{
                   width: `${progressPercent}%`,
                   transitionDuration: running ? "150ms" : "0ms",
@@ -388,7 +404,7 @@ export default function StepFlow({ tool, tone = "open", onComplete, storageKey }
               />
             )}
             <span className="relative z-10 t-row font-semibold">
-              {nextLabel} {!running && canAutoAdvance && <span className="text-xs font-normal opacity-60">(מושהה)</span>}
+              {nextLabel} {!running && canAutoAdvance && <span className="text-xs font-normal opacity-60">{pausedLabel}</span>}
             </span>
             <span className="relative z-10 t-small text-muted-foreground tabular-nums">{stepCount}</span>
           </button>

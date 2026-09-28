@@ -19,7 +19,7 @@ export default function ToolListRow({ tool, category }) {
   return (
     <Link
       to={`/tool/${tool.id}`}
-      className="press group flex items-center gap-3.5 py-3 text-right select-none"
+      className="press group flex items-center gap-3.5 py-3 text-start select-none"
     >
       {/* Organic pigment mark */}
       <span
@@ -50,7 +50,7 @@ export default function ToolListRow({ tool, category }) {
       </span>
 
       {/* Time + category */}
-      <span className="shrink-0 text-left">
+      <span className="shrink-0 text-end">
         <span className="block text-[12px] text-[#6B6A63] tabular-nums">{time}</span>
         {category && (
           <span className="block text-[11.5px] text-[#8C8B84] mt-0.5">{category}</span>

@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
+import { useLang } from "@/lib/i18n";
 
 // The header for any screen stepped into from the shell (a practice, the
 // pause beat, safety) — a kicker + big editorial title on one side, a close
@@ -9,6 +10,7 @@ import { X } from "lucide-react";
 // bottom tabs instead of a back-stack.
 export default function FocusHeader({ kicker, title, to, actions }) {
   const navigate = useNavigate();
+  const { t } = useLang();
   return (
     <div className="flex items-start justify-between gap-4 px-6 pt-7 pb-2">
       <h1 className="t-title text-foreground">
@@ -19,7 +21,7 @@ export default function FocusHeader({ kicker, title, to, actions }) {
         {actions}
         <button
           onClick={() => (to ? navigate(to) : navigate(-1))}
-          aria-label="סגור"
+          aria-label={t("סגור", "Close")}
           className="press grid place-items-center w-10 h-10 rounded-full bg-secondary text-foreground"
         >
           <X className="w-4 h-4" strokeWidth={1.75} />
