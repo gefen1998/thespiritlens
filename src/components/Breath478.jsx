@@ -6,10 +6,22 @@ import { useLang } from "@/lib/i18n";
 
 const CYCLES = 4;
 
-function speak(text, en) {
-  if (!("speechSynthesis" in window)) return;
-  window.speechSynthesis.cancel();
+const BASE = "https://base44.app/api/apps/6aa5ba6278746a9e6313ec62/files/mp/public/6aa5ba6278746a9e6313ec62/";
+const VERED = {
+  intro: BASE + "64d554a43_vered-478-intro.mp3",
+  outro: BASE + "e03a4274e_vered-478-outro.mp3",
+  inhale: BASE + "dc8281fe7_vered-478-inhale.mp3",
+  hold: BASE + "a031451a5_vered-478-hold.mp3",
+  exhale: BASE + "11e7aaf37_vered-478-exhale.mp3",
+};
+let current;
+
+function speak(text, en, key) {
+  current?.pause();
+  window.speechSynthesis?.cancel();
   if (localStorage.getItem("sl_voice_muted") === "1") return;
+  if (!en && VERED[key]) { current = new Audio(VERED[key]); current.play().catch(() => {}); return; }
+  if (!("speechSynthesis" in window)) return;
   const u = new SpeechSynthesisUtterance(text);
   u.lang = en ? "en-US" : "he-IL";
   u.rate = 0.8;
@@ -22,12 +34,12 @@ export default function Breath478({ tool, tone = "open", onComplete }) {
   const en = lang === "en";
   const seq = useMemo(() => {
     const P = [
-      { label: t("שאיפה", "Inhale"), hint: t("דרך האף", "Through the nose"), dur: 4, scale: 1 },
-      { label: t("החזקה", "Hold"), hint: t("בעדינות", "Gently"), dur: 7, scale: 1 },
-      { label: t("נשיפה", "Exhale"), hint: t("לאט, דרך הפה", "Slowly, through the mouth"), dur: 8, scale: 0.6 },
+      { key: "inhale", label: t("שאיפה", "Inhale"), hint: t("דרך האף", "Through the nose"), dur: 4, scale: 1 },
+      { key: "hold", label: t("החזקה", "Hold"), hint: t("בעדינות", "Gently"), dur: 7, scale: 1 },
+      { key: "exhale", label: t("נשיפה", "Exhale"), hint: t("לאט, דרך הפה", "Slowly, through the mouth"), dur: 8, scale: 0.6 },
     ];
     const cycles = Array.from({ length: CYCLES }, (_, c) => P.map((p) => ({ ...p, cycle: c + 1 }))).flat();
-    return [{ text: tool.steps[0].text, dur: 9, scale: 0.6 }, ...cycles, { text: tool.steps[1].text, dur: 10, scale: 0.6 }];
+    return [{ key: "intro", text: tool.steps[0].text, dur: 9, scale: 0.6 }, ...cycles, { key: "outro", text: tool.steps[1].text, dur: 10, scale: 0.6 }];
   }, [tool, lang]);
 
   const [i, setI] = useState(0);
@@ -37,11 +49,11 @@ export default function Breath478({ tool, tone = "open", onComplete }) {
 
   useEffect(() => {
     setLeft(s.dur);
-    speak(s.text || s.label, en);
+    speak(s.text || s.label, en, s.key);
   }, [i]);
 
   useEffect(() => {
-    if (!running) { window.speechSynthesis?.cancel(); return; }
+    if (!running) { current?.pause(); window.speechSynthesis?.cancel(); return; }
     const id = setInterval(() => setLeft((l) => l - 1), 1000);
     return () => clearInterval(id);
   }, [running, i]);
@@ -52,7 +64,7 @@ export default function Breath478({ tool, tone = "open", onComplete }) {
     else setI(i + 1);
   }, [left]);
 
-  useEffect(() => () => window.speechSynthesis?.cancel(), []);
+  useEffect(() => () => { current?.pause(); window.speechSynthesis?.cancel(); }, []);
 
   return (
     <div className="min-h-screen flex flex-col pb-10">
