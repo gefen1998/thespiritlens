@@ -14,13 +14,27 @@ const VERED = {
   hold: BASE + "a031451a5_vered-478-hold.mp3",
   exhale: BASE + "11e7aaf37_vered-478-exhale.mp3",
 };
-let current;
+// Every clip ever started, so stopping silences all of them — no orphan voice
+// can keep playing after a restart, a re-mount or pause.
+const playing = new Set();
+const current = { pause: () => stopAll() };
+
+function stopAll() {
+  playing.forEach((a) => { a.pause(); a.src = ""; });
+  playing.clear();
+}
 
 function speak(text, en, key) {
-  current?.pause();
+  stopAll();
   window.speechSynthesis?.cancel();
   if (localStorage.getItem("sl_voice_muted") === "1") return;
-  if (!en && VERED[key]) { current = new Audio(VERED[key]); current.play().catch(() => {}); return; }
+  if (!en && VERED[key]) {
+    const a = new Audio(VERED[key]);
+    playing.add(a);
+    a.onended = () => playing.delete(a);
+    a.play().catch(() => {});
+    return;
+  }
   if (!("speechSynthesis" in window)) return;
   const u = new SpeechSynthesisUtterance(text);
   u.lang = en ? "en-US" : "he-IL";
