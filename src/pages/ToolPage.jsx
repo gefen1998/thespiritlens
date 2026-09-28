@@ -3,6 +3,7 @@ import { base44 } from "@/api/base44Client";
 import { useParams, useNavigate } from "react-router-dom";
 import FocusHeader from "@/components/FocusHeader";
 import StepFlow from "@/components/StepFlow";
+import Breath478 from "@/components/Breath478";
 import GuidedAudioPlayer from "@/components/audio/GuidedAudioPlayer";
 import ChoiceCard from "@/components/ChoiceCard";
 import PracticeCompletionSheet from "@/components/PracticeCompletionSheet";
@@ -106,6 +107,8 @@ export default function ToolPage() {
             onFinish={() => onComplete({})}
             onReadInstead={() => setListening(false)}
           />
+        ) : tool.mode === "478" ? (
+          <Breath478 key={runKey} tool={tool} tone={tone} onComplete={onComplete} />
         ) : (
         <StepFlow
           key={runKey}
