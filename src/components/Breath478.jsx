@@ -13,7 +13,7 @@ const VERED = {
   intro: BASE + "3403e3880_vered-intro-v3.mp3",
   outro: BASE + "ded5f1515_vered-478-outro-v2.mp3",
   inhale: BASE + "dc8281fe7_vered-478-inhale.mp3",
-  hold: BASE + "c2a93adc2_vered-hold-v3.mp3",
+  hold: BASE + "4a4533876_vered-hold-v4.mp3",
   exhale: BASE + "11e7aaf37_vered-478-exhale.mp3",
 };
 const current = { pause: () => stopVered() };

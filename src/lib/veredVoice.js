@@ -43,7 +43,7 @@ if (audio && typeof window !== "undefined") {
 }
 
 // Soft fade-in/out so clips never end with an abrupt digital "click".
-const FADE = 0.35;
+const FADE = 0.15;
 let raf = 0;
 function tick() {
   if (!audio || audio.paused) return;
