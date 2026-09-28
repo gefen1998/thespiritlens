@@ -4,6 +4,7 @@ import { Globe, ArrowUpLeft, ArrowUpRight, PenLine, ArrowDown, Bookmark } from "
 import { useLang } from "@/lib/i18n";
 import { getSavedCount, getWriteDraft } from "@/lib/savedMoments";
 import BottomTabs from "@/components/BottomTabs";
+import PlaylistHomeCard from "@/components/PlaylistHomeCard";
 import WelcomeSheet from "@/components/WelcomeSheet";
 import EmotionCheckIn from "@/components/EmotionCheckIn";
 import EditorialCard, { TOOL_CARD_META, cardName } from "@/components/EditorialCard";
@@ -288,6 +289,8 @@ export default function Home() {
             </div>
           </button>
         </div>
+
+        <PlaylistHomeCard />
 
         {/* Quick Tools Section */}
         <div className="flex items-baseline justify-between mt-8 mb-3">
