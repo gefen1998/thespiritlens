@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { letterTone } from "@/lib/spiritContent";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/lib/i18n";
+import { playVered, stopVered } from "@/lib/veredVoice";
 
 const ORDINALS = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שביעי", "שמיני"];
 const BREATH_CYCLE = 11;
