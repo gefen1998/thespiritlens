@@ -5,16 +5,18 @@ const phrase = (options) => ({ options });
 
 export const toolsEn = {
   "gentle-exhale": {
-    name: "Quiet exhale",
-    description: "A one-minute practice to lengthen the exhale and calm the body",
-    duration: "1 min",
+    name: "4-7-8 breathing",
+    description: "A short breathing practice to calm the body: inhale, hold, and a long exhale",
+    duration: "2 min",
     steps: [
-      "Let's take one breath together, slowly.",
-      "Breathe in gently through your nose, as much as feels comfortable.",
-      "Now breathe out slowly through your mouth, letting the exhale last a little longer than the inhale.",
-      "Again. A soft inhale... and a long, quiet exhale.",
-      "One more time, at your own pace. No need to try. Just breathe.",
-      "Your breath has come back to you. Take this quiet with you.",
+      "Let's practice 4-7-8 breathing together. Sit comfortably and let your shoulders drop.",
+      "Breathe in through your nose for four seconds.",
+      "Gently hold the breath for seven seconds.",
+      "And breathe out slowly through your mouth for eight seconds.",
+      "Again. Inhale for four... hold for seven... and a long exhale for eight.",
+      "Repeat the cycle once or twice more, at your own pace and without effort.",
+      "If holding the breath feels unpleasant, return to natural breathing, or simply lengthen the exhale.",
+      "No need to force the count. Comfortable, steady breathing matters more than exact numbers.",
     ],
     ending: phrase(["I paused for a moment, and it was enough.", "My breath stayed with me.", "I can go on gently."]),
   },
@@ -173,7 +175,7 @@ export const toolsEn = {
 };
 
 export const cardLinesEn = {
-  "gentle-exhale": ["Quiet", "exhale"],
+  "gentle-exhale": ["4-7-8", "breathing"],
   "ground-touch": ["Touching", "the ground"],
   "return-to-senses": ["Back to", "the senses"],
   "body-scan": ["Body", "scan"],

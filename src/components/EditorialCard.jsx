@@ -19,9 +19,9 @@ import { useLang } from "@/lib/i18n";
 
 export const TOOL_CARD_META = {
   "gentle-exhale": {
-    line1: "נשיפה",
-    line2: "שקטה",
-    time: "01:00",
+    line1: "נשימת",
+    line2: "4-7-8",
+    time: "02:00",
     bg: "#CFD8C6",
     pebble: "#6E8C63",
     textDark: "#3A4A33",
