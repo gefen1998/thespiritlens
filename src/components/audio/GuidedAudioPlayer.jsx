@@ -26,7 +26,7 @@ export default function GuidedAudioPlayer({ tool, onClose, onFinish, onReadInste
       </div>
 
       <div className="relative mt-6 mx-auto w-full aspect-square max-w-[300px] rounded-[36px] overflow-hidden">
-        <img src={audio.coverUrl} alt={audio.title} className={`w-full h-full object-cover transition-transform duration-[4000ms] ${p.playing ? "scale-105" : "scale-100"}`} />
+        <img src={audio.coverUrl} alt={audio.title} className={`w-full h-full object-cover object-right origin-right transition-transform duration-[4000ms] ${p.playing ? "scale-105" : "scale-100"}`} />
       </div>
 
       <div className="relative mt-7 text-start">
