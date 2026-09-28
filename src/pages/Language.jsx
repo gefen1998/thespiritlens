@@ -30,9 +30,11 @@ export default function Language() {
       </button>
 
       <SpiritWingsWatermark
-        className="absolute top-20 inset-x-0 w-[88%] max-w-[380px] mx-auto h-[260px] pointer-events-none"
-        color="#BFA88F"
-        opacity={0.35}
+        className="absolute top-[15%] inset-x-0 w-full max-w-md mx-auto h-[36vh] min-h-[260px] pointer-events-none"
+        color="#C9B48E"
+        opacity={0.5}
+        showEye={false}
+        fit="100% 100%"
       />
 
       <div className="mt-auto relative z-10">

@@ -12,14 +12,14 @@ function wingsMask(position = "center", size = "contain") {
 /**
  * Full "כנפי הרוח" mark — both wings from the brand artwork, with the lens/eye centered between them.
  */
-export function SpiritWingsWatermark({ className = "", color = "#BFA88F", opacity = 0.14 }) {
+export function SpiritWingsWatermark({ className = "", color = "#BFA88F", opacity = 0.14, showEye = true, fit = "contain" }) {
   const uid = React.useId().replace(/:/g, "");
   return (
     <div aria-hidden="true" className={`pointer-events-none select-none ${className}`}>
       <div className="relative w-full h-full">
-        <div className="absolute inset-0" style={{ backgroundColor: color, opacity, ...wingsMask() }} />
+        <div className="absolute inset-0" style={{ backgroundColor: color, opacity, ...wingsMask("center", fit) }} />
         {/* Original "עדשת הרוח" eye */}
-        <svg
+        {showEye && <svg
           viewBox="0 0 200 130"
           fill="none"
           className="absolute left-1/2 top-[66%] -translate-x-1/2 -translate-y-1/2 w-[36%]"
@@ -45,7 +45,7 @@ export function SpiritWingsWatermark({ className = "", color = "#BFA88F", opacit
           <circle cx="100" cy="65" r="36" stroke={color} strokeWidth="2.5" strokeOpacity="0.8" />
           <circle cx="100" cy="65" r="29" fill={`url(#${uid}-pupil)`} />
           <circle cx="90" cy="54" r="6" fill="#FFFFFF" fillOpacity="0.7" />
-        </svg>
+        </svg>}
       </div>
     </div>
   );
