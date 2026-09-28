@@ -153,7 +153,7 @@ export default function Home() {
 
         {/* שתי דרכים לבחור בהן — Two Paths Containers */}
         <div className="mt-6">
-          <p className="text-[13px] font-medium text-[#6B6A63] text-start mb-2.5">
+          <p className={`text-start mb-2.5 ${lang === "en" ? "text-[12px] font-bold uppercase tracking-[0.08em] text-[#16161A]" : "text-[13px] font-medium text-[#6B6A63]"}`}>
             {t("שתי דרכים לבחור בהן", "Two ways in")}
           </p>
           <div className="grid grid-cols-2 gap-3">
