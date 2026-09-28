@@ -100,10 +100,10 @@ export default function Home() {
             </div>
             <h1 className="leading-[1.1]">
               <span className="block text-[32px] sm:text-[36px] font-bold text-[#6B6A63]">
-                {t("מרחב", "The")}
+                {t("מרחב", "Your space in")}
               </span>
               <span className="block text-[34px] sm:text-[38px] font-bold text-[#16161A] mt-0.5">
-                {t("עדשת הרוח", "Spirit Lens")}
+                {t("עדשת הרוח", "The Spirit Lens")}
               </span>
             </h1>
             <p className="mt-1 text-[14px] text-[#6B6A63] font-medium">
