@@ -3,6 +3,7 @@ import { base44 } from "@/api/base44Client";
 import { useParams, useNavigate } from "react-router-dom";
 import FocusHeader from "@/components/FocusHeader";
 import StepFlow from "@/components/StepFlow";
+import GuidedAudioPlayer from "@/components/audio/GuidedAudioPlayer";
 import ChoiceCard from "@/components/ChoiceCard";
 import PracticeCompletionSheet from "@/components/PracticeCompletionSheet";
 import { tools, thoughtBranches, emotionNeedMap, toolTone } from "@/lib/spiritContent";
@@ -15,6 +16,7 @@ export default function ToolPage() {
   const [phase, setPhase] = useState("steps"); // steps | completed | branches
   const [values, setValues] = useState({});
   const [runKey, setRunKey] = useState(0);
+  const [listening, setListening] = useState(!!tool?.audio);
 
   useEffect(() => {
     if (!tools[toolId]) return;
@@ -54,6 +56,7 @@ export default function ToolPage() {
   const handleRestart = () => {
     setValues({});
     setRunKey((k) => k + 1);
+    setListening(!!tool.audio);
     setPhase("steps");
   };
 
@@ -85,6 +88,15 @@ export default function ToolPage() {
   return (
     <div className="relative min-h-screen">
       <div className={phase === "completed" ? "pointer-events-none select-none" : ""}>
+        {listening ? (
+          <GuidedAudioPlayer
+            key={runKey}
+            tool={tool}
+            onClose={() => navigate(-1)}
+            onFinish={() => onComplete({})}
+            onReadInstead={() => setListening(false)}
+          />
+        ) : (
         <StepFlow
           key={runKey}
           tool={tool}
@@ -92,6 +104,7 @@ export default function ToolPage() {
           onComplete={onComplete}
           storageKey={storageKey}
         />
+        )}
       </div>
 
       {phase === "completed" && (

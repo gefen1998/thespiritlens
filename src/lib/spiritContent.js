@@ -268,8 +268,9 @@ export const tools = {
     duration: "חמש דקות",
     mode: "breath",
     audio: {
-      url: "https://media.base44.com/files/public/6aa5ba6278746a9e6313ec62/01f93d75e_BandLabSong.wav",
-      title: "קרן אור - הקלטה מונחית",
+      url: "https://media.base44.com/files/public/6aa5ba6278746a9e6313ec62/688d6f8c2_BandLabSong.mp3",
+      coverUrl: "https://base44.app/api/apps/6aa5ba6278746a9e6313ec62/files/mp/public/6aa5ba6278746a9e6313ec62/aa60bd778_playlist-cover.jpg",
+      title: "קרן אור - דמיון מודרך",
       note: "אפשר להאזין במקביל לתרגול, בעוצמה נעימה לכם.",
     },
     steps: [
