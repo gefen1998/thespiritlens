@@ -38,7 +38,9 @@ function speakHebrew(text) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
   try {
     window.speechSynthesis.cancel();
+    stopVered();
     if (!text) return;
+    if (document.documentElement.lang !== "en" && playVered(text)) return;
     const cleanText = text.replace(/[\n\r]+/g, " ").trim();
     const utterance = new SpeechSynthesisUtterance(cleanText);
     if (document.documentElement.lang === "en") {
@@ -60,6 +62,7 @@ function speakHebrew(text) {
 }
 
 function stopSpeaking() {
+  stopVered();
   if (typeof window !== "undefined" && "speechSynthesis" in window) {
     try {
       window.speechSynthesis.cancel();
