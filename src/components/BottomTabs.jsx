@@ -3,19 +3,21 @@ import { NavLink, useLocation } from "react-router-dom";
 import { motion, LayoutGroup } from "framer-motion";
 import { CircleDot, LayoutGrid, BookOpen } from "lucide-react";
 import { editorial } from "@/lib/spiritContent";
+import { useLang } from "@/lib/i18n";
 
 const TABS = [
-  { to: "/", label: editorial.tabs.home, icon: CircleDot, end: true },
-  { to: "/tools", label: editorial.tabs.library, icon: LayoutGrid },
-  { to: "/book", label: editorial.tabs.book, icon: BookOpen },
+  { to: "/", label: editorial.tabs.home, en: "Today", icon: CircleDot, end: true },
+  { to: "/tools", label: editorial.tabs.library, en: "Tools", icon: LayoutGrid },
+  { to: "/book", label: editorial.tabs.book, en: "The Book", icon: BookOpen },
 ];
 
 export default function BottomTabs() {
   const location = useLocation();
+  const { dir, t } = useLang();
 
   return (
     <div
-      dir="rtl"
+      dir={dir}
       className="fixed inset-x-0 bottom-0 z-30 flex items-center justify-center pb-5 pt-3 pointer-events-none"
     >
       <LayoutGroup id="bottom-tabs">
@@ -71,7 +73,7 @@ export default function BottomTabs() {
                       transition={{ duration: 0.18, ease: "easeOut" }}
                       className="text-sm font-semibold whitespace-nowrap"
                     >
-                      {tab.label}
+                      {t(tab.label, tab.en)}
                     </motion.span>
                   )}
                 </motion.div>

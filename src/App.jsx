@@ -25,6 +25,8 @@ import WriteGuide from '@/pages/WriteGuide';
 import SavedMoments from '@/pages/SavedMoments';
 import CreditLine from '@/components/CreditLine';
 import RealVisitTracker from '@/components/RealVisitTracker';
+import Language from '@/pages/Language';
+import { LanguageProvider } from '@/lib/i18n';
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -71,6 +73,7 @@ const AuthenticatedApp = () => {
       <Route path="/commits" element={<Commits />} />
       <Route path="/write" element={<WriteGuide />} />
       <Route path="/saved" element={<SavedMoments />} />
+      <Route path="/language" element={<Language />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
@@ -78,7 +81,7 @@ const AuthenticatedApp = () => {
 
 
 // Pages that render the credit inside their own single-screen layout.
-const OWN_CREDIT_ROUTES = ["/guided/pause", "/write", "/saved"];
+const OWN_CREDIT_ROUTES = ["/guided/pause", "/write", "/saved", "/language"];
 
 function GlobalCreditLine() {
   const { pathname } = useLocation();
@@ -90,6 +93,7 @@ function App() {
 
   return (
     <AuthProvider>
+      <LanguageProvider>
       <QueryClientProvider client={queryClientInstance}>
         <Router>
           <ScrollToTop />
@@ -99,6 +103,7 @@ function App() {
         </Router>
         <Toaster />
       </QueryClientProvider>
+      </LanguageProvider>
     </AuthProvider>
   )
 }

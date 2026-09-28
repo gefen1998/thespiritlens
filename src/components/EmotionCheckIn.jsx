@@ -9,6 +9,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { guidedChoices } from "@/lib/spiritContent";
+import { useLang } from "@/lib/i18n";
 
 export const EMOTION_ICONS = {
   calm: Wind,
@@ -20,7 +21,18 @@ export const EMOTION_ICONS = {
   grateful: Sparkles,
 };
 
+const EN_LABELS = {
+  calm: "Calm",
+  tired: "Tired",
+  stressed: "Stressed",
+  sad: "Sad",
+  restless: "Restless",
+  heavy: "Heavy",
+  grateful: "Grateful",
+};
+
 export default function EmotionCheckIn({ selected, onSelect }) {
+  const { t } = useLang();
   // Background color of the "לפנות מקום" container
   const defaultRingBg = "rgba(22, 22, 26, 0.06)";
 
@@ -89,7 +101,7 @@ export default function EmotionCheckIn({ selected, onSelect }) {
                 on ? "font-bold text-[#16161A]" : "font-medium text-[#46453F]"
               }`}
             >
-              {choice.label}
+              {t(choice.label, EN_LABELS[choice.id] || choice.label)}
             </span>
           </button>
         );
