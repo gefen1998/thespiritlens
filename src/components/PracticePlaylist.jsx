@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Music, ChevronDown, ExternalLink } from "lucide-react";
+import { Music, ChevronDown, ExternalLink, Play } from "lucide-react";
 import useYouTubePlaylist from "@/hooks/useYouTubePlaylist";
 import PlaylistControls from "@/components/PlaylistControls";
 
@@ -8,7 +8,7 @@ import PlaylistControls from "@/components/PlaylistControls";
  * alongside the exercise. Collapsed by default so it never competes with the
  * practice itself; expanded it shows the player so tracks can be skipped.
  */
-export default function PracticePlaylist({ playlist, className = "" }) {
+export default function PracticePlaylist({ playlist, className = "", preview = false }) {
   const [open, setOpen] = useState(false);
   const player = useYouTubePlaylist(playlist?.listId, open);
   if (!playlist?.listId) return null;
@@ -35,6 +35,19 @@ export default function PracticePlaylist({ playlist, className = "" }) {
             strokeWidth={2}
           />
         </button>
+
+        {!open && preview && playlist.coverUrl && (
+          <button
+            onClick={() => setOpen(true)}
+            aria-label={playlist.title}
+            className="press relative block w-full px-3 pb-3"
+          >
+            <img src={playlist.coverUrl} alt={playlist.title} className="w-full aspect-[1024/566] object-cover object-right rounded-[14px]" />
+            <span className="absolute bottom-6 left-6 grid place-items-center w-12 h-12 rounded-full bg-[#F1F0EC] text-[#16161A] shadow-md">
+              <Play className="w-5 h-5 fill-current" strokeWidth={1.5} />
+            </span>
+          </button>
+        )}
 
         {open && (
           <div className="px-3 pb-3">
