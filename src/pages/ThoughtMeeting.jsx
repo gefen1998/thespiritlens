@@ -5,6 +5,7 @@ import FocusHeader from "@/components/FocusHeader";
 import StepFlow from "@/components/StepFlow";
 import ChoiceCard from "@/components/ChoiceCard";
 import { tools, thoughtBranches } from "@/lib/spiritContent";
+import { logToolUse } from "@/lib/toolUsage";
 
 export default function ThoughtMeeting() {
   const tool = tools["thought-meeting"];
@@ -17,6 +18,7 @@ export default function ThoughtMeeting() {
       eventName: "tool_opened_thought_meeting",
       properties: { tool_id: "thought-meeting", tool_name: tool.name },
     });
+    logToolUse("thought-meeting", tool.name);
   }, []);
 
   const onComplete = (collected) => {

@@ -26,6 +26,7 @@ import SavedMoments from '@/pages/SavedMoments';
 import CreditLine from '@/components/CreditLine';
 import RealVisitTracker from '@/components/RealVisitTracker';
 import Language from '@/pages/Language';
+import UsageReport from '@/pages/UsageReport';
 import { LanguageProvider } from '@/lib/i18n';
 // Add page imports here
 
@@ -74,6 +75,7 @@ const AuthenticatedApp = () => {
       <Route path="/write" element={<WriteGuide />} />
       <Route path="/saved" element={<SavedMoments />} />
       <Route path="/language" element={<Language />} />
+      <Route path="/report" element={<UsageReport />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

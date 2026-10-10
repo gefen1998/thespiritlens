@@ -1,7 +1,7 @@
 import CreditLine from "@/components/CreditLine";
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Globe, ArrowUpLeft, ArrowUpRight, PenLine, ArrowDown, Bookmark } from "lucide-react";
+import { Globe, ArrowUpLeft, ArrowUpRight, PenLine, ArrowDown, Bookmark, BarChart3 } from "lucide-react";
 import { useLang } from "@/lib/i18n";
 import { getSavedCount, getWriteDraft } from "@/lib/savedMoments";
 import BottomTabs from "@/components/BottomTabs";
@@ -127,6 +127,16 @@ export default function Home() {
                   {savedCount > 9 ? "9+" : savedCount}
                 </span>
               )}
+            </Link>
+
+            {/* כפתור דוח שימוש (לבעלת האפליקציה) */}
+            <Link
+              to="/report"
+              aria-label={t("דוח שימוש", "Usage report")}
+              title={t("דוח שימוש", "Usage report")}
+              className="press grid place-items-center w-11 h-11 rounded-full bg-[#E7E5DF] text-[#16161A] hover:bg-[#D8D5CC] transition-colors"
+            >
+              <BarChart3 className="w-[19px] h-[19px]" strokeWidth={1.75} />
             </Link>
 
             {/* כפתור שפה (הספר נגיש מסרגל הניווט התחתון) */}

@@ -16,6 +16,7 @@ import { STORY_GATES } from "@/lib/storyGates";
 import CreditLine from "@/components/CreditLine";
 import WritePlaylistDock from "@/components/write/WritePlaylistDock";
 import ShortStoryNudge from "@/components/write/ShortStoryNudge";
+import { logToolUse } from "@/lib/toolUsage";
 
 const STEPS = [
   {
@@ -87,6 +88,7 @@ export default function WriteGuide() {
 
   useEffect(() => {
     base44.analytics.track({ eventName: "tool_opened_write_guide" });
+    logToolUse("write-guide", "מדריך הכתיבה");
   }, []);
 
   // Scroll-to-top on step change: every step opens from its top.

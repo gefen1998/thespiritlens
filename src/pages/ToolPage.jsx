@@ -10,6 +10,7 @@ import PracticeCompletionSheet from "@/components/PracticeCompletionSheet";
 import { tools, thoughtBranches, emotionNeedMap, toolTone } from "@/lib/spiritContent";
 import { localizeTool } from "@/lib/spiritContentEn";
 import { useLang } from "@/lib/i18n";
+import { logToolUse } from "@/lib/toolUsage";
 
 const BRANCHES_EN = {
   document: ["Record", "There is something here I want to keep"],
@@ -35,6 +36,7 @@ export default function ToolPage() {
       eventName: `tool_opened_${toolId.replace(/-/g, "_")}`,
       properties: { tool_id: toolId, tool_name: tools[toolId].name },
     });
+    logToolUse(toolId, tools[toolId].name);
   }, [toolId]);
 
   if (!tool) {
