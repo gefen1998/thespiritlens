@@ -33,7 +33,8 @@ FILES["נזהה דבר אחד שתומך בנו, ושאותו אנו מבקשי�
 
 // One shared element for the whole app: only one voice can ever play, and
 // once unlocked by a tap, mobile browsers let it keep auto-playing later clips.
-const audio = typeof Audio !== "undefined" ? new Audio() : null;
+// Kept on window so a module reload can never create a second, overlapping player.
+const audio = typeof Audio !== "undefined" ? (window.__veredAudio ||= new Audio()) : null;
 if (audio && typeof window !== "undefined") {
   const unlock = () => {
     if (!audio.src) { audio.muted = true; audio.play().catch(() => {}); audio.pause(); audio.muted = false; }
@@ -77,7 +78,7 @@ export function playClip(url) {
   const src = url.startsWith("http") ? url : BASE + url;
   cancelAnimationFrame(raf);
   // Same clip requested again right away (effect re-run) — keep the one already playing.
-  if (audio.src === src && performance.now() - lastStart < 1500 && !audio.ended) {
+  if (audio.src === src && !audio.ended && (!audio.paused || performance.now() - lastStart < 1500)) {
     if (audio.paused) audio.play().catch(() => {});
     else raf = requestAnimationFrame(tick);
     return;

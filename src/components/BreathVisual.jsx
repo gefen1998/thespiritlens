@@ -22,7 +22,7 @@ export default function BreathVisual({ phase = "inhale", dur = 4, left, running 
           style={{ backgroundColor: `${color} / ${0.1 + i * 0.1})` }}
           initial={{ scale: 0.55 }}
           animate={{ scale: scale && scale * s }}
-          transition={{ ...ease, delay: running ? i * 0.12 : 0 }}
+          transition={ease}
         />
       ))}
       {phase === "hold" && running && (

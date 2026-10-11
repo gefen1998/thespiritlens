@@ -10,11 +10,11 @@ const CYCLES = 4;
 
 const BASE = "https://base44.app/api/apps/6aa5ba6278746a9e6313ec62/files/mp/public/6aa5ba6278746a9e6313ec62/";
 const VERED = {
-  intro: BASE + "3403e3880_vered-intro-v3.mp3",
-  outro: BASE + "ded5f1515_vered-478-outro-v2.mp3",
-  inhale: BASE + "dc8281fe7_vered-478-inhale.mp3",
-  hold: BASE + "4a4533876_vered-hold-v4.mp3",
-  exhale: BASE + "11e7aaf37_vered-478-exhale.mp3",
+  intro: BASE + "b28f72467_vered-478-intro-v5.mp3",
+  outro: BASE + "5cfea3b80_vered-478-outro-v5.mp3",
+  inhale: BASE + "9e1d55867_vered-478-inhale-v5.mp3",
+  hold: BASE + "a840d380e_vered-478-hold-v5.mp3",
+  exhale: BASE + "8c144497f_vered-478-exhale-v5.mp3",
 };
 const current = { pause: () => stopVered() };
 const stopAll = stopVered;
@@ -45,7 +45,7 @@ export default function Breath478({ tool, tone = "open", onComplete }) {
       { key: "exhale", label: t("נשיפה", "Exhale"), hint: t("לאט, דרך הפה", "Slowly, through the mouth"), dur: 8, scale: 0.6 },
     ];
     const cycles = Array.from({ length: CYCLES }, (_, c) => P.map((p) => ({ ...p, cycle: c + 1 }))).flat();
-    return [{ key: "intro", text: tool.steps[0].text, dur: 9, scale: 0.6 }, ...cycles, { key: "outro", text: tool.steps[1].text, dur: 10, scale: 0.6 }];
+    return [{ key: "intro", text: tool.steps[0].text, dur: 12, scale: 0.6 }, ...cycles, { key: "outro", text: tool.steps[1].text, dur: 10, scale: 0.6 }];
   }, [tool, lang]);
 
   const [i, setI] = useState(0);
