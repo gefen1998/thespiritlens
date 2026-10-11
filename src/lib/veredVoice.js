@@ -51,7 +51,7 @@ function tick() {
   const d = audio.duration || 0;
   const t = audio.currentTime;
   const v = Math.min(1, t / 0.08, d ? (d - t) / FADE : 1);
-  audio.volume = Math.max(0, v);
+  audio.volume = Math.min(1, Math.max(0, v));
   if (d && d - t < 0.03) { audio.pause(); return; }
   raf = requestAnimationFrame(tick);
 }
@@ -65,7 +65,7 @@ export function stopVered() {
   const fade = (now) => {
     const k = 1 - (now - t0) / 200;
     if (k <= 0 || audio.paused) { audio.pause(); return; }
-    audio.volume = start * k;
+    audio.volume = Math.min(1, Math.max(0, start * k));
     raf = requestAnimationFrame(fade);
   };
   raf = requestAnimationFrame(fade);
