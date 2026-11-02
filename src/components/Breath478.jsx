@@ -86,7 +86,7 @@ export default function Breath478({ tool, tone = "open", onComplete }) {
         className="absolute inset-0 -z-10"
         style={{ background: `radial-gradient(circle at 50% 45%, hsl(var(--pigment-${tone}) / 0.28), transparent 70%)` }}
         animate={{ opacity: running ? (big ? 1 : 0.35) : 0.35 }}
-        transition={{ duration: running ? s.dur : 0.4, ease: [0.45, 0, 0.35, 1] }}
+        transition={{ duration: running ? s.dur : 0.4, ease: [0.37, 0, 0.63, 1] }}
       />
       <FocusHeader kicker={s.cycle ? t(`סבב ${s.cycle} מתוך ${CYCLES}`, `Round ${s.cycle} of ${CYCLES}`) : ""} title={tool.name} to="/" />
       <div className="flex-1 flex flex-col items-center justify-center gap-8 px-6">
