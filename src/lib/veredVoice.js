@@ -72,6 +72,13 @@ export function stopVered() {
   raf = requestAnimationFrame(fade);
 }
 
+export function pauseVered() { audio?.pause(); }
+
+/** Continues the current clip from where it was paused (never restarts it). */
+export function resumeVered() {
+  if (audio?.src && audio.paused && audio.duration - audio.currentTime > 0.1) audio.play().catch(() => {});
+}
+
 /** Plays a recorded clip by file name or full url. */
 export function playClip(url) {
   if (!audio) return;

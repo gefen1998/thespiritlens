@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { letterTone } from "@/lib/spiritContent";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/lib/i18n";
-import { playVered, stopVered } from "@/lib/veredVoice";
+import { playVered, stopVered, pauseVered, resumeVered } from "@/lib/veredVoice";
 
 const ORDINALS = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שביעי", "שמיני"];
 const BREATH_CYCLE = 11;
@@ -115,20 +115,21 @@ export default function StepFlow({ tool, tone = "open", onComplete, storageKey }
     speakHebrew(text);
   }, [isMuted, running]);
 
-  // Handle step narration
+  // Reset timing when the step changes.
   useEffect(() => {
     autoAdvanceTriggered.current = false;
     setStepElapsed(0);
+  }, [index]);
 
-    const textToRead = (index === 0 && tool.audioNote)
-      ? `${tool.audioNote}. ${step.text}`
-      : step.text;
-
-    triggerNarration(textToRead);
-
-    return () => {
-      stopSpeaking();
-    };
+  // Narrate each step once. Pausing pauses the clip and resuming continues it,
+  // so a sentence is never heard twice in a row.
+  const narratedIndex = useRef(-1);
+  useEffect(() => {
+    if (isMuted) return;
+    if (!running) { pauseVered(); window.speechSynthesis?.pause?.(); return; }
+    if (narratedIndex.current === index) { resumeVered(); window.speechSynthesis?.resume?.(); return; }
+    narratedIndex.current = index;
+    triggerNarration((index === 0 && tool.audioNote) ? `${tool.audioNote}. ${step.text}` : step.text);
   }, [index, isMuted, running, step.text, tool.audioNote, triggerNarration]);
 
   // Clean speech synthesis on unmount
@@ -140,10 +141,7 @@ export default function StepFlow({ tool, tone = "open", onComplete, storageKey }
 
   // Timer loop
   useEffect(() => {
-    if (!running) {
-      stopSpeaking();
-      return;
-    }
+    if (!running) return;
 
     lastTick.current = Date.now();
     const interval = setInterval(() => {
