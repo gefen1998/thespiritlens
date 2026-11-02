@@ -10,7 +10,7 @@ const CYCLES = 4;
 
 const BASE = "https://base44.app/api/apps/6aa5ba6278746a9e6313ec62/files/mp/public/6aa5ba6278746a9e6313ec62/";
 const VERED = {
-  intro: BASE + "b28f72467_vered-478-intro-v5.mp3",
+  intro: BASE + "cee4041f9_vered-478-intro-v6.mp3",
   outro: BASE + "5cfea3b80_vered-478-outro-v5.mp3",
   inhale: BASE + "9e1d55867_vered-478-inhale-v5.mp3",
   hold: BASE + "a840d380e_vered-478-hold-v5.mp3",
