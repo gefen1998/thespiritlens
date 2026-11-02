@@ -85,7 +85,9 @@ export function playClip(url) {
   const src = url.startsWith("http") ? url : BASE + url;
   cancelAnimationFrame(raf);
   // Same clip requested again right away (effect re-run) — keep the one already playing.
-  if (audio.src === src && !audio.ended && (!audio.paused || performance.now() - lastStart < 1500)) {
+  // The same clip is never played twice in a row: once it finished, a repeat request is ignored.
+  if (audio.src === src && (audio.ended || audio.duration - audio.currentTime < 0.1)) return;
+  if (audio.src === src && (!audio.paused || performance.now() - lastStart < 1500)) {
     if (audio.paused) audio.play().catch(() => {});
     else raf = requestAnimationFrame(tick);
     return;
