@@ -14,16 +14,16 @@ import { useLang } from "@/lib/i18n";
 import { playVered, stopVered, pauseVered, resumeVered } from "@/lib/veredVoice";
 
 const ORDINALS = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שביעי", "שמיני"];
-const BREATH_CYCLE = 11;
-const INHALE = 4.5;
-const HOLD = 1;
+const INHALE = 4;
+const HOLD = 7;
+const BREATH_CYCLE = INHALE + HOLD + 8;
 
 const ORDINALS_EN = ["one", "two", "three", "four", "five", "six", "seven", "eight"];
 
 function phaseOf(elapsed, en) {
   const p = elapsed % BREATH_CYCLE;
   if (p < INHALE) return { key: "inhale", dur: INHALE, ...(en ? { label: "Inhale", hint: "Slowly, through the nose" } : { label: "שאיפה", hint: "לאט, דרך האף" }) };
-  if (p < INHALE + HOLD) return { key: "hold", dur: HOLD, ...(en ? { label: "Hold", hint: "One moment" } : { label: "החזקה", hint: "רגע אחד" }) };
+  if (p < INHALE + HOLD) return { key: "hold", dur: HOLD, ...(en ? { label: "Hold", hint: "Gently" } : { label: "החזקה", hint: "בעדינות" }) };
   return { key: "exhale", dur: BREATH_CYCLE - INHALE - HOLD, ...(en ? { label: "Exhale", hint: "Longer than the inhale" } : { label: "נשיפה", hint: "ארוכה מן השאיפה" }) };
 }
 
