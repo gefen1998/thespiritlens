@@ -5,6 +5,7 @@ import FocusHeader from "@/components/FocusHeader";
 import BreathVisual from "@/components/BreathVisual";
 import { useLang } from "@/lib/i18n";
 import { playClip, stopVered } from "@/lib/veredVoice";
+import { startPad, stopPad, breathCue, pauseSound, resumeSound } from "@/lib/breathSound";
 
 const CYCLES = 4;
 
@@ -56,10 +57,13 @@ export default function Breath478({ tool, tone = "open", onComplete }) {
   useEffect(() => {
     setLeft(s.dur);
     speak(s.text || s.label, en, s.key);
+    if (s.label) breathCue(s.key, s.dur);
+    else if (s.key === "outro") breathCue("hold");
   }, [i]);
 
   useEffect(() => {
-    if (!running) { current?.pause(); window.speechSynthesis?.cancel(); return; }
+    if (!running) { current?.pause(); window.speechSynthesis?.cancel(); pauseSound(); return; }
+    resumeSound();
     const id = setInterval(() => setLeft((l) => l - 1), 1000);
     return () => clearInterval(id);
   }, [running, i]);
@@ -70,10 +74,21 @@ export default function Breath478({ tool, tone = "open", onComplete }) {
     else setI(i + 1);
   }, [left]);
 
-  useEffect(() => () => { current?.pause(); window.speechSynthesis?.cancel(); }, []);
+  useEffect(() => {
+    startPad();
+    return () => { current?.pause(); window.speechSynthesis?.cancel(); stopPad(); };
+  }, []);
 
+  const big = s.key === "inhale" || s.key === "hold";
   return (
-    <div className="min-h-screen flex flex-col pb-10">
+    <div className="relative isolate min-h-screen flex flex-col pb-10 overflow-hidden">
+      <motion.div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10"
+        style={{ background: `radial-gradient(circle at 50% 45%, hsl(var(--pigment-${tone}) / 0.28), transparent 70%)` }}
+        animate={{ opacity: running ? (big ? 1 : 0.35) : 0.35 }}
+        transition={{ duration: running ? s.dur : 0.4, ease: [0.45, 0, 0.35, 1] }}
+      />
       <FocusHeader kicker={s.cycle ? t(`סבב ${s.cycle} מתוך ${CYCLES}`, `Round ${s.cycle} of ${CYCLES}`) : ""} title={tool.name} to="/" />
       <div className="flex-1 flex flex-col items-center justify-center gap-8 px-6">
         <BreathVisual phase={s.label ? s.key : "exhale"} dur={s.dur} left={s.label ? left : null} running={running} tone={tone}>
@@ -85,6 +100,11 @@ export default function Breath478({ tool, tone = "open", onComplete }) {
           ) : null}
         </BreathVisual>
         {s.label && <p className="t-small text-muted-foreground -mt-4">{s.hint}</p>}
+        <div className="flex gap-2" aria-hidden="true">
+          {Array.from({ length: CYCLES }, (_, c) => (
+            <span key={c} className={`h-1.5 rounded-full transition-all duration-500 ${s.cycle === c + 1 ? "w-6 bg-foreground/60" : (s.cycle || (s.key === "outro" ? CYCLES + 1 : 0)) > c + 1 ? "w-1.5 bg-foreground/40" : "w-1.5 bg-foreground/15"}`} />
+          ))}
+        </div>
         {s.text && <p className="t-practice text-foreground text-center max-w-md text-balance">{s.text}</p>}
       </div>
       <div className="flex items-center justify-center gap-4 px-6">
