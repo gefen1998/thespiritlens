@@ -78,13 +78,14 @@ function bell() {
   const c = ac(), t = c.currentTime;
   const g = c.createGain();
   g.gain.setValueAtTime(0, t);
-  g.gain.linearRampToValueAtTime(0.09, t + 0.02);
-  g.gain.exponentialRampToValueAtTime(0.0001, t + 3);
-  [523.25, 1046.5 * 1.002].forEach((f, i) => {
+  // Soft low singing-bowl: slow swell, warm inharmonic partials, long fade.
+  g.gain.linearRampToValueAtTime(0.07, t + 0.35);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 5);
+  [[174.6, 1], [175.4, 0.7], [471, 0.18], [872, 0.06]].forEach(([f, v]) => {
     const o = c.createOscillator();
     o.type = "sine"; o.frequency.value = f;
-    const og = c.createGain(); og.gain.value = i ? 0.3 : 1;
-    o.connect(og); og.connect(g); o.start(t); o.stop(t + 3.1);
+    const og = c.createGain(); og.gain.value = v;
+    o.connect(og); og.connect(g); o.start(t); o.stop(t + 5.1);
   });
   g.connect(master);
 }
