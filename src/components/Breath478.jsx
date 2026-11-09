@@ -11,7 +11,7 @@ const CYCLES = 4;
 
 const BASE = "https://base44.app/api/apps/6aa5ba6278746a9e6313ec62/files/mp/public/6aa5ba6278746a9e6313ec62/";
 const VERED = {
-  intro: BASE + "cee4041f9_vered-478-intro-v6.mp3",
+  intro: BASE + "dc40221fd_vered-478-intro-v7.mp3",
   outro: BASE + "5cfea3b80_vered-478-outro-v5.mp3",
 };
 // Breath phases stay voiceless until Vered records them herself.
@@ -24,7 +24,7 @@ function speak(text, en, key) {
   window.speechSynthesis?.cancel();
   if (localStorage.getItem("sl_voice_muted") === "1" || SILENT.includes(key)) return;
   if (!en && VERED[key]) {
-    playClip(VERED[key]);
+    playClip(VERED[key], key === "intro" ? 0.9 : 1);
     return;
   }
   if (!("speechSynthesis" in window)) return;
@@ -45,7 +45,7 @@ export default function Breath478({ tool, tone = "open", onComplete }) {
       { key: "exhale", label: t("נשיפה", "Exhale"), hint: t("לאט, דרך הפה", "Slowly, through the mouth"), dur: 8, scale: 0.6 },
     ];
     const cycles = Array.from({ length: CYCLES }, (_, c) => P.map((p) => ({ ...p, cycle: c + 1 }))).flat();
-    return [{ key: "intro", text: tool.steps[0].text, dur: 12, scale: 0.6 }, ...cycles, { key: "outro", text: tool.steps[1].text, dur: 10, scale: 0.6 }];
+    return [{ key: "intro", text: tool.steps[0].text, dur: 13, scale: 0.6 }, ...cycles, { key: "outro", text: tool.steps[1].text, dur: 10, scale: 0.6 }];
   }, [tool, lang]);
 
   const [i, setI] = useState(0);

@@ -80,9 +80,13 @@ export function resumeVered() {
 }
 
 /** Plays a recorded clip by file name or full url. */
-export function playClip(url) {
+export function playClip(url, rate = 1) {
   if (!audio) return;
   const src = url.startsWith("http") ? url : BASE + url;
+  // Slowing keeps the original pitch (browser time-stretch), so the voice stays natural.
+  audio.preservesPitch = true;
+  audio.defaultPlaybackRate = rate;
+  audio.playbackRate = rate;
   cancelAnimationFrame(raf);
   // Same clip requested again right away (effect re-run) — keep the one already playing.
   // The same clip is never played twice in a row: once it finished, a repeat request is ignored.
@@ -97,6 +101,7 @@ export function playClip(url) {
   audio.volume = 0;
   audio.src = src;
   audio.currentTime = 0;
+  audio.playbackRate = rate;
   audio.play().catch(() => {});
 }
 
