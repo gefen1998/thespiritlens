@@ -24,7 +24,7 @@ function speak(text, en, key) {
   window.speechSynthesis?.cancel();
   if (localStorage.getItem("sl_voice_muted") === "1" || SILENT.includes(key)) return;
   if (!en && VERED[key]) {
-    playClip(VERED[key], key === "intro" ? 0.9 : 1);
+    playClip(VERED[key], key === "intro" ? 0.85 : 1);
     return;
   }
   if (!("speechSynthesis" in window)) return;
