@@ -13,8 +13,11 @@ const BASE = "https://base44.app/api/apps/6aa5ba6278746a9e6313ec62/files/mp/publ
 const VERED = {
   intro: BASE + "edf489502_vered-478-intro-v9-shoreru.mp3",
   outro: BASE + "5cfea3b80_vered-478-outro-v5.mp3",
+  inhale: BASE + "9f38ef5b0_vered-478-inhale-word.mp3",
+  hold: BASE + "f54b20946_vered-478-hold-word.mp3",
+  exhale: BASE + "c33a20bda_vered-478-exhale-word.mp3",
 };
-// Breath phases stay voiceless until Vered records them herself.
+// English breath phases stay voiceless.
 const SILENT = ["inhale", "hold", "exhale"];
 const current = { pause: () => stopVered() };
 const stopAll = stopVered;
@@ -22,7 +25,7 @@ const stopAll = stopVered;
 function speak(text, en, key) {
   stopAll();
   window.speechSynthesis?.cancel();
-  if (localStorage.getItem("sl_voice_muted") === "1" || SILENT.includes(key)) return;
+  if (localStorage.getItem("sl_voice_muted") === "1" || (en && SILENT.includes(key))) return;
   if (!en && VERED[key]) {
     playClip(VERED[key], key === "intro" ? 0.9 : 1);
     return;
