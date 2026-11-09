@@ -11,7 +11,7 @@ const CYCLES = 4;
 
 const BASE = "https://base44.app/api/apps/6aa5ba6278746a9e6313ec62/files/mp/public/6aa5ba6278746a9e6313ec62/";
 const VERED = {
-  intro: BASE + "4e9e5e4b8_vered-478-intro-shvu-fixed.mp3",
+  intro: BASE + "edf489502_vered-478-intro-v9-shoreru.mp3",
   outro: BASE + "5cfea3b80_vered-478-outro-v5.mp3",
 };
 // Breath phases stay voiceless until Vered records them herself.
