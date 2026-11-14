@@ -9,16 +9,30 @@ import { startPad, stopPad, breathCue, pauseSound, resumeSound } from "@/lib/bre
 
 const CYCLES = 4;
 
-// Vered's Hebrew narration, generated with ElevenLabs (see scripts/generate-vered-audio.mjs
-// in the working repo): an intro, one counted cue per phase (the voice counts
-// 4-3-2-1, 7…1, 8…1 itself), and a closing line. One variant per round.
-const A = "/audio/gentle-exhale/";
+// Vered's Hebrew narration, generated with ElevenLabs and stored in the app's
+// file storage: an intro, one counted cue per phase (the voice counts 4-3-2-1,
+// 7…1, 8…1 itself, one variant per round), and a closing line.
 const VERED = {
-  intro: [A + "intro.mp3"],
-  outro: [A + "closing.mp3"],
-  inhale: [1, 2, 3, 4].map((n) => A + `inhale-${n}.mp3`),
-  hold: [1, 2, 3, 4].map((n) => A + `hold-${n}.mp3`),
-  exhale: [1, 2, 3, 4].map((n) => A + `exhale-${n}.mp3`),
+  intro: ["https://media.base44.com/files/public/6aa5ba6278746a9e6313ec62/b6ec48128_intro.mp3"],
+  outro: ["https://media.base44.com/files/public/6aa5ba6278746a9e6313ec62/ec21ae349_closing.mp3"],
+  inhale: [
+    "https://media.base44.com/files/public/6aa5ba6278746a9e6313ec62/a86d81075_inhale-1.mp3",
+    "https://media.base44.com/files/public/6aa5ba6278746a9e6313ec62/10089412c_inhale-2.mp3",
+    "https://media.base44.com/files/public/6aa5ba6278746a9e6313ec62/06edda80c_inhale-3.mp3",
+    "https://media.base44.com/files/public/6aa5ba6278746a9e6313ec62/3e18873da_inhale-4.mp3",
+  ],
+  hold: [
+    "https://media.base44.com/files/public/6aa5ba6278746a9e6313ec62/cd1ea18bb_hold-1.mp3",
+    "https://media.base44.com/files/public/6aa5ba6278746a9e6313ec62/3401aa4c0_hold-2.mp3",
+    "https://media.base44.com/files/public/6aa5ba6278746a9e6313ec62/fa43ac237_hold-3.mp3",
+    "https://media.base44.com/files/public/6aa5ba6278746a9e6313ec62/305c9aa1a_hold-4.mp3",
+  ],
+  exhale: [
+    "https://media.base44.com/files/public/6aa5ba6278746a9e6313ec62/b43fd8816_exhale-1.mp3",
+    "https://media.base44.com/files/public/6aa5ba6278746a9e6313ec62/00a047df6_exhale-2.mp3",
+    "https://media.base44.com/files/public/6aa5ba6278746a9e6313ec62/d3728ca6a_exhale-3.mp3",
+    "https://media.base44.com/files/public/6aa5ba6278746a9e6313ec62/bf7dfb734_exhale-4.mp3",
+  ],
 };
 // English breath phases stay voiceless.
 const SILENT = ["inhale", "hold", "exhale"];
