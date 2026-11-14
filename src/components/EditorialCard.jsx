@@ -21,7 +21,7 @@ export const TOOL_CARD_META = {
   "gentle-exhale": {
     line1: "נשימת",
     line2: "4-7-8",
-    time: "02:00",
+    time: "01:40",
     bg: "#CFD8C6",
     pebble: "#6E8C63",
     textDark: "#3A4A33",
@@ -33,7 +33,7 @@ export const TOOL_CARD_META = {
   "ground-touch": {
     line1: "מגע",
     line2: "בקרקע",
-    time: "01:00",
+    time: "01:30",
     bg: "#D6D1C6",
     pebble: "#7C7263",
     textDark: "#463F35",
@@ -45,7 +45,7 @@ export const TOOL_CARD_META = {
   "return-to-senses": {
     line1: "חזרה",
     line2: "אל החושים",
-    time: "03:00",
+    time: "01:40",
     bg: "#C7D2DC",
     pebble: "#5A7387",
     textDark: "#2F404B",
@@ -57,7 +57,7 @@ export const TOOL_CARD_META = {
   "body-scan": {
     line1: "סריקת",
     line2: "גוף",
-    time: "05:00",
+    time: "02:00",
     bg: "#D6D1C6",
     pebble: "#7C7263",
     textDark: "#463F35",
@@ -69,7 +69,7 @@ export const TOOL_CARD_META = {
   "anchoring": {
     line1: "ניגון",
     line2: "כעוגן",
-    time: "03:00",
+    time: "01:30",
     bg: "#C9CBDA",
     pebble: "#4E5680",
     textDark: "#2B3049",
@@ -93,7 +93,7 @@ export const TOOL_CARD_META = {
   "word-for-path": {
     line1: "מילה",
     line2: "לדרך",
-    time: "01:00",
+    time: "00:40",
     bg: "#D8CBD8",
     pebble: "#7A5C7D",
     textDark: "#463149",
@@ -105,7 +105,7 @@ export const TOOL_CARD_META = {
   "gratitude-moment": {
     line1: "רגע",
     line2: "של הודיה",
-    time: "01:00",
+    time: "01:20",
     bg: "#E6D8B8",
     pebble: "#B08A3C",
     textDark: "#5F4A1C",
@@ -117,7 +117,7 @@ export const TOOL_CARD_META = {
   "nesheama": {
     line1: "ארבעה",
     line2: "שערים",
-    time: "04:00",
+    time: "01:20",
     bg: "#CFD8C6",
     pebble: "#6E8C63",
     textDark: "#3A4A33",
@@ -129,7 +129,7 @@ export const TOOL_CARD_META = {
   "meaning-choice": {
     line1: "משמעות",
     line2: "ובחירה",
-    time: "03:00",
+    time: "01:00",
     bg: "#D8CBD8",
     pebble: "#7A5C7D",
     textDark: "#463149",
@@ -141,7 +141,7 @@ export const TOOL_CARD_META = {
   "thought-release": {
     line1: "לשחרר",
     line2: "",
-    time: "02:00",
+    time: "01:20",
     bg: "#C9CBDA",
     pebble: "#4E5680",
     textDark: "#2B3049",
@@ -153,7 +153,7 @@ export const TOOL_CARD_META = {
   "thought-meeting": {
     line1: "מה המחשבה",
     line2: "מבקשת ממני?",
-    time: "03:00",
+    time: "00:30",
     bg: "#C9CBDA",
     pebble: "#4E5680",
     textDark: "#2B3049",
@@ -165,7 +165,7 @@ export const TOOL_CARD_META = {
   "emotion-space": {
     line1: "לתת מקום",
     line2: "לרגש",
-    time: "03:00",
+    time: "01:20",
     bg: "#D8CBD8",
     pebble: "#7A5C7D",
     textDark: "#463149",
@@ -177,7 +177,7 @@ export const TOOL_CARD_META = {
   "strengthening-memory": {
     line1: "זיכרון",
     line2: "שמחזק",
-    time: "03:00",
+    time: "01:20",
     bg: "#D6D1C6",
     pebble: "#7C7263",
     textDark: "#463F35",

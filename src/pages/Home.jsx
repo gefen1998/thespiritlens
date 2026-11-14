@@ -72,7 +72,7 @@ export default function Home() {
 
   if (recoId === "nesheama") {
     displayName = t("כלי נשמ״ה", "N.S.M.H. practice");
-    displayDuration = "04:00";
+    displayDuration = "01:20";
     displayDescription = t("תרגול קצר בארבעה שלבים, על פי מודל עדשת הרוח", "A short four-step practice, based on the Spirit Lens model");
   }
 
