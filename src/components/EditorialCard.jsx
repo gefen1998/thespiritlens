@@ -81,7 +81,7 @@ export const TOOL_CARD_META = {
   "light-beam": {
     line1: "קרן",
     line2: "אור",
-    time: "05:00",
+    time: "10:00",
     bg: "#E6D8B8",
     pebble: "#B08A3C",
     textDark: "#5F4A1C",

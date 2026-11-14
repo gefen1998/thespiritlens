@@ -261,10 +261,10 @@ export const tools = {
     id: "light-beam",
     name: "קרן אור - דמיון מודרך",
     description: "תרגול דמיון עדין לחיבור למשאב פנימי",
-    duration: "חמש דקות",
+    duration: "עשר דקות",
     mode: "breath",
     audio: {
-      url: "https://media.base44.com/files/public/6aa5ba6278746a9e6313ec62/688d6f8c2_BandLabSong.mp3",
+      url: "https://base44.app/api/apps/6aa5ba6278746a9e6313ec62/files/mp/public/6aa5ba6278746a9e6313ec62/f1e25ff9c_light-beam-guided.mp3",
       coverUrl: "https://base44.app/api/apps/6aa5ba6278746a9e6313ec62/files/mp/public/6aa5ba6278746a9e6313ec62/aa60bd778_playlist-cover.jpg",
       title: "קרן אור - דמיון מודרך",
       note: "אפשר להאזין במקביל לתרגול, בעוצמה נעימה לכם.",

@@ -61,7 +61,7 @@ export const toolsEn = {
   "light-beam": {
     name: "Beam of light - guided imagery",
     description: "A gentle imagery practice to connect with an inner resource",
-    duration: "5 min",
+    duration: "10 min",
     audio: { title: "Beam of light - guided imagery", note: "You can listen alongside the practice, at a volume that feels good." },
     steps: [
       "Sit comfortably, or lie down if that feels better.",
