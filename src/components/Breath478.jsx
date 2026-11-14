@@ -9,25 +9,29 @@ import { startPad, stopPad, breathCue, pauseSound, resumeSound } from "@/lib/bre
 
 const CYCLES = 4;
 
-const BASE = "https://base44.app/api/apps/6aa5ba6278746a9e6313ec62/files/mp/public/6aa5ba6278746a9e6313ec62/";
+// Vered's Hebrew narration, generated with ElevenLabs (see scripts/generate-vered-audio.mjs
+// in the working repo): an intro, one counted cue per phase (the voice counts
+// 4-3-2-1, 7…1, 8…1 itself), and a closing line. One variant per round.
+const A = "/audio/gentle-exhale/";
 const VERED = {
-  intro: BASE + "edf489502_vered-478-intro-v9-shoreru.mp3",
-  outro: BASE + "5cfea3b80_vered-478-outro-v5.mp3",
-  inhale: BASE + "9f38ef5b0_vered-478-inhale-word.mp3",
-  hold: BASE + "f54b20946_vered-478-hold-word.mp3",
-  exhale: BASE + "c33a20bda_vered-478-exhale-word.mp3",
+  intro: [A + "intro.mp3"],
+  outro: [A + "closing.mp3"],
+  inhale: [1, 2, 3, 4].map((n) => A + `inhale-${n}.mp3`),
+  hold: [1, 2, 3, 4].map((n) => A + `hold-${n}.mp3`),
+  exhale: [1, 2, 3, 4].map((n) => A + `exhale-${n}.mp3`),
 };
 // English breath phases stay voiceless.
 const SILENT = ["inhale", "hold", "exhale"];
 const current = { pause: () => stopVered() };
 const stopAll = stopVered;
 
-function speak(text, en, key) {
+function speak(text, en, key, cycle = 1) {
   stopAll();
   window.speechSynthesis?.cancel();
   if (localStorage.getItem("sl_voice_muted") === "1" || (en && SILENT.includes(key))) return;
   if (!en && VERED[key]) {
-    playClip(VERED[key], key === "intro" ? 0.9 : 1);
+    const clips = VERED[key];
+    playClip(clips[(cycle - 1) % clips.length], 1);
     return;
   }
   if (!("speechSynthesis" in window)) return;
@@ -43,12 +47,12 @@ export default function Breath478({ tool, tone = "open", onComplete }) {
   const en = lang === "en";
   const seq = useMemo(() => {
     const P = [
-      { key: "inhale", label: t("שאיפה", "Inhale"), hint: t("דרך האף", "Through the nose"), dur: 4, scale: 1 },
-      { key: "hold", label: t("החזקה", "Hold"), hint: t("בעדינות", "Gently"), dur: 7, scale: 1 },
-      { key: "exhale", label: t("נשיפה", "Exhale"), hint: t("לאט, דרך הפה", "Slowly, through the mouth"), dur: 8, scale: 0.6 },
+      { key: "inhale", label: t("שאיפה", "Inhale"), hint: t("דרך האף", "Through the nose"), dur: en ? 4 : 7.5, scale: 1 },
+      { key: "hold", label: t("החזקה", "Hold"), hint: t("בעדינות", "Gently"), dur: en ? 7 : 10.5, scale: 1 },
+      { key: "exhale", label: t("נשיפה", "Exhale"), hint: t("לאט, דרך הפה", "Slowly, through the mouth"), dur: en ? 8 : 12.5, scale: 0.6 },
     ];
     const cycles = Array.from({ length: CYCLES }, (_, c) => P.map((p) => ({ ...p, cycle: c + 1 }))).flat();
-    return [{ key: "intro", text: tool.steps[0].text, dur: 13, scale: 0.6 }, ...cycles, { key: "outro", text: tool.steps[1].text, dur: 10, scale: 0.6 }];
+    return [{ key: "intro", text: tool.steps[0].text, dur: en ? 13 : 23, scale: 0.6 }, ...cycles, { key: "outro", text: tool.steps[1].text, dur: en ? 10 : 10, scale: 0.6 }];
   }, [tool, lang]);
 
   const [i, setI] = useState(0);
@@ -58,7 +62,7 @@ export default function Breath478({ tool, tone = "open", onComplete }) {
 
   useEffect(() => {
     setLeft(s.dur);
-    speak(s.text || s.label, en, s.key);
+    speak(s.text || s.label, en, s.key, s.cycle);
     if (s.label) breathCue(s.key, s.dur);
     else if (s.key === "outro") breathCue("hold");
   }, [i]);
@@ -97,7 +101,7 @@ export default function Breath478({ tool, tone = "open", onComplete }) {
           {s.label ? (
             <>
               <p className="t-row">{s.label}</p>
-              <p className="text-[34px] font-bold tabular-nums leading-none mt-0.5">{Math.max(left, 1)}</p>
+              {en && <p className="text-[34px] font-bold tabular-nums leading-none mt-0.5">{Math.max(left, 1)}</p>}
             </>
           ) : null}
         </BreathVisual>
