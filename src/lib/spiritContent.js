@@ -264,7 +264,7 @@ export const tools = {
     duration: "עשר דקות",
     mode: "breath",
     audio: {
-      url: "https://base44.app/api/apps/6aa5ba6278746a9e6313ec62/files/mp/public/6aa5ba6278746a9e6313ec62/d3ca92d8b_light-beam-guided-fixed.mp3",
+      url: "https://base44.app/api/apps/6aa5ba6278746a9e6313ec62/files/mp/public/6aa5ba6278746a9e6313ec62/3b360162f_light-beam-guided-v2.mp3",
       coverUrl: "https://base44.app/api/apps/6aa5ba6278746a9e6313ec62/files/mp/public/6aa5ba6278746a9e6313ec62/aa60bd778_playlist-cover.jpg",
       title: "קרן אור - דמיון מודרך",
       note: "אפשר להאזין במקביל לתרגול, בעוצמה נעימה לכם.",
